@@ -11,6 +11,7 @@ const Layout = () => {
         }}
       >
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="categories" />
       </Stack>
     </Authenticated>
   )
