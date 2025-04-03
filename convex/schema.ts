@@ -23,10 +23,68 @@ export const Categories = {
   image: v.string(),
 }
 
+export const PresetChallenges = {
+  title: v.string(),
+  description: v.string(),
+  image: v.string(),
+  color: v.object({
+    primary: v.string(),
+    secondary: v.string(),
+  }),
+  duration: v.number(),
+  categoryId: v.id("categories"),
+  activities: v.array(
+    v.object({
+      day: v.number(),
+      title: v.string(),
+      task: v.string(),
+      pros: v.string(),
+      tips: v.array(v.string()),
+    }),
+  ),
+}
+
+export const UserChallenges = {
+  userId: v.string(),
+  challengeId: v.string(),
+  title: v.string(),
+  description: v.string(),
+  image: v.string(),
+  startDate: v.string(),
+  color: v.object({
+    primary: v.string(),
+    secondary: v.string(),
+  }),
+  duration: v.number(),
+  categoryId: v.string(),
+  status: v.string(),
+  activities: v.array(
+    v.object({
+      day: v.number(),
+      title: v.string(),
+      task: v.string(),
+      status: v.optional(v.string()),
+      pros: v.string(),
+      date: v.optional(v.string()),
+      tips: v.array(v.string()),
+    }),
+  ),
+  reminderTime: v.object({
+    hour: v.number(),
+    minutes: v.number(),
+    period: v.number(),
+  }),
+}
+
 export default defineSchema({
   users: defineTable(User)
     .index("by_userId", ["userId"])
     .index("by_userName", ["userName"])
     .index("by_email", ["email"]),
+  userChallenges: defineTable(UserChallenges)
+    .index("by_cid_uid_status", ["userId", "challengeId", "status"])
+    .index("by_userId", ["userId"])
+    .index("by_userId_status", ["userId", "status"]),
+  presetChallenges: defineTable(PresetChallenges).index("by_categoryId", ["categoryId"]),
   categories: defineTable(Categories),
 })
