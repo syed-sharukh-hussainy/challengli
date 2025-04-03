@@ -14,9 +14,7 @@
     },
     "newArchEnabled": true,
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.flamingoo.challengli",
@@ -38,6 +36,7 @@
     "plugins": [
       "expo-localization",
       "expo-font",
+      "expo-secure-store",
       [
         "expo-splash-screen",
         {
