@@ -17,9 +17,16 @@ export const User = {
   streakDates: v.array(v.string()),
 }
 
+export const Categories = {
+  title: v.string(),
+  description: v.string(),
+  image: v.string(),
+}
+
 export default defineSchema({
   users: defineTable(User)
     .index("by_userId", ["userId"])
     .index("by_userName", ["userName"])
     .index("by_email", ["email"]),
+  categories: defineTable(Categories),
 })
