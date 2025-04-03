@@ -1,8 +1,8 @@
 {
-  "name": "challengli",
-  "displayName": "challengli",
+  "name": "Challengli",
+  "displayName": "Challengli",
   "expo": {
-    "name": "challengli",
+    "name": "Challengli",
     "slug": "challengli",
     "scheme": "challengli",
     "version": "1.0.0",
@@ -22,35 +22,66 @@
         "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
-      "allowBackup": false
+      "allowBackup": false,
+      "splash": {
+        "backgroundColor": "#fff"
+      },
+      "permissions": [
+        "android.permission.SCHEDULE_EXACT_ALARM",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "com.android.vending.BILLING"
+      ]
     },
     "ios": {
       "icon": "./assets/images/app-icon-ios.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.flamingoo.challengli"
+      "bundleIdentifier": "com.flamingoo.challengli",
+      "splash": {
+        "backgroundColor": "#fff"
+      }
     },
     "web": {
       "favicon": "./assets/images/app-icon-web-favicon.png",
-      "bundler": "metro"
+      "bundler": "metro",
+      "splash": {
+        "backgroundColor": "#fff"
+      }
     },
     "plugins": [
       "expo-localization",
       "expo-font",
       "expo-secure-store",
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "extraProguardRules": "-keep public class com.horcrux.svg.** {*;}"
+          }
+        }
+      ],
       [
         "expo-splash-screen",
         {
           "image": "./assets/images/app-icon-android-adaptive-foreground.png",
           "imageWidth": 300,
           "resizeMode": "contain",
-          "backgroundColor": "#191015"
+          "backgroundColor": "#FFF",
+          "dark": {
+            "image": "./assets/images/app-icon-android-adaptive-foreground.png",
+            "backgroundColor": "#FFF"
+          }
         }
-      ],
-      "expo-router"
+      ]
     ],
     "experiments": {
       "tsconfigPaths": true,
       "typedRoutes": true
+    },
+    "splash": {
+      "backgroundColor": "#fff"
     }
   },
   "ignite": {
