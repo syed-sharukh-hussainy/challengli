@@ -1,0 +1,51 @@
+import { TextStyle, View, ViewStyle } from "react-native"
+import React, { useEffect, useState } from "react"
+import SmartImage from "./SmartImage"
+import { ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/utils/useAppTheme"
+import { Text } from "../Text"
+
+const LoadingLogo = () => {
+  const { themed } = useAppTheme()
+  const [dots, setDots] = useState("")
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prev) => (prev.length < 3 ? prev + "." : ""))
+    }, 500)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <View style={themed($container)}>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          flex: 1,
+        }}
+      >
+        <SmartImage imgKey="boarding1.png" width={96} height={96} />
+        <Text size="sm" weight="bold" style={themed($loadingText)}>
+          Loading{dots}
+        </Text>
+      </View>
+    </View>
+  )
+}
+
+export default LoadingLogo
+
+const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
+  flex: 1,
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: colors.background,
+})
+
+const $loadingText: ThemedStyle<TextStyle> = ({ colors }) => ({
+  textTransform: "uppercase",
+  color: colors.textDim,
+  marginTop: 12,
+})
