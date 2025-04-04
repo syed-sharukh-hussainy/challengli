@@ -21,19 +21,13 @@ const DetailsHeader = ({ color, description, duration, image, title }: Props) =>
   return (
     <View style={themed($container)}>
       <SmartImage imgKey={image} style={$image} />
-      <Text size="md" weight="bold" style={themed($title)}>
-        {title}
-      </Text>
-      <Text size="xs" weight="normal" style={themed($description)}>
-        {description}
-      </Text>
-
       <View
         style={themed(({ spacing }) => ({
           backgroundColor: color.primary,
           paddingHorizontal: spacing.md,
           paddingVertical: spacing.xxxs,
           borderRadius: 6,
+          marginTop: spacing.sm,
         }))}
       >
         <Text
@@ -46,6 +40,12 @@ const DetailsHeader = ({ color, description, duration, image, title }: Props) =>
           {duration} DAYS
         </Text>
       </View>
+      <Text size="md" weight="bold" style={themed($title)}>
+        {title}
+      </Text>
+      <Text size="xs" weight="normal" style={themed($description)}>
+        {description}
+      </Text>
     </View>
   )
 }
@@ -65,7 +65,7 @@ const $image: ImageProps = {
 
 const $title: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.text,
-  marginTop: spacing.md,
+  marginTop: spacing.xs,
 })
 const $description: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.textDim,
