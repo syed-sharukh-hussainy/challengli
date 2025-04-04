@@ -2,13 +2,15 @@ import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { Pressable, View, ViewStyle } from "react-native"
 import { Text } from "../Text"
+import Spinner from "./Spinner"
 
 type Props = {
   backgroundColor: string
   onPress: () => void
   label: string
+  isLoading?: boolean
 }
-const FooterButton = ({ backgroundColor, onPress, label }: Props) => {
+const FooterButton = ({ backgroundColor, onPress, label, isLoading }: Props) => {
   const { themed } = useAppTheme()
   return (
     <View style={themed($footerContainer)}>
@@ -17,19 +19,23 @@ const FooterButton = ({ backgroundColor, onPress, label }: Props) => {
         style={{
           backgroundColor,
           borderRadius: 12,
+          paddingVertical: 14,
         }}
       >
-        <Text
-          size="sm"
-          weight="bold"
-          style={themed(({ spacing }) => ({
-            color: "white",
-            textAlign: "center",
-            paddingVertical: spacing.sm,
-          }))}
-        >
-          {label}
-        </Text>
+        {isLoading ? (
+          <Spinner size={24} color="white" />
+        ) : (
+          <Text
+            size="sm"
+            weight="bold"
+            style={{
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            {label}
+          </Text>
+        )}
       </Pressable>
     </View>
   )

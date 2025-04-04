@@ -33,14 +33,15 @@ const Accordion = ({
             flexDirection: "row",
             alignItems: "center",
             gap: 12,
+            flex: 1,
           }}
         >
           <SmartImage imgKey={imageKey} style={{ width: 40, height: 40 }} />
-          <View>
+          <View style={{ flex: 1 }}>
             <Text size="xs" weight="semiBold" style={themed($title)}>
               {title}
             </Text>
-            <Text size="xxs" style={themed($subtitle)}>
+            <Text size="xxs" style={themed($subtitle)} numberOfLines={2}>
               {subtitle}
             </Text>
           </View>
@@ -48,7 +49,7 @@ const Accordion = ({
         <FontAwesome6 name={isExpanded ? "chevron-up" : "chevron-down"} size={18} color="#4b5563" />
       </Pressable>
       {isExpanded && (
-        <View style={{ marginTop: 16 }}>
+        <View style={{ marginTop: 16, flex: 1 }}>
           {isList && Array.isArray(content) ? (
             content.map((item, index) => (
               <View
@@ -58,12 +59,13 @@ const Accordion = ({
                   alignItems: "flex-start",
                   gap: 12,
                   marginVertical: 4,
+                  flex: 1,
                 }}
               >
                 <View style={{ marginTop: 4 }}>
                   <FontAwesome6 name="caret-right" size={14} color={challengeColor} />
                 </View>
-                <Text size="xs" weight="normal">
+                <Text size="xs" weight="normal" style={{ flex: 1 }}>
                   {item}
                 </Text>
               </View>
@@ -80,7 +82,7 @@ const Accordion = ({
               <View style={{ marginTop: 4 }}>
                 <FontAwesome6 name="check" size={14} color={challengeColor} />
               </View>
-              <Text size="xs" weight="normal">
+              <Text size="xs" weight="normal" style={{ flex: 1 }}>
                 {content}
               </Text>
             </View>
@@ -106,6 +108,7 @@ const $btn: ViewStyle = {
   alignItems: "center",
   justifyContent: "space-between",
   flex: 1,
+  gap: 18,
 }
 
 const $subtitle: ThemedStyle<TextStyle> = ({ colors }) => ({
@@ -114,4 +117,7 @@ const $subtitle: ThemedStyle<TextStyle> = ({ colors }) => ({
 
 const $title: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.text,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
 })

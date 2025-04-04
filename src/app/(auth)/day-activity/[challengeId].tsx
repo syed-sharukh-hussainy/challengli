@@ -1,4 +1,4 @@
-import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
+import { Image, ScrollView, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import React, { useCallback, useMemo, useState } from "react"
 import { useLocalSearchParams } from "expo-router"
 import { format } from "date-fns/format"
@@ -9,9 +9,10 @@ import TopBar from "@/components/UI/TopBar"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import Accordion from "@/components/UI/Accordion"
-import FooterButton from "@/components/UI/FooterButton"
 import DayActivityFooter from "@/components/Challenges/DayActivityFooter"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
+import ModalText from "@/components/UI/ActionModal/ModalText"
+import ActionModal from "@/components/UI/ActionModal/ActionModal"
 
 const DayActivity = () => {
   const { challengeId, query } = useLocalSearchParams<{
@@ -69,7 +70,11 @@ const DayActivity = () => {
       ) : (
         <>
           <View style={themed($container)}>
-            <ScrollView>
+            <ScrollView
+              contentContainerStyle={{
+                paddingVertical: 20,
+              }}
+            >
               <View style={$headerText}>
                 <Text
                   size="xs"
@@ -127,13 +132,70 @@ const DayActivity = () => {
             </ScrollView>
           </View>
           <DayActivityFooter
+            isLoading={isLoading}
             backgroundColor={color?.primary!}
-            onPress={() => {}}
+            onPress={onFinishDayActivity}
             status={activity.status!}
             day={activity.day}
           />
         </>
       )}
+      <ActionModal visible={showCongratsModal}>
+        <ModalText title={`Congratulations on completing Day ${activity?.day} activity!`} />
+        <View
+          style={{
+            alignItems: "center",
+            marginTop: 16,
+          }}
+        >
+          <Text
+            size="sm"
+            weight="medium"
+            style={{
+              marginBottom: 12,
+            }}
+          >
+            You got:
+          </Text>
+          <View
+            style={themed(({ colors, spacing }) => ({
+              backgroundColor: colors.palette.gray,
+              alignItems: "center",
+              padding: spacing.sm,
+              borderRadius: 12,
+            }))}
+          >
+            <Image
+              source={require("assets/images/xp-points.png")}
+              style={{
+                width: 36,
+                height: 36,
+              }}
+            />
+            <Text size="xs" weight="semiBold">
+              10 XP
+            </Text>
+          </View>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={() => setShowCongratsModal(false)}
+            style={themed(({ spacing, colors }) => ({
+              backgroundColor: colors.palette.muted,
+              marginTop: spacing.md,
+              padding: spacing.xs,
+              borderRadius: 12,
+              alignItems: "center",
+              borderWidth: 2,
+              borderColor: colors.border,
+            }))}
+          >
+            <Text size="sm" weight="semiBold">
+              OKAY
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ActionModal>
     </Screen>
   )
 }
@@ -142,7 +204,7 @@ export default DayActivity
 
 const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flex: 1,
-  padding: spacing.md,
+  paddingHorizontal: spacing.md,
 })
 
 const $headerText: ViewStyle = {

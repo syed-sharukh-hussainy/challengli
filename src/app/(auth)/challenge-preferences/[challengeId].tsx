@@ -69,7 +69,7 @@ const ChallengePreferences = () => {
       console.error("Error creating challenge:", error)
     } finally {
       setIsLoading(false)
-      rootNavigation.dispatch(StackActions.popToTop())
+      // rootNavigation.dispatch(StackActions.popToTop())
       router.replace(`/(auth)/created-challenge-details/${challengeId}`)
     }
   }
@@ -110,6 +110,7 @@ const ChallengePreferences = () => {
             </View>
 
             <FooterButton
+              isLoading={isLoading}
               label="Start Challenge"
               backgroundColor={challenge?.color.primary}
               onPress={onCreateChallenge}

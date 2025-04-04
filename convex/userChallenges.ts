@@ -169,3 +169,27 @@ export const updateDayActivityStatus = mutation({
     })
   },
 })
+
+export const deleteChallenge = mutation({
+  args: {
+    challengeId: v.id("userChallenges"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+
+    if (!identity) {
+      throw new ConvexError("Not authenticated")
+    }
+
+    const challenge = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_id", (q) => q.eq("_id", args.challengeId))
+      .unique()
+
+    if (!challenge) {
+      throw new ConvexError("Challenge Not Found")
+    }
+
+    await ctx.db.delete(challenge._id)
+  },
+})

@@ -71,6 +71,7 @@ const ActivityItem = ({
         style={{
           flexDirection: "row",
           alignItems: "center",
+          gap: 14,
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", flex: 1, gap: 14 }}>
@@ -100,25 +101,39 @@ const ActivityItem = ({
               {item.day}
             </Text>
           </View>
-          <Text
-            size="xs"
-            weight="bold"
-            style={themed(({ colors }) => ({
-              color: textColor ? textColor : colors.text,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              flex: 1,
-            }))}
-            numberOfLines={2}
-          >
-            {item.title}
-          </Text>
+          <View style={{ flex: 1 }}>
+            <Text
+              size="xs"
+              weight="bold"
+              style={themed(({ colors }) => ({
+                color: textColor ? textColor : colors.text,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                textDecorationLine: $textDecoration,
+              }))}
+              numberOfLines={1}
+            >
+              {item.title}
+            </Text>
+            {item.date && (
+              <Text
+                size="xxs"
+                weight="medium"
+                style={themed(({ colors }) => ({
+                  color: textColor ? textColor : colors.text,
+                  textDecorationLine: $textDecoration,
+                }))}
+              >
+                {item.date ? format(new Date(item.date), "MMM dd, E") : ""}
+              </Text>
+            )}
+          </View>
         </View>
         {!isValidDate ? (
           <FontAwesome6 name="lock" size={18} color={theme.colors.palette.gray} />
         ) : item.status === "COMPLETED" ? (
-          <FontAwesome6 name="check" size={14} color={theme.colors.palette.gray} />
+          <FontAwesome6 name="check-circle" size={22} color={textColor} />
         ) : (
           <FontAwesome6 name="circle-chevron-right" size={22} color={textColor} />
         )}

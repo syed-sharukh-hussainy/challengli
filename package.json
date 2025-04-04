@@ -25,7 +25,9 @@
     "web": "expo start --web",
     "bundle:web": "npx expo export --platform web",
     "serve:web": "npx serve dist",
-    "prebuild:clean": "npx expo prebuild --clean"
+    "prebuild:clean": "npx expo prebuild --clean",
+    "convex:dev": "npx convex dev",
+    "convex:prod": "npx convex deploy"
   },
   "dependencies": {
     "@clerk/backend": "^1.25.8",
