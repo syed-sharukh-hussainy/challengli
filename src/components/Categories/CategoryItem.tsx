@@ -4,6 +4,7 @@ import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import SmartImage from "../UI/SmartImage"
 import { Id } from "convex/_generated/dataModel"
+import { router } from "expo-router"
 
 type Props = {
   id: Id<"categories">
@@ -15,7 +16,11 @@ type Props = {
 const CategoryItem = ({ id, title, image, description }: Props) => {
   const { themed } = useAppTheme()
   return (
-    <TouchableOpacity activeOpacity={0.8} style={themed($btnContainer)}>
+    <TouchableOpacity
+      onPress={() => router.push(`/(auth)/challenges-list/${id}`)}
+      activeOpacity={0.8}
+      style={themed($btnContainer)}
+    >
       <View style={{ width: "70%", alignItems: "flex-start", gap: 4 }}>
         <Text size="sm" weight="bold" numberOfLines={1} style={themed($title)}>
           {title}

@@ -12,6 +12,10 @@ const Layout = () => {
       >
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="categories" />
+        <Stack.Screen name="challenges-list/[categoryId]" />
+        <Stack.Screen name="preset-challenge-details/[challengeId]" />
+        <Stack.Screen name="created-challenge-details/[challengeId]" />
+        <Stack.Screen name="challenge-preferences/[challengeId]" />
       </Stack>
     </Authenticated>
   )

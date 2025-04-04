@@ -1,52 +1,57 @@
-import { TextStyle, View, ViewStyle } from "react-native"
+import { View, ViewStyle } from "react-native"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { Text } from "../Text"
 import { router } from "expo-router"
 import ActionButton from "./ActionButton"
 
-type Props = {
-  title?: string
-  showBackButton?: boolean
-}
-const TopBar = ({ title, showBackButton = true }: Props) => {
+const TopBarWithActions = () => {
   const { themed } = useAppTheme()
   return (
     <View style={themed($topHeader)}>
       <View style={$headerAction}>
-        {showBackButton && (
+        <ActionButton
+          icon="chevron-left"
+          onPress={() => {
+            router.back()
+          }}
+        />
+        <View style={$rightAction}>
           <ActionButton
-            icon="chevron-left"
+            icon="bell"
             onPress={() => {
-              router.back()
+              console.log("bell")
             }}
           />
-        )}
-        {title && (
-          <Text size="lg" weight="bold" style={themed($title)}>
-            {title}
-          </Text>
-        )}
+          <ActionButton
+            icon="trash-alt"
+            size={22}
+            onPress={() => {
+              console.log("trash")
+            }}
+          />
+        </View>
       </View>
     </View>
   )
 }
 
-export default TopBar
+export default TopBarWithActions
 
 const $topHeader: ThemedStyle<ViewStyle> = ({ spacing, colors }) => ({
   height: 70,
+  justifyContent: "center",
   backgroundColor: colors.background,
   borderBottomWidth: 2,
-  justifyContent: "center",
   borderBottomColor: colors.border,
 })
 
-const $title: ThemedStyle<TextStyle> = ({ colors }) => ({
-  color: colors.text,
-})
-
 const $headerAction: ViewStyle = {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+}
+
+const $rightAction: ViewStyle = {
   flexDirection: "row",
   alignItems: "center",
 }
