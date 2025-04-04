@@ -6,8 +6,9 @@ import { Text } from "../Text"
 type Props = {
   backgroundColor: string
   onPress: () => void
+  label: string
 }
-const FooterButton = ({ backgroundColor, onPress }: Props) => {
+const FooterButton = ({ backgroundColor, onPress, label }: Props) => {
   const { themed } = useAppTheme()
   return (
     <View style={themed($footerContainer)}>
@@ -27,7 +28,7 @@ const FooterButton = ({ backgroundColor, onPress }: Props) => {
             paddingVertical: spacing.sm,
           }))}
         >
-          Start Challenge
+          {label}
         </Text>
       </Pressable>
     </View>
