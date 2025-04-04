@@ -20,18 +20,10 @@ const LoadingLogo = () => {
 
   return (
     <Screen safeAreaEdges={["top"]} style={themed($container)}>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          flex: 1,
-        }}
-      >
-        <SmartImage imgKey="boarding1.png" width={96} height={96} />
-        <Text size="sm" weight="bold" style={themed($loadingText)}>
-          Loading{dots}
-        </Text>
-      </View>
+      <SmartImage imgKey="boarding1.png" width={96} height={96} />
+      <Text size="sm" weight="bold" style={themed($loadingText)}>
+        Loading{dots}
+      </Text>
     </Screen>
   )
 }
