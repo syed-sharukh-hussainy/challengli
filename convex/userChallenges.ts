@@ -128,3 +128,44 @@ export const getChallengeByChallengeId = query({
     return challenge
   },
 })
+
+export const updateDayActivityStatus = mutation({
+  args: {
+    date: v.string(),
+    challengeId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Not authenticated")
+    }
+    const challenge = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_cid_uid_status", (q) =>
+        q.eq("userId", identity.subject).eq("challengeId", args.challengeId),
+      )
+      .first()
+
+    if (challenge === null) {
+      return null
+    }
+
+    const activityIndex = challenge?.activities.findIndex((activity) => activity.date === args.date)
+
+    let status
+    if (challenge.activities[activityIndex].status === "IN_PROGRESS") {
+      status = "COMPLETED"
+    } else {
+      status = "IN_PROGRESS"
+    }
+    const newActivity = [...challenge.activities]
+    newActivity[activityIndex] = {
+      ...newActivity[activityIndex],
+      status,
+    }
+
+    await ctx.db.patch(challenge._id, {
+      activities: newActivity,
+    })
+  },
+})
