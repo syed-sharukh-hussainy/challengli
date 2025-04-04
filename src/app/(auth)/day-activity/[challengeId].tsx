@@ -26,7 +26,6 @@ const DayActivity = () => {
     )
   }, [challenge, todaysDate])
   const color = useMemo(() => challenge?.color, [challenge])
-  console.log(challenge)
   return (
     <Screen
       safeAreaEdges={["top"]}
@@ -106,4 +105,5 @@ const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 
 const $headerText: ViewStyle = {
   gap: 12,
+  marginBottom: 24,
 }
