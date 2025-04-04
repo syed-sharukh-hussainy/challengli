@@ -13,6 +13,7 @@ import { format } from "date-fns/format"
 import { HOURS, MINUTES, PERIOD } from "@/utils/constants"
 import { getLabelByValue } from "@/utils/helper"
 import { StackActions } from "@react-navigation/native"
+import LoadingAnimation from "@/components/UI/LoadingAnimation"
 
 const ChallengePreferences = () => {
   const { themed } = useAppTheme()
@@ -73,10 +74,6 @@ const ChallengePreferences = () => {
     }
   }
 
-  if (!challenge) {
-    return <View></View>
-  }
-
   return (
     <>
       <Screen
@@ -86,19 +83,39 @@ const ChallengePreferences = () => {
         }}
       >
         <TopBar showBackButton={true} title="Set a reminder" />
-        <View style={{ padding: spacing.md, flex: 1 }}>
-          <Pressable style={themed($reminderBtn)} onPress={() => setShowTimePicker(true)}>
-            <Text size="xs" weight="semiBold" style={themed($reminderLabel)}>
-              Reminder Time
-            </Text>
-            <Text size="md" weight="bold" style={themed($reminderTime)}>
-              {getLabelByValue(HOURS, hour)}:{getLabelByValue(MINUTES, minutes)}{" "}
-              {getLabelByValue(PERIOD, period)}
-            </Text>
-          </Pressable>
-        </View>
+        {!challenge ? (
+          <LoadingAnimation />
+        ) : (
+          <>
+            <View style={{ padding: spacing.md, flex: 1 }}>
+              <Text
+                size="sm"
+                weight="medium"
+                style={{
+                  marginBottom: spacing.md,
+                  textAlign: "center",
+                }}
+              >
+                Before you begin, pick a time to get notified and stay on track!
+              </Text>
+              <Pressable style={themed($reminderBtn)} onPress={() => setShowTimePicker(true)}>
+                <Text size="xs" weight="semiBold" style={themed($reminderLabel)}>
+                  Reminder Time
+                </Text>
+                <Text size="md" weight="bold" style={themed($reminderTime)}>
+                  {getLabelByValue(HOURS, hour)}:{getLabelByValue(MINUTES, minutes)}{" "}
+                  {getLabelByValue(PERIOD, period)}
+                </Text>
+              </Pressable>
+            </View>
 
-        <FooterButton backgroundColor={challenge?.color.primary} onPress={onCreateChallenge} />
+            <FooterButton
+              label="Start Challenge"
+              backgroundColor={challenge?.color.primary}
+              onPress={onCreateChallenge}
+            />
+          </>
+        )}
       </Screen>
       {/* <WheelTimePicker
         showTimePicker={showTimePicker}
@@ -125,7 +142,7 @@ const $reminderBtn: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   borderWidth: 2,
   borderColor: colors.border,
   borderRadius: 18,
-  padding: spacing.md,
+  padding: spacing.sm,
 })
 
 const $reminderLabel: ThemedStyle<TextStyle> = ({ colors }) => ({
