@@ -8,6 +8,7 @@ import { api } from "convex/_generated/api"
 import DetailsHeader from "@/components/Challenges/DetailsHeader"
 import ActivityItem from "@/components/Challenges/ActivityItem"
 import FooterButton from "@/components/UI/FooterButton"
+import LoadingAnimation from "@/components/UI/LoadingAnimation"
 const PresetChallengeDetails = () => {
   const { challengeId } = useLocalSearchParams<{
     challengeId: Id<"presetChallenges">
@@ -16,9 +17,6 @@ const PresetChallengeDetails = () => {
     challengeId,
   })
 
-  if (!challenge) {
-    return <View></View>
-  }
   return (
     <Screen
       safeAreaEdges={["top"]}
@@ -27,36 +25,42 @@ const PresetChallengeDetails = () => {
       }}
     >
       <TopBar showBackButton={true} />
-      <ListView
-        data={challenge?.activities}
-        keyExtractor={(item) => `${item.title}-${item.day}`}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          padding: 20,
-        }}
-        ListHeaderComponent={
-          <DetailsHeader
-            title={challenge.title}
-            description={challenge.description}
-            image={challenge.image}
-            duration={challenge.duration}
-            color={challenge.color}
+      {!challenge ? (
+        <LoadingAnimation />
+      ) : (
+        <>
+          <ListView
+            data={challenge?.activities}
+            keyExtractor={(item) => `${item.title}-${item.day}`}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              padding: 20,
+            }}
+            ListHeaderComponent={
+              <DetailsHeader
+                title={challenge.title}
+                description={challenge.description}
+                image={challenge.image}
+                duration={challenge.duration}
+                color={challenge.color}
+              />
+            }
+            estimatedItemSize={84}
+            renderItem={({ item, index }) => (
+              <ActivityItem
+                isPressable={false}
+                item={item}
+                isFirst={index === 0}
+                isLast={index === challenge?.activities.length! - 1}
+              />
+            )}
           />
-        }
-        estimatedItemSize={84}
-        renderItem={({ item, index }) => (
-          <ActivityItem
-            isPressable={false}
-            item={item}
-            isFirst={index === 0}
-            isLast={index === challenge?.activities.length! - 1}
+          <FooterButton
+            backgroundColor={challenge.color.primary}
+            onPress={() => router.push(`/(auth)/challenge-preferences/${challengeId}`)}
           />
-        )}
-      />
-      <FooterButton
-        backgroundColor={challenge.color.primary}
-        onPress={() => router.push(`/(auth)/challenge-preferences/${challengeId}`)}
-      />
+        </>
+      )}
     </Screen>
   )
 }
