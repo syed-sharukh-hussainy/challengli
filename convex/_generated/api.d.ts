@@ -13,8 +13,11 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as categories from "../categories.js";
 import type * as clerk from "../clerk.js";
 import type * as http from "../http.js";
+import type * as presetChallenges from "../presetChallenges.js";
+import type * as userChallenges from "../userChallenges.js";
 import type * as users from "../users.js";
 import type * as utils from "../utils.js";
 
@@ -27,8 +30,11 @@ import type * as utils from "../utils.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  categories: typeof categories;
   clerk: typeof clerk;
   http: typeof http;
+  presetChallenges: typeof presetChallenges;
+  userChallenges: typeof userChallenges;
   users: typeof users;
   utils: typeof utils;
 }>;
