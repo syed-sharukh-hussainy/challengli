@@ -1,4 +1,3 @@
-import { View } from "react-native"
 import { ListView, Screen, Text } from "@/components"
 import TopBar from "@/components/UI/TopBar"
 import { router, useLocalSearchParams } from "expo-router"
@@ -56,6 +55,7 @@ const PresetChallengeDetails = () => {
             )}
           />
           <FooterButton
+            label="Start Challenge"
             backgroundColor={challenge.color.primary}
             onPress={() => router.push(`/(auth)/challenge-preferences/${challengeId}`)}
           />
