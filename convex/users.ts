@@ -1,6 +1,5 @@
 import { ConvexError, v } from "convex/values"
 import { internalMutation, mutation, query } from "./_generated/server"
-import { paginationOptsValidator } from "convex/server"
 import { generateRandomUserName } from "./utils"
 
 export const createUser = internalMutation({
@@ -75,5 +74,29 @@ export const deleteUser = internalMutation({
     if (user) {
       return await ctx.db.delete(user?._id)
     }
+  },
+})
+
+export const addXpToUser = mutation({
+  args: {
+    xp: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Unauthenticated")
+    }
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_userId", (q) => q.eq("userId", identity.subject))
+      .first()
+
+    if (!user) {
+      throw new ConvexError("No user found")
+    }
+
+    await ctx.db.patch(user?._id, {
+      xp: user.xp + args.xp,
+    })
   },
 })
