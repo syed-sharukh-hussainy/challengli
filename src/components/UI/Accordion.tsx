@@ -51,20 +51,39 @@ const Accordion = ({
         <View style={{ marginTop: 16 }}>
           {isList && Array.isArray(content) ? (
             content.map((item, index) => (
-              <View key={index} className="my-1 flex-row items-start gap-3">
-                <FontAwesome6
-                  name="caret-right"
-                  className="mt-1.5"
-                  size={14}
-                  color={challengeColor}
-                />
-                <Text className="font-urbanist-semibold text-base text-gray-400">{item}</Text>
+              <View
+                key={index}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "flex-start",
+                  gap: 12,
+                  marginVertical: 4,
+                }}
+              >
+                <View style={{ marginTop: 4 }}>
+                  <FontAwesome6 name="caret-right" size={14} color={challengeColor} />
+                </View>
+                <Text size="xs" weight="normal">
+                  {item}
+                </Text>
               </View>
             ))
           ) : (
-            <Text size="xs" weight="medium">
-              {content}
-            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                gap: 12,
+                marginVertical: 4,
+              }}
+            >
+              <View style={{ marginTop: 4 }}>
+                <FontAwesome6 name="check" size={14} color={challengeColor} />
+              </View>
+              <Text size="xs" weight="normal">
+                {content}
+              </Text>
+            </View>
           )}
         </View>
       )}
@@ -77,7 +96,7 @@ export default Accordion
 const $container: ThemedStyle<ViewStyle> = ({ spacing, colors }) => ({
   marginTop: spacing.sm,
   overflow: "hidden",
-  borderRadius: 16,
+  borderRadius: 18,
   backgroundColor: colors.palette.muted,
   padding: spacing.sm,
 })
@@ -86,7 +105,7 @@ const $btn: ViewStyle = {
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
-  gap: 40,
+  flex: 1,
 }
 
 const $subtitle: ThemedStyle<TextStyle> = ({ colors }) => ({

@@ -1,4 +1,3 @@
-import { TouchableHighlight, TouchableOpacity, View } from "react-native"
 import React, { useMemo } from "react"
 import { ListView, Screen, Text } from "@/components"
 import { useLocalSearchParams } from "expo-router"
@@ -7,6 +6,7 @@ import { useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
 import TopBar from "@/components/UI/TopBar"
 import ChallengesListItem from "@/components/Challenges/ChallengesListItem"
+import LoadingAnimation from "@/components/UI/LoadingAnimation"
 
 const ChallengesList = () => {
   const { categoryId } = useLocalSearchParams<{
@@ -27,28 +27,33 @@ const ChallengesList = () => {
   }, [userChallenges])
 
   const category = useMemo(() => categories?.find((cat) => cat._id === categoryId), [categoryId])
+
   return (
     <Screen safeAreaEdges={["top"]} contentContainerStyle={{ flex: 1 }}>
       <TopBar showBackButton={true} title={category?.title} />
-      <ListView
-        data={challenges}
-        keyExtractor={(item) => item._id}
-        contentContainerStyle={{ padding: 20 }}
-        estimatedItemSize={156}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <ChallengesListItem
-            challengeId={item._id}
-            description={item.description}
-            duration={item.duration}
-            image={item.image}
-            primaryColor={item.color.primary}
-            title={item.title}
-            isChallengePresent={userChallengeData.has(item._id)}
-            status={userChallengeData.get(item._id)!}
-          />
-        )}
-      />
+      {!challenges || !userChallenges ? (
+        <LoadingAnimation />
+      ) : (
+        <ListView
+          data={challenges}
+          keyExtractor={(item) => item._id}
+          contentContainerStyle={{ padding: 20 }}
+          estimatedItemSize={156}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <ChallengesListItem
+              challengeId={item._id}
+              description={item.description}
+              duration={item.duration}
+              image={item.image}
+              primaryColor={item.color.primary}
+              title={item.title}
+              isChallengePresent={userChallengeData.has(item._id)}
+              status={userChallengeData.get(item._id)!}
+            />
+          )}
+        />
+      )}
     </Screen>
   )
 }

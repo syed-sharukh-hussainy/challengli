@@ -4,6 +4,7 @@ import SmartImage from "./SmartImage"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { Text } from "../Text"
+import { Screen } from "../Screen"
 
 const LoadingLogo = () => {
   const { themed } = useAppTheme()
@@ -18,7 +19,7 @@ const LoadingLogo = () => {
   }, [])
 
   return (
-    <View style={themed($container)}>
+    <Screen safeAreaEdges={["top"]} style={themed($container)}>
       <View
         style={{
           alignItems: "center",
@@ -31,7 +32,7 @@ const LoadingLogo = () => {
           Loading{dots}
         </Text>
       </View>
-    </View>
+    </Screen>
   )
 }
 

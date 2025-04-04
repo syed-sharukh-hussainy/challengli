@@ -1,7 +1,5 @@
 export * from "./AutoImage"
-export * from "./Icon"
 export * from "./ListView"
 export * from "./Screen"
 export * from "./Text"
 export * from "./TextField"
-export * from "./Toggle"

@@ -71,7 +71,7 @@
           "backgroundColor": "#FFF",
           "dark": {
             "image": "./assets/images/app-icon-android-adaptive-foreground.png",
-            "backgroundColor": "#FFF"
+            "backgroundColor": "#131f24"
           }
         }
       ]
