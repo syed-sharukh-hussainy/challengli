@@ -30,7 +30,7 @@ const CreatedChallengeDetails = () => {
         flex: 1,
       }}
     >
-      <TopBarWithActions />
+      <TopBarWithActions challenge={challenge!} />
       {!challenge ? (
         <LoadingAnimation />
       ) : (
