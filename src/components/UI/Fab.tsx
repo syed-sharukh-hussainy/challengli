@@ -1,11 +1,12 @@
 import { View, Pressable, ViewStyle } from "react-native"
-import { router } from "expo-router"
+import { useRouter } from "expo-router"
 import { FontAwesome6 } from "@expo/vector-icons"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 
 const FAB = () => {
   const { themed } = useAppTheme()
+  const router = useRouter()
   return (
     <View style={themed($container)}>
       <Pressable onPress={() => router.push("/(auth)/categories")} style={themed($btn)}>
