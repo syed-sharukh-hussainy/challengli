@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import ActionModal from "./ActionModal/ActionModal"
-import { TextStyle, View, ViewStyle } from "react-native"
 import ModalText from "./ActionModal/ModalText"
 import WheelPicker from "@quidone/react-native-wheel-picker"
+import ModalButton from "./ActionModal/ModalButton"
+import { TextStyle, View, ViewStyle } from "react-native"
 import { HOURS, MINUTES, PERIOD } from "@/utils/constants"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { Entypo } from "@expo/vector-icons"
 import { ThemedStyle } from "@/theme"
-import ModalButton from "./ActionModal/ModalButton"
 
 type Props = {
   showTimePicker: boolean
@@ -17,6 +17,7 @@ type Props = {
   initialHour?: number
   initialMinutes?: number
   initialPeriod?: number
+  color: string
 }
 
 const TimePickerModal = ({
@@ -27,8 +28,9 @@ const TimePickerModal = ({
   initialHour = 8,
   initialMinutes = 30,
   initialPeriod = 1,
+  color,
 }: Props) => {
-  const { themed } = useAppTheme()
+  const { theme, themed } = useAppTheme()
   const [hour, setHour] = useState(initialHour)
   const [minutes, setMinutes] = useState(initialMinutes)
   const [period, setPeriod] = useState(initialPeriod)
@@ -50,9 +52,13 @@ const TimePickerModal = ({
           }}
           overlayItemStyle={themed($overlay)}
           itemTextStyle={themed($time)}
-          onValueChanged={({ item: { value } }) => setHour(value)}
+          onValueChanged={({ item: { value } }) => {
+            if (!isLoading) {
+              setHour(value)
+            }
+          }}
         />
-        <Entypo name="dots-two-vertical" size={22} color="black" />
+        <Entypo name="dots-two-vertical" size={22} color={theme.colors.palette.gray200} />
         <View
           style={{
             flexDirection: "row",
@@ -68,7 +74,11 @@ const TimePickerModal = ({
             }}
             overlayItemStyle={themed($overlay)}
             itemTextStyle={themed($time)}
-            onValueChanged={({ item: { value } }) => setMinutes(value)}
+            onValueChanged={({ item: { value } }) => {
+              if (!isLoading) {
+                setMinutes(value)
+              }
+            }}
           />
           <WheelPicker
             data={PERIOD}
@@ -78,7 +88,11 @@ const TimePickerModal = ({
             }}
             overlayItemStyle={themed($overlay)}
             itemTextStyle={themed($time)}
-            onValueChanged={({ item: { value } }) => setPeriod(value)}
+            onValueChanged={({ item: { value } }) => {
+              if (!isLoading) {
+                setPeriod(value)
+              }
+            }}
           />
         </View>
       </View>
@@ -108,7 +122,7 @@ const TimePickerModal = ({
           }}
           isLoading={isLoading}
           style={themed(({ colors }) => ({
-            backgroundColor: colors.palette.primary,
+            backgroundColor: color,
           }))}
           labelStyle={{
             color: "white",
