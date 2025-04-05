@@ -14,6 +14,8 @@ import { HOURS, MINUTES, PERIOD } from "@/utils/constants"
 import { getLabelByValue } from "@/utils/helper"
 import { StackActions } from "@react-navigation/native"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
+import ActionModal from "@/components/UI/ActionModal/ActionModal"
+import TimePickerModal from "@/components/UI/TimePickerModal"
 
 const ChallengePreferences = () => {
   const { themed } = useAppTheme()
@@ -57,19 +59,11 @@ const ChallengePreferences = () => {
           period,
         },
       })
-      // await createNotification(
-      //   challenge.title,
-      //   challenge.duration,
-      //   _id,
-      //   hour,
-      //   period,
-      //   minutes
-      // );
     } catch (error) {
       console.error("Error creating challenge:", error)
     } finally {
       setIsLoading(false)
-      // rootNavigation.dispatch(StackActions.popToTop())
+      rootNavigation.dispatch(StackActions.popToTop())
       router.replace(`/(auth)/created-challenge-details/${challengeId}`)
     }
   }
@@ -82,7 +76,11 @@ const ChallengePreferences = () => {
           flex: 1,
         }}
       >
-        <TopBar showBackButton={true} title="Set a reminder" />
+        <TopBar
+          showBackButton={true}
+          title="Set a reminder"
+          onBackButtonPressed={() => router.back()}
+        />
         {!challenge ? (
           <LoadingAnimation />
         ) : (
@@ -118,21 +116,21 @@ const ChallengePreferences = () => {
           </>
         )}
       </Screen>
-      {/* <WheelTimePicker
+      <TimePickerModal
         showTimePicker={showTimePicker}
-        backgroundColor={challenge.color.primary}
-        onSavePressed={(hr, min, per) => {
-          setHour(hr)
-          setMinutes(min)
-          setPeriod(per)
-          setShowTimePicker(false)
-          console.log("preferences", hr, min, per)
-        }}
         onCloseButtonPressed={() => setShowTimePicker(false)}
+        onSaveButtonPressed={(hour, minutes, period) => {
+          console.log(hour, minutes, period)
+          setHour(hour)
+          setMinutes(minutes)
+          setPeriod(period)
+          setShowTimePicker(false)
+        }}
+        isLoading={isLoading}
         initialHour={hour}
         initialMinutes={minutes}
         initialPeriod={period}
-      /> */}
+      />
     </>
   )
 }
