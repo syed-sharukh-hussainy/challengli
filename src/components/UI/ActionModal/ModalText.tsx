@@ -12,7 +12,7 @@ const ModalText = ({ title, subtitle }: { title: string; subtitle?: string }) =>
         gap: 4,
       }}
     >
-      <Text size="md" weight="semiBold" style={themed($title)}>
+      <Text size="lg" weight="bold" style={themed($title)}>
         {title}
       </Text>
       {subtitle && (

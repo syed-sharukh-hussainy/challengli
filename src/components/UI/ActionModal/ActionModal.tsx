@@ -29,8 +29,8 @@ const $modalBackground: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
 
 const $modalWrapper: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   flex: 1,
-  alignItems: "center",
+  width: "100%",
   justifyContent: "center",
   backgroundColor: colors.palette.overlay70,
-  padding: spacing.md,
+  paddingHorizontal: spacing.md,
 })
