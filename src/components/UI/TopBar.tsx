@@ -2,22 +2,37 @@ import { TextStyle, View, ViewStyle } from "react-native"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { Text } from "../Text"
-import { router } from "expo-router"
 import ActionButton from "./ActionButton"
 
 type Props = {
   title?: string
   showBackButton?: boolean
-  onBackButtonPressed: () => void
+  onBackButtonPressed?: () => void
 }
 const TopBar = ({ title, showBackButton = true, onBackButtonPressed }: Props) => {
   const { themed } = useAppTheme()
   return (
     <View style={themed($topHeader)}>
       <View style={$headerAction}>
-        {showBackButton && <ActionButton icon="chevron-left" onPress={onBackButtonPressed} />}
+        {showBackButton && (
+          <ActionButton
+            icon="chevron-left"
+            onPress={() => {
+              if (showBackButton) {
+                onBackButtonPressed!()
+              }
+            }}
+          />
+        )}
         {title && (
-          <Text size="lg" weight="bold" style={themed($title)}>
+          <Text
+            size="lg"
+            weight="bold"
+            style={themed(({ spacing, colors }) => ({
+              paddingLeft: showBackButton ? 0 : spacing.md,
+              color: colors.text,
+            }))}
+          >
             {title}
           </Text>
         )}
