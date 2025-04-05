@@ -30,39 +30,43 @@ const CreatedChallengeDetails = () => {
         flex: 1,
       }}
     >
-      <TopBarWithActions challenge={challenge!} />
       {!challenge ? (
         <LoadingAnimation />
       ) : (
-        <ListView
-          data={challenge?.activities}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            padding: 20,
-          }}
-          keyExtractor={(item) => item.title}
-          ListHeaderComponent={
-            <DetailsHeader
-              title={challenge.title}
-              description={challenge.description}
-              image={challenge.image}
-              duration={challenge.duration}
-              color={challenge.color}
-            />
-          }
-          estimatedItemSize={86}
-          renderItem={({ item, index }) => (
-            <ActivityItem
-              isFirst={index === 0}
-              isLast={index === challenge.activities.length - 1}
-              item={item}
-              isValidDate={new Date(item.date || "") <= new Date(todaysDate)}
-              isPressable={true}
-              textColor={getItemStyles(new Date(item.date || "") <= new Date(todaysDate)).textColor}
-              challengeId={challengeId}
-            />
-          )}
-        />
+        <>
+          <TopBarWithActions challenge={challenge} />
+          <ListView
+            data={challenge?.activities}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              padding: 20,
+            }}
+            keyExtractor={(item) => item.title}
+            ListHeaderComponent={
+              <DetailsHeader
+                title={challenge.title}
+                description={challenge.description}
+                image={challenge.image}
+                duration={challenge.duration}
+                color={challenge.color}
+              />
+            }
+            estimatedItemSize={86}
+            renderItem={({ item, index }) => (
+              <ActivityItem
+                isFirst={index === 0}
+                isLast={index === challenge.activities.length - 1}
+                item={item}
+                isValidDate={new Date(item.date || "") <= new Date(todaysDate)}
+                isPressable={true}
+                textColor={
+                  getItemStyles(new Date(item.date || "") <= new Date(todaysDate)).textColor
+                }
+                challengeId={challengeId}
+              />
+            )}
+          />
+        </>
       )}
     </Screen>
   )
