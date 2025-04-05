@@ -6,6 +6,7 @@ import CategoryItem from "@/components/Categories/CategoryItem"
 import TopBar from "@/components/UI/TopBar"
 import { View } from "react-native"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
+import { router } from "expo-router"
 
 const CategoriesScreen = () => {
   const categories = useQuery(api.categories.getAllCategories, {})
@@ -16,7 +17,7 @@ const CategoriesScreen = () => {
         flex: 1,
       }}
     >
-      <TopBar title="Categories" />
+      <TopBar title="Categories" onBackButtonPressed={() => router.back()} />
       {!categories ? (
         <LoadingAnimation />
       ) : (
