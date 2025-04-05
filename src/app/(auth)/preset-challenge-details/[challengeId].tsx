@@ -23,7 +23,7 @@ const PresetChallengeDetails = () => {
         flex: 1,
       }}
     >
-      <TopBar showBackButton={true} />
+      <TopBar onBackButtonPressed={() => router.back()} />
       {!challenge ? (
         <LoadingAnimation />
       ) : (
