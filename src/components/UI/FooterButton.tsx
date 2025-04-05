@@ -19,7 +19,7 @@ const FooterButton = ({ backgroundColor, onPress, label, isLoading }: Props) => 
         style={{
           backgroundColor,
           borderRadius: 12,
-          paddingVertical: 14,
+          paddingVertical: 12,
         }}
       >
         {isLoading ? (
