@@ -6,7 +6,7 @@ const palette = {
   muted: "#202f36",
 
   angry100: "#F2D6CD",
-  angry500: "#C03403",
+  angry500: "#ef4444",
 
   gray: "#202f36",
 
