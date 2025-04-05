@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { ListView, Screen, Text } from "@/components"
-import { useLocalSearchParams } from "expo-router"
+import { router, useLocalSearchParams } from "expo-router"
 import { Id } from "convex/_generated/dataModel"
 import { useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
@@ -30,7 +30,11 @@ const ChallengesList = () => {
 
   return (
     <Screen safeAreaEdges={["top"]} contentContainerStyle={{ flex: 1 }}>
-      <TopBar showBackButton={true} title={category?.title} />
+      <TopBar
+        showBackButton={true}
+        title={category?.title}
+        onBackButtonPressed={() => router.back()}
+      />
       {!challenges || !userChallenges ? (
         <LoadingAnimation />
       ) : (
