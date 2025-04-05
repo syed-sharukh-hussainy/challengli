@@ -8,6 +8,7 @@ const palette = {
   muted: "#F7F7F7",
 
   gray: "#e5e7eb",
+  gray200: "#d1d5db",
 
   angry100: "#F2D6CD",
   angry500: "#ef4444",

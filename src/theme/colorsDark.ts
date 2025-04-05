@@ -9,6 +9,7 @@ const palette = {
   angry500: "#ef4444",
 
   gray: "#202f36",
+  gray200: "#d1d5db",
 
   overlay20: "rgba(25, 16, 21, 0.2)",
   overlay50: "rgba(25, 16, 21, 0.5)",
