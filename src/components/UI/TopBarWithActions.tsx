@@ -11,6 +11,7 @@ import ModalText from "./ActionModal/ModalText"
 import { Doc } from "convex/_generated/dataModel"
 import ModalButton from "./ActionModal/ModalButton"
 import { StackActions } from "@react-navigation/native"
+import TimePickerModal from "./TimePickerModal"
 
 type Props = {
   challenge: Doc<"userChallenges">
@@ -18,11 +19,20 @@ type Props = {
 
 const TopBarWithActions = ({ challenge }: Props) => {
   const { themed } = useAppTheme()
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const rootNavigation = useNavigationContainerRef()
 
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showEditNotificationModal, setShowEditNotificationModal] = useState(false)
+
+  const [hour, setHour] = useState(challenge.reminderTime.hour)
+  const [minutes, setMinutes] = useState(challenge.reminderTime.minutes)
+  const [period, setPeriod] = useState(challenge.reminderTime.period)
+
   const deleteChallenge = useMutation(api.userChallenges.deleteChallenge)
+  const updateReminderTime = useMutation(api.userChallenges.updateReminderTime)
+
   const onDeleteChallenge = async () => {
     try {
       setIsLoading(true)
@@ -36,6 +46,30 @@ const TopBarWithActions = ({ challenge }: Props) => {
       setIsLoading(false)
     }
   }
+
+  const onSavePressed = async (hr: number, min: number, per: number) => {
+    try {
+      setIsLoading(true)
+      await updateReminderTime({
+        challengeId: challenge._id,
+        reminderTime: {
+          hour: hr,
+          minutes: min,
+          period: per,
+        },
+      })
+      setHour(hr)
+      setMinutes(min)
+      setPeriod(per)
+      setShowEditNotificationModal(false)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+      setShowEditNotificationModal(false)
+    }
+  }
+
   return (
     <>
       <View style={themed($topHeader)}>
@@ -47,12 +81,7 @@ const TopBarWithActions = ({ challenge }: Props) => {
             }}
           />
           <View style={$rightAction}>
-            <ActionButton
-              icon="bell"
-              onPress={() => {
-                console.log("bell")
-              }}
-            />
+            <ActionButton icon="bell" onPress={() => setShowEditNotificationModal(true)} />
             <ActionButton icon="trash-alt" size={22} onPress={() => setShowDeleteModal(true)} />
           </View>
         </View>
@@ -86,6 +115,16 @@ const TopBarWithActions = ({ challenge }: Props) => {
           />
         </View>
       </ActionModal>
+      <TimePickerModal
+        showTimePicker={showEditNotificationModal}
+        onCloseButtonPressed={() => setShowEditNotificationModal(false)}
+        onSaveButtonPressed={onSavePressed}
+        isLoading={isLoading}
+        initialHour={hour}
+        initialMinutes={minutes}
+        initialPeriod={period}
+        color={challenge.color.primary}
+      />
     </>
   )
 }
