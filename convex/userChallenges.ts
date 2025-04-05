@@ -227,3 +227,20 @@ export const updateReminderTime = mutation({
     return newChallenge
   },
 })
+
+export const getUserInProgressChallenges = query({
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Not authenticated")
+    }
+    const challenges = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_userId_status", (q) =>
+        q.eq("userId", identity.subject).eq("status", "IN_PROGRESS"),
+      )
+      .collect()
+
+    return challenges
+  },
+})
