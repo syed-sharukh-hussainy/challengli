@@ -2,6 +2,7 @@ import React from "react"
 import { Screen } from "@/components"
 import HomeTopHeader from "@/components/Home/HomeTopHeader"
 import FAB from "@/components/UI/Fab"
+import HomeChallengesList from "@/components/Home/HomeChallengesList"
 
 const HomeScreen = () => {
   return (
@@ -12,6 +13,7 @@ const HomeScreen = () => {
       }}
     >
       <HomeTopHeader />
+      <HomeChallengesList />
       <FAB />
     </Screen>
   )
