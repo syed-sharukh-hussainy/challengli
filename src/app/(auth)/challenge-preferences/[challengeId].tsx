@@ -120,7 +120,6 @@ const ChallengePreferences = () => {
         showTimePicker={showTimePicker}
         onCloseButtonPressed={() => setShowTimePicker(false)}
         onSaveButtonPressed={(hour, minutes, period) => {
-          console.log(hour, minutes, period)
           setHour(hour)
           setMinutes(minutes)
           setPeriod(period)
@@ -130,6 +129,7 @@ const ChallengePreferences = () => {
         initialHour={hour}
         initialMinutes={minutes}
         initialPeriod={period}
+        color={challenge?.color.primary || ""}
       />
     </>
   )
