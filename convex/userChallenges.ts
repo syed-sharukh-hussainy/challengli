@@ -193,3 +193,37 @@ export const deleteChallenge = mutation({
     await ctx.db.delete(challenge._id)
   },
 })
+
+export const updateReminderTime = mutation({
+  args: {
+    challengeId: v.id("userChallenges"),
+    reminderTime: v.object({
+      hour: v.number(),
+      minutes: v.number(),
+      period: v.number(),
+    }),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Not authenticated")
+    }
+    const challenge = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_id", (q) => q.eq("_id", args.challengeId))
+      .unique()
+
+    if (!challenge) {
+      throw new ConvexError("Challenge Not Found")
+    }
+
+    const newChallenge = {
+      ...challenge,
+      reminderTime: args.reminderTime,
+    }
+
+    await ctx.db.patch(challenge._id, newChallenge)
+
+    return newChallenge
+  },
+})
