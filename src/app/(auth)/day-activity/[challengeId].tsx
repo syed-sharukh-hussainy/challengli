@@ -1,6 +1,6 @@
 import { Image, ScrollView, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import React, { useCallback, useMemo, useState } from "react"
-import { useLocalSearchParams } from "expo-router"
+import { router, useLocalSearchParams } from "expo-router"
 import { format } from "date-fns/format"
 import { useMutation, useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
@@ -64,7 +64,7 @@ const DayActivity = () => {
         flex: 1,
       }}
     >
-      <TopBar />
+      <TopBar onBackButtonPressed={() => router.back()} />
       {!activity ? (
         <LoadingAnimation />
       ) : (
