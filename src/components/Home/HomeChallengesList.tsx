@@ -3,10 +3,9 @@ import React, { useMemo } from "react"
 import { format } from "date-fns/format"
 import { useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
+import { ListView } from "../ListView"
 import EmptyList from "../UI/EmptyList"
 import LoadingAnimation from "../UI/LoadingAnimation"
-import { Text } from "../Text"
-import { ListView } from "../ListView"
 import HomeChallengesListItem from "./HomeChallengesListItem"
 
 const HomeChallengesList = () => {
