@@ -1,16 +1,16 @@
-import { TouchableOpacity, View, ViewStyle } from "react-native"
+import { View, ViewStyle } from "react-native"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { router } from "expo-router"
+import { router, useNavigationContainerRef } from "expo-router"
 import ActionButton from "./ActionButton"
 import { useMutation } from "convex/react"
 import { api } from "convex/_generated/api"
 import ActionModal from "./ActionModal/ActionModal"
 import { useState } from "react"
 import ModalText from "./ActionModal/ModalText"
-import { Text } from "../Text"
 import { Doc } from "convex/_generated/dataModel"
-import Spinner from "./Spinner"
+import ModalButton from "./ActionModal/ModalButton"
+import { StackActions } from "@react-navigation/native"
 
 type Props = {
   challenge: Doc<"userChallenges">
@@ -20,13 +20,15 @@ const TopBarWithActions = ({ challenge }: Props) => {
   const { themed } = useAppTheme()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const rootNavigation = useNavigationContainerRef()
 
   const deleteChallenge = useMutation(api.userChallenges.deleteChallenge)
   const onDeleteChallenge = async () => {
     try {
       setIsLoading(true)
       await deleteChallenge({ challengeId: challenge._id })
-      router.replace(`/(auth)/categories`)
+      rootNavigation.dispatch(StackActions.popToTop())
+      router.replace(`/(auth)/(tabs)/challenges`)
     } catch (error) {
       console.error(error)
     } finally {
@@ -41,7 +43,7 @@ const TopBarWithActions = ({ challenge }: Props) => {
           <ActionButton
             icon="chevron-left"
             onPress={() => {
-              router.back()
+              router.replace("/(auth)/(tabs)/challenges")
             }}
           />
           <View style={$rightAction}>
@@ -60,46 +62,28 @@ const TopBarWithActions = ({ challenge }: Props) => {
         <View
           style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 8 }}
         >
-          <TouchableOpacity
+          <ModalButton
+            label="close"
             onPress={() => setShowDeleteModal(false)}
-            style={themed(({ spacing, colors }) => ({
-              backgroundColor: colors.palette.muted,
-              marginTop: spacing.md,
-              padding: spacing.xs,
-              borderRadius: 12,
-              alignItems: "center",
-              borderWidth: 2,
-              flex: 1,
-              borderColor: colors.border,
+            isLoading={isLoading}
+            style={themed((theme) => ({
+              backgroundColor: theme.colors.palette.gray,
             }))}
-          >
-            <Text size="sm" weight="semiBold">
-              CLOSE
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              onDeleteChallenge()
-            }}
-            style={themed(({ spacing, colors }) => ({
+            labelStyle={themed((theme) => ({
+              color: theme.colors.text,
+            }))}
+          />
+          <ModalButton
+            label="delete"
+            onPress={() => onDeleteChallenge()}
+            isLoading={isLoading}
+            style={themed(({ colors }) => ({
               backgroundColor: colors.palette.angry500,
-              marginTop: spacing.md,
-              padding: spacing.xs,
-              borderRadius: 12,
-              alignItems: "center",
-              flex: 1,
-              borderWidth: 2,
-              borderColor: colors.palette.angry500,
             }))}
-          >
-            {isLoading ? (
-              <Spinner size={18} color="white" />
-            ) : (
-              <Text size="sm" weight="semiBold">
-                DELETE
-              </Text>
-            )}
-          </TouchableOpacity>
+            labelStyle={{
+              color: "white",
+            }}
+          />
         </View>
       </ActionModal>
     </>
