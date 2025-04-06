@@ -71,6 +71,7 @@ const DayActivity = () => {
         <>
           <View style={themed($container)}>
             <ScrollView
+              showsVerticalScrollIndicator={false}
               contentContainerStyle={{
                 paddingVertical: 20,
               }}
