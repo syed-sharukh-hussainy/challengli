@@ -100,3 +100,31 @@ export const addXpToUser = mutation({
     })
   },
 })
+
+export const getUser = query({
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Unauthenticated")
+    }
+
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_userId", (q) => q.eq("userId", identity.subject))
+      .first()
+
+    return user
+  },
+})
+
+export const allUsers = query({
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Unauthenticated")
+    }
+
+    const users = await ctx.db.query("users").collect()
+    return users
+  },
+})

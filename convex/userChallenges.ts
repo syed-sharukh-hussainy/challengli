@@ -244,3 +244,17 @@ export const getUserInProgressChallenges = query({
     return challenges
   },
 })
+
+export const getAllChallengesByUserId = query({
+  args: {
+    userId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const challenges = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_userId", (q) => q.eq("userId", args.userId))
+      .collect()
+
+    return challenges
+  },
+})
