@@ -9,6 +9,7 @@ import { usePaginatedQuery } from "convex/react"
 import { api } from "convex/_generated/api"
 import WeeklyCountDownTimer from "@/components/Leaderboard/WeeklyCountDownTimer"
 import UsersLeaderboardList from "@/components/Leaderboard/UsersLeaderboardList"
+import TabHeader from "@/components/UI/TabHeader"
 
 const Leaderboard = () => {
   const { user } = useUser()
@@ -22,7 +23,7 @@ const Leaderboard = () => {
       }}
     >
       <TopBar showBackButton={false} title="Leaderboard" />
-      <LeaderboardTopHeader tabName={tabName} setTabName={setTabName} />
+      <TabHeader tabName={tabName} tabs={["weekly", "all time"]} setTabName={setTabName} />
       {tabName === "weekly" ? <WeeklyCountDownTimer /> : null}
       <UsersLeaderboardList tabName={tabName} />
     </Screen>
