@@ -16,6 +16,10 @@ const Layout = () => {
         <Stack.Screen name="preset-challenge-details/[challengeId]" />
         <Stack.Screen name="created-challenge-details/[challengeId]" />
         <Stack.Screen name="challenge-preferences/[challengeId]" />
+        <Stack.Screen name="search-users" />
+        <Stack.Screen name="settings" />
+        <Stack.Screen name="other-users-profile/[userId]" />
+        <Stack.Screen name="achievements/[userId]" />
       </Stack>
     </Authenticated>
   )
