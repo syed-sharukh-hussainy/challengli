@@ -1,6 +1,7 @@
 import { ConvexError, v } from "convex/values"
 import { internalMutation, mutation, query } from "./_generated/server"
 import { generateRandomUserName } from "./utils"
+import { paginationOptsValidator } from "convex/server"
 
 export const createUser = internalMutation({
   args: {
@@ -126,5 +127,78 @@ export const allUsers = query({
 
     const users = await ctx.db.query("users").collect()
     return users
+  },
+})
+
+export const getAllusers = query({
+  args: {
+    paginationOpts: paginationOptsValidator,
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Unauthenticated")
+    }
+    const users = await ctx.db
+      .query("users")
+      .filter((q) => q.neq(q.field("userId"), identity.subject))
+      .paginate(args.paginationOpts)
+    return users
+  },
+})
+
+export const updateFollowingFollowers = mutation({
+  args: {
+    userName: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Unauthenticated")
+    }
+
+    const me = await ctx.db
+      .query("users")
+      .withIndex("by_userId", (q) => q.eq("userId", identity.subject))
+      .first()
+
+    const other = await ctx.db
+      .query("users")
+      .withIndex("by_userName", (q) => q.eq("userName", args.userName))
+      .first()
+
+    if (me && other) {
+      const isFollowing = me.following.includes(args.userName)
+
+      if (isFollowing) {
+        await ctx.db.patch(me._id, {
+          following: me.following.filter((user) => user !== args.userName),
+        })
+        await ctx.db.patch(other._id, {
+          followers: other.followers.filter((user) => user !== me.userName),
+        })
+      } else {
+        await ctx.db.patch(me._id, {
+          following: [...me.following, args.userName],
+        })
+        await ctx.db.patch(other._id, {
+          followers: [...other.followers, me.userName],
+        })
+      }
+    }
+  },
+})
+
+export const getUserById = query({
+  args: {
+    userId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_userId", (q) => q.eq("userId", args.userId))
+      .first()
+
+    return user
   },
 })
