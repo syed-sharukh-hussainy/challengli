@@ -31,6 +31,7 @@ const TopBar = ({ title, showBackButton = true, onBackButtonPressed, rightIcon }
             <Text
               size="lg"
               weight="bold"
+              numberOfLines={1}
               style={themed(({ spacing, colors }) => ({
                 paddingLeft: showBackButton ? 0 : spacing.md,
                 color: colors.text,
