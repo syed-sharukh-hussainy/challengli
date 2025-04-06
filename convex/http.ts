@@ -34,13 +34,17 @@ http.route({
             lastName: result.data.last_name || "",
             imageUrl: result.data.image_url,
           })
-
+          await ctx.runMutation(internal.leaderboard.addUserToLeaderboard, {
+            userId: result.data.id,
+            firstName: result.data.first_name || "",
+            lastName: result.data.last_name || "",
+            imageUrl: result.data.image_url,
+          })
           break
         case "user.deleted":
           await ctx.runMutation(internal.users.deleteUser, {
             userId: result.data.id!,
           })
-
           break
       }
       return new Response(null, {
