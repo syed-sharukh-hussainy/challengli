@@ -85,7 +85,15 @@ const MyChallengesListItem = ({
                 borderRadius: 6,
               }}
             >
-              <Text size="xxs" weight="medium">
+              <Text
+                size="xxs"
+                weight="medium"
+                style={{
+                  textTransform: "capitalize",
+                  textAlign: "center",
+                  color: "white",
+                }}
+              >
                 Day {dayNumber} / {duration}
               </Text>
             </View>
@@ -103,6 +111,7 @@ const MyChallengesListItem = ({
                 style={{
                   textTransform: "capitalize",
                   textAlign: "center",
+                  color: "white",
                 }}
               >
                 {status}
