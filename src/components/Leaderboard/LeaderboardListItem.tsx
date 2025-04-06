@@ -7,6 +7,7 @@ import SmartImage from "../UI/SmartImage"
 import { Text } from "../Text"
 import { AutoImage } from "../AutoImage"
 import { useUser } from "@clerk/clerk-expo"
+import { router } from "expo-router"
 
 type Props = {
   item: {
@@ -51,7 +52,16 @@ const LeaderboardListItem = ({ item, index, length }: Props) => {
   }, [])
 
   return (
-    <Pressable style={[themed($container), $borderStyles]}>
+    <Pressable
+      style={[themed($container), $borderStyles]}
+      onPress={() => {
+        if (user?.id === item.userId) {
+          router.push("/profile")
+        } else {
+          router.push(`/other-users-profile/${item.userId}`)
+        }
+      }}
+    >
       <View
         style={{
           width: 32,
@@ -61,19 +71,31 @@ const LeaderboardListItem = ({ item, index, length }: Props) => {
         {index < 3 ? (
           <SmartImage imgKey={getMedals(index + 1) || ""} width={28} height={28} />
         ) : (
-          <Text>{index + 1}</Text>
+          <Text size="sm" weight="bold">
+            {index + 1}
+          </Text>
         )}
       </View>
-      <AutoImage
-        source={{
-          uri: item.imageUrl,
-        }}
+      <View
         style={{
-          height: 40,
+          borderRadius: 100,
+          overflow: "hidden",
           width: 40,
+          height: 40,
           marginLeft: 12,
         }}
-      />
+      >
+        <AutoImage
+          source={{
+            uri: item.imageUrl,
+          }}
+          style={{
+            height: 40,
+            width: 40,
+            borderRadius: 100,
+          }}
+        />
+      </View>
       <View
         style={{
           flex: 1,
@@ -93,6 +115,7 @@ const LeaderboardListItem = ({ item, index, length }: Props) => {
         </Text>
         <Text
           size="xxs"
+          weight="semiBold"
           style={{
             color: user?.id === item.userId ? theme.colors.palette.primary : theme.colors.text,
           }}
