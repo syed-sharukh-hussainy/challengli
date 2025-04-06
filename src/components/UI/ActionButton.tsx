@@ -1,4 +1,4 @@
-import { Pressable, TouchableOpacity } from "react-native"
+import { TouchableOpacity } from "react-native"
 import { FontAwesome6 } from "@expo/vector-icons"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { colors, colorsDark } from "@/theme"
@@ -13,6 +13,7 @@ const ActionButton = ({ icon, onPress, size = 24 }: Props) => {
   const { theme } = useAppTheme()
   return (
     <TouchableOpacity
+      activeOpacity={0.7}
       onPress={onPress}
       style={{
         width: 70,
