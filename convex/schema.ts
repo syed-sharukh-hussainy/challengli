@@ -76,6 +76,15 @@ export const UserChallenges = {
   }),
 }
 
+export const Leaderboard = {
+  userId: v.string(),
+  xp: v.number(),
+  imageUrl: v.string(),
+  firstName: v.string(),
+  lastName: v.string(),
+  type: v.string(),
+}
+
 export default defineSchema({
   users: defineTable(User)
     .index("by_userId", ["userId"])
@@ -87,4 +96,7 @@ export default defineSchema({
     .index("by_userId_status", ["userId", "status"]),
   presetChallenges: defineTable(PresetChallenges).index("by_categoryId", ["categoryId"]),
   categories: defineTable(Categories),
+  leaderboard: defineTable(Leaderboard)
+    .index("by_userId_type", ["userId", "type"])
+    .index("by_type", ["type"]),
 })
