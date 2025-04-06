@@ -83,7 +83,7 @@ const Profile = () => {
             challenges={challenges?.length!}
             achievements={0}
           />
-          <ProfileAchievements />
+          <ProfileAchievements userId={user.userId} />
         </ScrollView>
       )}
     </Screen>
