@@ -47,7 +47,7 @@ const Profile = () => {
       <TopBar
         showBackButton={false}
         title="Profile"
-        rightIcon={<ActionButton icon="gear" onPress={() => {}} />}
+        rightIcon={<ActionButton icon="gear" onPress={() => router.push("/settings")} />}
       />
       {!user ? (
         <LoadingAnimation />
