@@ -85,6 +85,14 @@ export const Leaderboard = {
   type: v.string(),
 }
 
+export const Achievements = {
+  isClaimed: v.boolean(),
+  status: v.string(),
+  name: v.string(),
+  userId: v.string(),
+  cId: v.string(),
+}
+
 export default defineSchema({
   users: defineTable(User)
     .index("by_userId", ["userId"])
@@ -99,4 +107,7 @@ export default defineSchema({
   leaderboard: defineTable(Leaderboard)
     .index("by_userId_type", ["userId", "type"])
     .index("by_type", ["type"]),
+  achievements: defineTable(Achievements)
+    .index("by_cId_userId", ["userId", "cId"])
+    .index("by_userId", ["userId"]),
 })
