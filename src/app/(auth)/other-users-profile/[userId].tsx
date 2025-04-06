@@ -35,16 +35,11 @@ const OtherUsersProfile = () => {
   const challenges = useQuery(api.userChallenges.getAllChallengesByUserId, {
     userId,
   })
-  //   const achievements = useQuery(
-  //     api.achievements.getAllUserAchievementsByUserId,
-  //     {
-  //       userId,
-  //     }
-  //   );
+  const achievements = useQuery(api.achievements.getAllUserAchievementsByUserId, {
+    userId,
+  })
 
-  //   const totalAchievements = achievements?.filter(
-  //     (ach) => ach.status === "COMPLETED"
-  //   );
+  const totalAchievements = achievements?.filter((ach) => ach.status === "COMPLETED")
 
   return (
     <Screen
@@ -90,9 +85,9 @@ const OtherUsersProfile = () => {
               currStreak={user.currentStreak}
               bestStreak={user.longestStreak}
               challenges={challenges?.length!}
-              achievements={0}
+              achievements={totalAchievements?.length!}
             />
-            <ProfileAchievements />
+            <ProfileAchievements userId={user.userId} />
           </ScrollView>
         </>
       )}
