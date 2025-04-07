@@ -3,20 +3,25 @@ import { Screen, Text } from "@/components"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { useAuth, useSSO } from "@clerk/clerk-expo"
-import * as WebBrowser from "expo-web-browser"
-import * as Linking from "expo-linking"
 import { Link, Redirect } from "expo-router"
-
 import { useCallback, useEffect, useState } from "react"
+import * as Linking from "expo-linking"
+import * as WebBrowser from "expo-web-browser"
 import AuthButton from "@/components/UI/AuthButton"
 import ModalSpinner from "@/components/UI/ModalSpinner"
 import OnboardingSteps from "@/components/UI/OnboardingSteps"
+import ActionModal from "@/components/UI/ActionModal/ActionModal"
+import ModalText from "@/components/UI/ActionModal/ModalText"
+import ModalButton from "@/components/UI/ActionModal/ModalButton"
+import SmartImage from "@/components/UI/SmartImage"
 
 WebBrowser.maybeCompleteAuthSession()
 
 export default function WelcomeScreen() {
   const { themed } = useAppTheme()
   const { isSignedIn } = useAuth()
+  const [showErrorModal, setShowErrorModal] = useState(false)
+
   const [isAuthLoading, setIsAuthLoading] = useState(false)
   const { startSSOFlow } = useSSO()
 
@@ -40,7 +45,7 @@ export default function WelcomeScreen() {
       if (createdSessionId) {
         await setActive!({ session: createdSessionId })
       } else {
-        // setShowErrorModal(true);
+        setShowErrorModal(true)
       }
     } catch (error) {
       console.log(error)
@@ -73,6 +78,41 @@ export default function WelcomeScreen() {
         </Text>
       </Screen>
       <ModalSpinner isLoading={isAuthLoading} />
+      <ActionModal visible={showErrorModal}>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <SmartImage
+            imgKey="error.png"
+            width={60}
+            height={60}
+            style={{
+              marginBottom: 24,
+            }}
+          />
+          <ModalText title="An error occurred while signing in with your account!" />
+          <View
+            style={{
+              marginTop: 24,
+              width: "100%",
+            }}
+          >
+            <ModalButton
+              label="close"
+              onPress={() => setShowErrorModal(false)}
+              isLoading={isAuthLoading}
+              style={themed((theme) => ({
+                backgroundColor: theme.colors.palette.gray,
+              }))}
+              labelStyle={themed((theme) => ({
+                color: theme.colors.text,
+              }))}
+            />
+          </View>
+        </View>
+      </ActionModal>
     </>
   )
 }
