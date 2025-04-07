@@ -13,6 +13,7 @@ import DayActivityFooter from "@/components/Challenges/DayActivityFooter"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
 import ModalText from "@/components/UI/ActionModal/ModalText"
 import ActionModal from "@/components/UI/ActionModal/ActionModal"
+import ModalButton from "@/components/UI/ActionModal/ModalButton"
 
 const DayActivity = () => {
   const { challengeId, query } = useLocalSearchParams<{
@@ -178,23 +179,22 @@ const DayActivity = () => {
             </Text>
           </View>
         </View>
-        <View>
-          <TouchableOpacity
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <ModalButton
+            label="okay"
             onPress={() => setShowCongratsModal(false)}
-            style={themed(({ spacing, colors }) => ({
-              backgroundColor: colors.palette.muted,
-              marginTop: spacing.md,
-              padding: spacing.xs,
-              borderRadius: 12,
-              alignItems: "center",
-              borderWidth: 2,
-              borderColor: colors.border,
+            isLoading={isLoading}
+            style={themed((theme) => ({
+              backgroundColor: theme.colors.palette.gray,
             }))}
-          >
-            <Text size="sm" weight="semiBold">
-              OKAY
-            </Text>
-          </TouchableOpacity>
+            labelStyle={themed((theme) => ({
+              color: theme.colors.text,
+            }))}
+          />
         </View>
       </ActionModal>
     </Screen>
