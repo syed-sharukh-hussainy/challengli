@@ -5,11 +5,11 @@ import { AutoImage } from "../AutoImage"
 import { Text } from "../Text"
 import { Doc } from "convex/_generated/dataModel"
 import { FontAwesome6 } from "@expo/vector-icons"
-import Spinner from "../UI/Spinner"
 import { useMutation, useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
-import { spacing, ThemedStyle } from "@/theme"
+import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
+import Spinner from "../UI/Spinner"
 
 type Props = {
   user: Doc<"users">
@@ -93,7 +93,7 @@ const UserProfile = ({ user, index, length }: Props) => {
       </View>
       <Pressable onPress={() => onFollowFriends(user.userName)} style={themed($followBtn)}>
         {isFollowing[user.userName] ? (
-          <Spinner size={10} color="white" />
+          <Spinner size={14} color="white" />
         ) : me?.following.includes(user.userName) ? (
           <FontAwesome6 name="user-check" size={14} color="white" />
         ) : (
