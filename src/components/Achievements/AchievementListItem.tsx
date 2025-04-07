@@ -99,6 +99,7 @@ const AchievementListItem = ({ achievement, isClaimed, isMe, status }: Props) =>
                 justifyContent: "center",
                 alignItems: "center",
                 gap: 8,
+                marginTop: 14,
               }}
             >
               <ModalButton
