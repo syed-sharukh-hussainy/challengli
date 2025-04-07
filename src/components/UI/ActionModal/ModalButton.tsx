@@ -1,4 +1,4 @@
-import { TouchableOpacity, StyleProp, ViewStyle, TextStyle } from "react-native"
+import { TouchableOpacity, StyleProp, ViewStyle, TextStyle, View } from "react-native"
 import React from "react"
 import { Text } from "@/components/Text"
 import { useAppTheme } from "@/utils/useAppTheme"
@@ -21,7 +21,7 @@ const ModalButton = ({ label, onPress, style, labelStyle, isLoading }: Props) =>
       style={[themed($btn), style, { opacity: isLoading ? 0.5 : 1 }]}
       disabled={isLoading}
     >
-      <Text size="sm" weight="semiBold" style={[$labelS, labelStyle]}>
+      <Text size="xs" weight="semiBold" style={[$labelS, labelStyle]}>
         {label}
       </Text>
     </TouchableOpacity>
@@ -31,11 +31,9 @@ const ModalButton = ({ label, onPress, style, labelStyle, isLoading }: Props) =>
 export default ModalButton
 
 const $btn: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
-  marginTop: spacing.md,
   padding: spacing.xs,
   borderRadius: 12,
   alignItems: "center",
-  flex: 1,
 })
 
 const $labelS: TextStyle = {
