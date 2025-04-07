@@ -85,7 +85,7 @@ const SearchUsers = () => {
           ListFooterComponent={
             isLoading ? (
               <View className="mt-2">
-                <Spinner />
+                <Spinner size={24} />
               </View>
             ) : status === "CanLoadMore" ? (
               <Pressable onPress={() => loadMore(10)} className="mt-4 items-center">
