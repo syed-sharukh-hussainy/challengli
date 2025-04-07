@@ -44,7 +44,7 @@ const ActivityItem = ({
   const todaysDate = useMemo(() => format(new Date(), "yyyy-MM-dd"), [])
   const handleActivityPress = useCallback(
     (date: string) => {
-      if (new Date(date) <= new Date(todaysDate)) {
+      if (isValidDate) {
         router.push(`/(auth)/day-activity/${challengeId}?query=${date}`)
       }
     },
@@ -106,11 +106,7 @@ const ActivityItem = ({
               size="xs"
               weight="bold"
               style={themed(({ colors }) => ({
-                color: textColor ? textColor : colors.text,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                textDecorationLine: $textDecoration,
+                color: isValidDate ? textColor : colors.text,
               }))}
               numberOfLines={1}
             >

@@ -37,8 +37,8 @@ const DayActivityFooter = ({ backgroundColor, onPress, status, day, isLoading }:
           }}
           style={{
             backgroundColor,
-            borderRadius: 12,
-            paddingVertical: 14,
+            borderRadius: 14,
+            paddingVertical: 12,
           }}
         >
           {isLoading ? (
