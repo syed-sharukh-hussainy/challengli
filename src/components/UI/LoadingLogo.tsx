@@ -34,7 +34,6 @@ const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flex: 1,
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: colors.background,
 })
 
 const $loadingText: ThemedStyle<TextStyle> = ({ colors }) => ({

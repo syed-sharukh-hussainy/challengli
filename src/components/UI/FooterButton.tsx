@@ -1,6 +1,6 @@
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { Pressable, View, ViewStyle } from "react-native"
+import { Pressable, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Text } from "../Text"
 import Spinner from "./Spinner"
 
@@ -14,7 +14,8 @@ const FooterButton = ({ backgroundColor, onPress, label, isLoading }: Props) => 
   const { themed } = useAppTheme()
   return (
     <View style={themed($footerContainer)}>
-      <Pressable
+      <TouchableOpacity
+        activeOpacity={0.7}
         onPress={onPress}
         style={{
           backgroundColor,
@@ -31,12 +32,13 @@ const FooterButton = ({ backgroundColor, onPress, label, isLoading }: Props) => 
             style={{
               color: "white",
               textAlign: "center",
+              textTransform: "uppercase",
             }}
           >
             {label}
           </Text>
         )}
-      </Pressable>
+      </TouchableOpacity>
     </View>
   )
 }

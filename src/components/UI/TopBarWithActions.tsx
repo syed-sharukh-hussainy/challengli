@@ -1,16 +1,15 @@
 import { View, ViewStyle } from "react-native"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { router, useNavigationContainerRef } from "expo-router"
-import ActionButton from "./ActionButton"
+import { router } from "expo-router"
 import { useMutation } from "convex/react"
 import { api } from "convex/_generated/api"
-import ActionModal from "./ActionModal/ActionModal"
 import { useState } from "react"
-import ModalText from "./ActionModal/ModalText"
 import { Doc } from "convex/_generated/dataModel"
+import ActionModal from "./ActionModal/ActionModal"
+import ModalText from "./ActionModal/ModalText"
+import ActionButton from "./ActionModal/ActionButton"
 import ModalButton from "./ActionModal/ModalButton"
-import { StackActions } from "@react-navigation/native"
 import TimePickerModal from "./TimePickerModal"
 
 type Props = {
@@ -19,7 +18,6 @@ type Props = {
 
 const TopBarWithActions = ({ challenge }: Props) => {
   const { themed } = useAppTheme()
-  const rootNavigation = useNavigationContainerRef()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -37,7 +35,6 @@ const TopBarWithActions = ({ challenge }: Props) => {
     try {
       setIsLoading(true)
       await deleteChallenge({ challengeId: challenge._id })
-      rootNavigation.dispatch(StackActions.popToTop())
       router.replace(`/(auth)/(tabs)/challenges`)
     } catch (error) {
       console.error(error)

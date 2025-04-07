@@ -2,7 +2,7 @@ import { TextStyle, View, ViewStyle } from "react-native"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { Text } from "../Text"
-import ActionButton from "./ActionButton"
+import ActionButton from "./ActionModal/ActionButton"
 import { ReactNode } from "react"
 
 type Props = {
