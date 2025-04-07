@@ -202,3 +202,72 @@ export const getUserById = query({
     return user
   },
 })
+
+export const getUserFriendsById = query({
+  args: {
+    friendsIds: v.optional(v.array(v.string())),
+  },
+  handler: async (ctx, args) => {
+    if (args.friendsIds === undefined) {
+      return []
+    }
+    let friends = []
+    for (let i = 0; i < args.friendsIds.length; i++) {
+      const friend = await ctx.db
+        .query("users")
+        .withIndex("by_userName", (q) => q.eq("userName", args.friendsIds![i]))
+        .first()
+      friends.push(friend)
+    }
+
+    return friends
+  },
+})
+
+export const updateUserDetails = mutation({
+  args: {
+    field: v.string(),
+    value: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Unauthenticated")
+    }
+
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_userId", (q) => q.eq("userId", identity.subject))
+      .first()
+    const leaderboard = await ctx.db
+      .query("leaderboard")
+      .withIndex("by_userId_type", (q) => q.eq("userId", identity.subject))
+      .collect()
+
+    if (!user) {
+      return
+    }
+
+    if (args.field === "First name") {
+      await ctx.db.patch(user?._id, {
+        firstName: args.value,
+      })
+      await ctx.db.patch(leaderboard[0]._id, {
+        firstName: args.value,
+      })
+      await ctx.db.patch(leaderboard[1]._id, {
+        firstName: args.value,
+      })
+    } else {
+      await ctx.db.patch(user?._id, {
+        lastName: args.value,
+      })
+      await ctx.db.patch(leaderboard[0]._id, {
+        lastName: args.value,
+      })
+      await ctx.db.patch(leaderboard[1]._id, {
+        lastName: args.value,
+      })
+    }
+  },
+})
