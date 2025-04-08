@@ -93,6 +93,12 @@ export const Achievements = {
   cId: v.string(),
 }
 
+export const Feedback = {
+  feedback: v.string(),
+  userId: v.string(),
+  email: v.string(),
+}
+
 export default defineSchema({
   users: defineTable(User)
     .index("by_userId", ["userId"])
@@ -110,4 +116,5 @@ export default defineSchema({
   achievements: defineTable(Achievements)
     .index("by_cId_userId", ["userId", "cId"])
     .index("by_userId", ["userId"]),
+  feedback: defineTable(Feedback),
 })

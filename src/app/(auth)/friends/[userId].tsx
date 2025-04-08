@@ -40,6 +40,8 @@ const Friends = () => {
     },
     [user?.id],
   )
+
+  console.log(friends)
   return (
     <Screen
       safeAreaEdges={["top"]}
@@ -61,24 +63,22 @@ const Friends = () => {
           <Spinner />
         </View>
       ) : friends.length == 0 ? (
-        <View>
-          <Text
-            size="md"
-            weight="semiBold"
-            style={{
-              textAlign: "center",
-              marginTop: 24,
-            }}
-          >
-            {isMe
-              ? tabName === "following"
-                ? "You are not following anyone yet!"
-                : "You have no followers yet!"
-              : tabName === "following"
-                ? `${otherUser?.firstName} is not following anyone yet!`
-                : `${otherUser?.firstName} has no followers yet`}
-          </Text>
-        </View>
+        <Text
+          size="md"
+          weight="semiBold"
+          style={{
+            textAlign: "center",
+            marginTop: 24,
+          }}
+        >
+          {isMe
+            ? tabName === "following"
+              ? "You are not following anyone yet!"
+              : "You have no followers yet!"
+            : tabName === "following"
+              ? `${otherUser?.firstName} is not following anyone yet!`
+              : `${otherUser?.firstName} has no followers yet`}
+        </Text>
       ) : (
         <ListView
           data={friends}

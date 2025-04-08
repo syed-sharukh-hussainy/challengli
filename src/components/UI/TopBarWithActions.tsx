@@ -11,6 +11,7 @@ import ModalText from "./ActionModal/ModalText"
 import ActionButton from "./ActionModal/ActionButton"
 import ModalButton from "./ActionModal/ModalButton"
 import TimePickerModal from "./TimePickerModal"
+import { deleteAndCancelNotifications, updateNotifications } from "@/utils/notificationHelper"
 
 type Props = {
   challenge: Doc<"userChallenges">
@@ -34,6 +35,7 @@ const TopBarWithActions = ({ challenge }: Props) => {
   const onDeleteChallenge = async () => {
     try {
       setIsLoading(true)
+      await deleteAndCancelNotifications(challenge._id)
       await deleteChallenge({ challengeId: challenge._id })
       router.replace(`/(auth)/(tabs)/challenges`)
     } catch (error) {
@@ -47,6 +49,16 @@ const TopBarWithActions = ({ challenge }: Props) => {
   const onSavePressed = async (hr: number, min: number, per: number) => {
     try {
       setIsLoading(true)
+      await updateNotifications(
+        challenge.title,
+        challenge.duration,
+        challenge._id,
+        hr,
+        per,
+        min,
+        challenge.startDate,
+        challenge.activities,
+      )
       await updateReminderTime({
         challengeId: challenge._id,
         reminderTime: {
@@ -86,30 +98,48 @@ const TopBarWithActions = ({ challenge }: Props) => {
       <ActionModal visible={showDeleteModal}>
         <ModalText title="Are you sure you want to delete this challenge?" />
         <View
-          style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 8 }}
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 8,
+            marginTop: 24,
+          }}
         >
-          <ModalButton
-            label="close"
-            onPress={() => setShowDeleteModal(false)}
-            isLoading={isLoading}
-            style={themed((theme) => ({
-              backgroundColor: theme.colors.palette.gray,
-            }))}
-            labelStyle={themed((theme) => ({
-              color: theme.colors.text,
-            }))}
-          />
-          <ModalButton
-            label="delete"
-            onPress={() => onDeleteChallenge()}
-            isLoading={isLoading}
-            style={themed(({ colors }) => ({
-              backgroundColor: colors.palette.angry500,
-            }))}
-            labelStyle={{
-              color: "white",
+          <View
+            style={{
+              flex: 1,
             }}
-          />
+          >
+            <ModalButton
+              label="close"
+              onPress={() => setShowDeleteModal(false)}
+              isLoading={isLoading}
+              style={themed((theme) => ({
+                backgroundColor: theme.colors.palette.gray,
+              }))}
+              labelStyle={themed((theme) => ({
+                color: theme.colors.text,
+              }))}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+            }}
+          >
+            <ModalButton
+              label="delete"
+              onPress={() => onDeleteChallenge()}
+              isLoading={isLoading}
+              style={themed(({ colors }) => ({
+                backgroundColor: colors.palette.angry500,
+              }))}
+              labelStyle={{
+                color: "white",
+              }}
+            />
+          </View>
         </View>
       </ActionModal>
       <TimePickerModal

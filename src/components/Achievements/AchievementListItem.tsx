@@ -102,39 +102,51 @@ const AchievementListItem = ({ achievement, isClaimed, isMe, status }: Props) =>
                 marginTop: 14,
               }}
             >
-              <ModalButton
-                label="close"
-                onPress={() => setShowAchievement(false)}
-                isLoading={isLoading}
-                style={themed((theme) => ({
-                  backgroundColor: theme.colors.palette.gray,
-                }))}
-                labelStyle={themed((theme) => ({
-                  color: theme.colors.text,
-                }))}
-              />
-              {isMe && !isClaimed && status === "COMPLETED" && (
+              <View
+                style={{
+                  flex: 1,
+                }}
+              >
                 <ModalButton
-                  label="claim"
-                  onPress={async () => {
-                    if (!isLoading) {
-                      setIsLoading(true)
-                      await claimAchievement({
-                        id: achievement.id,
-                        xp: achievement.xp,
-                      })
-                      setIsLoading(false)
-                      setShowAchievement(false)
-                    }
-                  }}
+                  label="close"
+                  onPress={() => setShowAchievement(false)}
                   isLoading={isLoading}
-                  style={themed(({ colors }) => ({
-                    backgroundColor: colors.palette.primary,
+                  style={themed((theme) => ({
+                    backgroundColor: theme.colors.palette.gray,
                   }))}
-                  labelStyle={{
-                    color: "white",
-                  }}
+                  labelStyle={themed((theme) => ({
+                    color: theme.colors.text,
+                  }))}
                 />
+              </View>
+              {isMe && !isClaimed && status === "COMPLETED" && (
+                <View
+                  style={{
+                    flex: 1,
+                  }}
+                >
+                  <ModalButton
+                    label="claim"
+                    onPress={async () => {
+                      if (!isLoading) {
+                        setIsLoading(true)
+                        await claimAchievement({
+                          id: achievement.id,
+                          xp: achievement.xp,
+                        })
+                        setIsLoading(false)
+                        setShowAchievement(false)
+                      }
+                    }}
+                    isLoading={isLoading}
+                    style={themed(({ colors }) => ({
+                      backgroundColor: colors.palette.primary,
+                    }))}
+                    labelStyle={{
+                      color: "white",
+                    }}
+                  />
+                </View>
               )}
             </View>
           )}

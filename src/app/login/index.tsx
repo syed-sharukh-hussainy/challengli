@@ -14,10 +14,12 @@ import ActionModal from "@/components/UI/ActionModal/ActionModal"
 import ModalText from "@/components/UI/ActionModal/ModalText"
 import ModalButton from "@/components/UI/ActionModal/ModalButton"
 import SmartImage from "@/components/UI/SmartImage"
+import { useNotifications } from "@/hooks/useNotification"
 
 WebBrowser.maybeCompleteAuthSession()
 
 export default function WelcomeScreen() {
+  useNotifications()
   const { themed } = useAppTheme()
   const { isSignedIn } = useAuth()
   const [showErrorModal, setShowErrorModal] = useState(false)

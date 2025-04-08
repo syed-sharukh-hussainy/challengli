@@ -14,6 +14,8 @@ import LoadingAnimation from "@/components/UI/LoadingAnimation"
 import ModalText from "@/components/UI/ActionModal/ModalText"
 import ActionModal from "@/components/UI/ActionModal/ActionModal"
 import ModalButton from "@/components/UI/ActionModal/ModalButton"
+import notifee from "@notifee/react-native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const DayActivity = () => {
   const { challengeId, query } = useLocalSearchParams<{
@@ -23,7 +25,9 @@ const DayActivity = () => {
   const { themed } = useAppTheme()
   const [isLoading, setIsLoading] = useState(false)
   const [showCongratsModal, setShowCongratsModal] = useState(false)
-
+  const addXPToUsersLeaderboard = useMutation(api.leaderboard.addXPToUsersLeaderboard)
+  const updateAchievement = useMutation(api.achievements.updateAchievement)
+  const updateStreak = useMutation(api.users.updateStreak)
   const addXpToUser = useMutation(api.users.addXpToUser)
   const updateActivityStatus = useMutation(api.userChallenges.updateDayActivityStatus)
   const todaysDate = format(query, "yyyy-MM-dd")
@@ -37,6 +41,31 @@ const DayActivity = () => {
   }, [challenge, todaysDate])
   const color = useMemo(() => challenge?.color, [challenge])
 
+  const handleNotificationUpdate = async () => {
+    const storageKey = `challenge_${challenge?._id}_notifications`
+    const storedNotifications = await AsyncStorage.getItem(storageKey)
+    if (!storedNotifications) return
+
+    const notifications = JSON.parse(storedNotifications)
+    if (notifications) {
+      const notification = notifications.notifications.find((n: any) => n.day === activity?.day)
+      if (notification) {
+        await notifee.cancelTriggerNotification(notification.notificationId)
+        const updatedNotifications = notifications.notifications.filter(
+          (n: any) => n.day !== activity?.day,
+        )
+        await AsyncStorage.setItem(
+          storageKey,
+          JSON.stringify({
+            notifications: updatedNotifications,
+            reminderTime: challenge?.reminderTime,
+            challengeId: challenge?._id,
+          }),
+        )
+      }
+    }
+  }
+
   const onFinishDayActivity = useCallback(async () => {
     try {
       setIsLoading(true)
@@ -46,8 +75,12 @@ const DayActivity = () => {
           challengeId,
           date: new Date(query).toISOString(),
         }),
-
+        handleNotificationUpdate(),
+        addXPToUsersLeaderboard({ type: "weekly", xp: 10 }),
+        addXPToUsersLeaderboard({ type: "all time", xp: 10 }),
         addXpToUser({ xp: 10 }),
+        updateStreak({ activityDate: todaysDate }),
+        updateAchievement({ userChallengeId: challengeId }),
       ]
       await Promise.all(updates)
       setShowCongratsModal(true)
@@ -181,7 +214,7 @@ const DayActivity = () => {
         </View>
         <View
           style={{
-            flexDirection: "row",
+            marginTop: 24,
           }}
         >
           <ModalButton

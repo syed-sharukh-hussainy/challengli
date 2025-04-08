@@ -16,6 +16,8 @@ import type {
 import type * as achievements from "../achievements.js";
 import type * as categories from "../categories.js";
 import type * as clerk from "../clerk.js";
+import type * as crons from "../crons.js";
+import type * as feedback from "../feedback.js";
 import type * as http from "../http.js";
 import type * as leaderboard from "../leaderboard.js";
 import type * as presetChallenges from "../presetChallenges.js";
@@ -35,6 +37,8 @@ declare const fullApi: ApiFromModules<{
   achievements: typeof achievements;
   categories: typeof categories;
   clerk: typeof clerk;
+  crons: typeof crons;
+  feedback: typeof feedback;
   http: typeof http;
   leaderboard: typeof leaderboard;
   presetChallenges: typeof presetChallenges;

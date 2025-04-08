@@ -11,6 +11,72 @@ type Activity = {
   tips: string[]
 }
 
+export const getUserChallenges = query({
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Not authenticated")
+    }
+    const challenges = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_userId", (q) => q.eq("userId", identity.subject))
+      .collect()
+
+    return challenges
+  },
+})
+
+export const getUserInProgressChallenges = query({
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Not authenticated")
+    }
+    const challenges = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_userId_status", (q) =>
+        q.eq("userId", identity.subject).eq("status", "IN_PROGRESS"),
+      )
+      .collect()
+
+    return challenges
+  },
+})
+
+export const getChallengeByChallengeId = query({
+  args: {
+    challengeId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Not authenticated")
+    }
+    const challenge = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_cid_uid_status", (q) =>
+        q.eq("userId", identity.subject).eq("challengeId", args.challengeId),
+      )
+      .first()
+
+    return challenge
+  },
+})
+
+export const getAllChallengesByUserId = query({
+  args: {
+    userId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const challenges = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_userId", (q) => q.eq("userId", args.userId))
+      .collect()
+
+    return challenges
+  },
+})
+
 export const createChallenge = mutation({
   args: {
     challengeId: v.id("presetChallenges"),
@@ -94,24 +160,14 @@ export const createChallenge = mutation({
   },
 })
 
-export const getUserChallenges = query({
-  handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity()
-    if (!identity) {
-      throw new ConvexError("Not authenticated")
-    }
-    const challenges = await ctx.db
-      .query("userChallenges")
-      .withIndex("by_userId", (q) => q.eq("userId", identity.subject))
-      .collect()
-
-    return challenges
-  },
-})
-
-export const getChallengeByChallengeId = query({
+export const updateReminderTime = mutation({
   args: {
-    challengeId: v.string(),
+    challengeId: v.id("userChallenges"),
+    reminderTime: v.object({
+      hour: v.number(),
+      minutes: v.number(),
+      period: v.number(),
+    }),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
@@ -120,12 +176,21 @@ export const getChallengeByChallengeId = query({
     }
     const challenge = await ctx.db
       .query("userChallenges")
-      .withIndex("by_cid_uid_status", (q) =>
-        q.eq("userId", identity.subject).eq("challengeId", args.challengeId),
-      )
-      .first()
+      .withIndex("by_id", (q) => q.eq("_id", args.challengeId))
+      .unique()
 
-    return challenge
+    if (!challenge) {
+      throw new ConvexError("Challenge Not Found")
+    }
+
+    const newChallenge = {
+      ...challenge,
+      reminderTime: args.reminderTime,
+    }
+
+    await ctx.db.patch(challenge._id, newChallenge)
+
+    return newChallenge
   },
 })
 
@@ -170,6 +235,63 @@ export const updateDayActivityStatus = mutation({
   },
 })
 
+export const resetChallenge = mutation({
+  args: {
+    challengeId: v.id("userChallenges"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+
+    if (!identity) {
+      throw new ConvexError("Not authenticated")
+    }
+
+    const challenge = await ctx.db
+      .query("userChallenges")
+      .withIndex("by_id", (q) => q.eq("_id", args.challengeId))
+      .unique()
+
+    if (!challenge) {
+      throw new ConvexError("Challenge Not Found")
+    }
+
+    let activities: Activity[] = []
+    const length = challenge.activities.length
+    const date = new Date()
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, "0") // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, "0")
+
+    const formattedDate = `${year}-${month}-${day}`
+    const activityDate = new Date(Date.parse(formattedDate))
+    for (let i = 0; i < length; i++) {
+      const newDate = new Date(activityDate) // Clone the date to avoid modifying the original
+      newDate.setDate(newDate.getDate() + i)
+
+      let newActivity = {
+        title: challenge.activities[i].title,
+        day: challenge.activities[i].day,
+        task: challenge.activities[i].task,
+        status: "IN_PROGRESS",
+        date: newDate.toISOString(),
+        tips: challenge.activities[i].tips,
+        pros: challenge.activities[i].pros,
+      }
+      activities.push(newActivity)
+    }
+    const newChallenge = {
+      ...challenge,
+      startDate: activityDate.toISOString(),
+      activities,
+      status: "IN_PROGRESS",
+    }
+
+    await ctx.db.patch(challenge._id, newChallenge)
+
+    return newChallenge
+  },
+})
+
 export const deleteChallenge = mutation({
   args: {
     challengeId: v.id("userChallenges"),
@@ -194,58 +316,7 @@ export const deleteChallenge = mutation({
   },
 })
 
-export const updateReminderTime = mutation({
-  args: {
-    challengeId: v.id("userChallenges"),
-    reminderTime: v.object({
-      hour: v.number(),
-      minutes: v.number(),
-      period: v.number(),
-    }),
-  },
-  handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity()
-    if (!identity) {
-      throw new ConvexError("Not authenticated")
-    }
-    const challenge = await ctx.db
-      .query("userChallenges")
-      .withIndex("by_id", (q) => q.eq("_id", args.challengeId))
-      .unique()
-
-    if (!challenge) {
-      throw new ConvexError("Challenge Not Found")
-    }
-
-    const newChallenge = {
-      ...challenge,
-      reminderTime: args.reminderTime,
-    }
-
-    await ctx.db.patch(challenge._id, newChallenge)
-
-    return newChallenge
-  },
-})
-
-export const getUserInProgressChallenges = query({
-  handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity()
-    if (!identity) {
-      throw new ConvexError("Not authenticated")
-    }
-    const challenges = await ctx.db
-      .query("userChallenges")
-      .withIndex("by_userId_status", (q) =>
-        q.eq("userId", identity.subject).eq("status", "IN_PROGRESS"),
-      )
-      .collect()
-
-    return challenges
-  },
-})
-
-export const getAllChallengesByUserId = query({
+export const deleteUserChallenges = internalMutation({
   args: {
     userId: v.string(),
   },
@@ -254,7 +325,9 @@ export const getAllChallengesByUserId = query({
       .query("userChallenges")
       .withIndex("by_userId", (q) => q.eq("userId", args.userId))
       .collect()
-
-    return challenges
+    if (!challenges) return
+    for (let i = 0; i < challenges.length; i++) {
+      await ctx.db.delete(challenges[i]._id)
+    }
   },
 })

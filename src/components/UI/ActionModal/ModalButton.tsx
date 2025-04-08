@@ -9,7 +9,7 @@ type Props = {
   label: string
   style: StyleProp<ViewStyle>
   labelStyle: StyleProp<TextStyle>
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 const ModalButton = ({ label, onPress, style, labelStyle, isLoading }: Props) => {

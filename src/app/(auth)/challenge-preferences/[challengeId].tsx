@@ -16,8 +16,11 @@ import { StackActions } from "@react-navigation/native"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
 import ActionModal from "@/components/UI/ActionModal/ActionModal"
 import TimePickerModal from "@/components/UI/TimePickerModal"
+import { useNotifications } from "@/hooks/useNotification"
+import { createNotification } from "@/utils/notificationHelper"
 
 const ChallengePreferences = () => {
+  useNotifications()
   const { themed } = useAppTheme()
   const { challengeId } = useLocalSearchParams<{
     challengeId: Id<"presetChallenges">
@@ -59,6 +62,7 @@ const ChallengePreferences = () => {
           period,
         },
       })
+      await createNotification(challenge.title, challenge.duration, _id, hour, period, minutes)
     } catch (error) {
       console.error("Error creating challenge:", error)
     } finally {

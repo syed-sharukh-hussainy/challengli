@@ -20,6 +20,11 @@ const Layout = () => {
         <Stack.Screen name="settings" />
         <Stack.Screen name="other-users-profile/[userId]" />
         <Stack.Screen name="achievements/[userId]" />
+        <Stack.Screen name="friends/[userId]" />
+        <Stack.Screen name="profile-settings" />
+        <Stack.Screen name="calendar-streak" />
+        <Stack.Screen name="feedback" />
+        <Stack.Screen name="notification-settings" />
       </Stack>
     </Authenticated>
   )

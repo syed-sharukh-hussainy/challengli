@@ -1,10 +1,14 @@
 import { Pressable, TextStyle, View, ViewStyle } from "react-native"
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { Text } from "../Text"
 import { format } from "date-fns/format"
 import { AutoImage } from "../AutoImage"
+import { useMutation, useQuery } from "convex/react"
+import { api } from "convex/_generated/api"
+import { formattedXPNumber } from "@/utils/helper"
+import Spinner from "../UI/Spinner"
 
 const streak = require("../../../assets/images/streak.png")
 const xpPoints = require("../../../assets/images/xp-points.png")
@@ -12,6 +16,15 @@ const xpPoints = require("../../../assets/images/xp-points.png")
 const HomeTopHeader = () => {
   const { themed } = useAppTheme()
   const today = useMemo(() => format(new Date(), "MMM dd, EEEE"), [])
+  const checkStreak = useMutation(api.users.checkStreak)
+  const user = useQuery(api.users.getUser, {})
+
+  useEffect(() => {
+    if (user && user.currentStreak === undefined) {
+      checkStreak()
+    }
+  }, [user?.currentStreak])
+
   return (
     <View style={[themed($homeTopHeader)]}>
       <View style={$wrapper}>
@@ -27,14 +40,18 @@ const HomeTopHeader = () => {
           <Pressable style={themed($headerAction)}>
             <AutoImage source={streak} style={{ width: 24, height: 24 }} />
             <Text weight="bold" size="xs">
-              10
+              {user?.currentStreak}
             </Text>
           </Pressable>
           <Pressable style={themed($headerAction)}>
             <AutoImage source={xpPoints} style={{ width: 24, height: 24 }} />
-            <Text weight="bold" size="xs">
-              10 XP
-            </Text>
+            {!user ? (
+              <Spinner size={14} />
+            ) : (
+              <Text weight="bold" size="xs">
+                {formattedXPNumber(user?.xp)} XP
+              </Text>
+            )}
           </Pressable>
         </View>
       </View>

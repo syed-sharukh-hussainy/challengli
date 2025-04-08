@@ -1,32 +1,25 @@
 import React, { useState } from "react"
 import { Screen, Text } from "@/components"
-import {
-  Alert,
-  Button,
-  Linking,
-  ScrollView,
-  Share,
-  TouchableOpacity,
-  ViewStyle,
-} from "react-native"
+import { Alert, Linking, ScrollView, Share, TouchableOpacity, ViewStyle } from "react-native"
 import TopBar from "@/components/UI/TopBar"
 import { router } from "expo-router"
 import { FontAwesome6 } from "@expo/vector-icons"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { FooterComponent } from "react-native-screens/lib/typescript/components/ScreenFooter"
 import { useAuth } from "@clerk/clerk-expo"
 import Spinner from "@/components/UI/Spinner"
 import { openLinkInBrowser } from "@/utils/openLinkInBrowser"
+import { clearAllNotifications } from "@/utils/notificationHelper"
 
 const Settings = () => {
   const { signOut } = useAuth()
-  const { theme, themed } = useAppTheme()
+  const { themed } = useAppTheme()
   const [isLoading, setIsLoading] = useState(false)
 
   const onSignOut = async () => {
     if (!isLoading) {
       try {
         setIsLoading(true)
+        clearAllNotifications()
         await signOut({ redirectUrl: "/login" })
       } catch (error) {
         console.log(error)
@@ -133,7 +126,7 @@ const Settings = () => {
           }}
         />
         <PressableButton
-          onPress={() => {}}
+          onPress={() => router.push("/(auth)/feedback")}
           label="Feedback"
           pressableRoundedStyle={{
             borderWidth: 2,

@@ -97,37 +97,54 @@ const TimePickerModal = ({
         </View>
       </View>
       <View
-        style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 8 }}
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 8,
+        }}
       >
-        <ModalButton
-          label="close"
-          onPress={() => {
-            onCloseButtonPressed()
-            setHour(initialHour)
-            setMinutes(initialMinutes)
-            setPeriod(initialPeriod)
+        <View
+          style={{
+            flex: 1,
           }}
-          isLoading={isLoading}
-          style={themed((theme) => ({
-            backgroundColor: theme.colors.palette.gray,
-          }))}
-          labelStyle={themed((theme) => ({
-            color: theme.colors.text,
-          }))}
-        />
-        <ModalButton
-          label="save"
-          onPress={() => {
-            onSaveButtonPressed(hour, minutes, period)
+        >
+          <ModalButton
+            label="close"
+            onPress={() => {
+              onCloseButtonPressed()
+              setHour(initialHour)
+              setMinutes(initialMinutes)
+              setPeriod(initialPeriod)
+            }}
+            isLoading={isLoading}
+            style={themed((theme) => ({
+              backgroundColor: theme.colors.palette.gray,
+            }))}
+            labelStyle={themed((theme) => ({
+              color: theme.colors.text,
+            }))}
+          />
+        </View>
+        <View
+          style={{
+            flex: 1,
           }}
-          isLoading={isLoading}
-          style={themed(({ colors }) => ({
-            backgroundColor: color,
-          }))}
-          labelStyle={{
-            color: "white",
-          }}
-        />
+        >
+          <ModalButton
+            label="save"
+            onPress={() => {
+              onSaveButtonPressed(hour, minutes, period)
+            }}
+            isLoading={isLoading}
+            style={themed(({ colors }) => ({
+              backgroundColor: color,
+            }))}
+            labelStyle={{
+              color: "white",
+            }}
+          />
+        </View>
       </View>
     </ActionModal>
   )

@@ -63,10 +63,23 @@ const MyChallengesListItem = ({
             gap: 4,
           }}
         >
-          <Text size="sm" weight="semiBold" numberOfLines={1}>
+          <Text
+            size="sm"
+            weight="semiBold"
+            numberOfLines={1}
+            style={themed(({ colors }) => ({
+              color: colors.text,
+            }))}
+          >
             {title}
           </Text>
-          <Text size="xxs" numberOfLines={2}>
+          <Text
+            size="xxs"
+            numberOfLines={2}
+            style={themed(({ colors }) => ({
+              color: colors.textDim,
+            }))}
+          >
             {description}
           </Text>
           <View
@@ -130,7 +143,8 @@ const $container: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   flex: 1,
   borderWidth: 2,
   borderColor: colors.border,
-  padding: spacing.sm,
+  paddingVertical: spacing.md,
+  paddingHorizontal: spacing.sm,
   justifyContent: "center",
 })
 

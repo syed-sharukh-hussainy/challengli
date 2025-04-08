@@ -1,6 +1,6 @@
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { Pressable, TextStyle, View, ViewStyle } from "react-native"
+import { Pressable, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Text } from "../Text"
 import Spinner from "../UI/Spinner"
 
@@ -29,7 +29,8 @@ const DayActivityFooter = ({ backgroundColor, onPress, status, day, isLoading }:
           You have completed day {day}
         </Text>
       ) : (
-        <Pressable
+        <TouchableOpacity
+          activeOpacity={0.7}
           onPress={() => {
             if (!isLoading) {
               onPress()
@@ -48,7 +49,7 @@ const DayActivityFooter = ({ backgroundColor, onPress, status, day, isLoading }:
               Mark Day as complete
             </Text>
           )}
-        </Pressable>
+        </TouchableOpacity>
       )}
     </View>
   )
