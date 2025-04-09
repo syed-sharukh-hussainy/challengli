@@ -95,7 +95,7 @@ const Settings = () => {
           }}
         />
         <PressableButton
-          onPress={() => {}}
+          onPress={() => router.push("/(auth)/notification-settings")}
           label="Notification"
           pressableRoundedStyle={{
             borderWidth: 2,

@@ -1,4 +1,4 @@
-import { Pressable, TextStyle, View, ViewStyle } from "react-native"
+import { Pressable, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import React, { useEffect, useMemo } from "react"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
@@ -9,6 +9,7 @@ import { useMutation, useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
 import { formattedXPNumber } from "@/utils/helper"
 import Spinner from "../UI/Spinner"
+import { router } from "expo-router"
 
 const streak = require("../../../assets/images/streak.png")
 const xpPoints = require("../../../assets/images/xp-points.png")
@@ -37,13 +38,17 @@ const HomeTopHeader = () => {
           </Text>
         </View>
         <View style={themed($headerActionButtons)}>
-          <Pressable style={themed($headerAction)}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={themed($headerAction)}
+            onPress={() => router.push("/(auth)/calendar-streak")}
+          >
             <AutoImage source={streak} style={{ width: 24, height: 24 }} />
             <Text weight="bold" size="xs">
               {user?.currentStreak}
             </Text>
-          </Pressable>
-          <Pressable style={themed($headerAction)}>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7} style={themed($headerAction)} onPress={() => {}}>
             <AutoImage source={xpPoints} style={{ width: 24, height: 24 }} />
             {!user ? (
               <Spinner size={14} />
@@ -52,7 +57,7 @@ const HomeTopHeader = () => {
                 {formattedXPNumber(user?.xp)} XP
               </Text>
             )}
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

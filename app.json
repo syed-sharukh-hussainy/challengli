@@ -24,7 +24,7 @@
       },
       "allowBackup": false,
       "splash": {
-        "backgroundColor": "#fff"
+        "backgroundColor": "#FFFFFF"
       },
       "permissions": [
         "android.permission.SCHEDULE_EXACT_ALARM",
@@ -38,14 +38,14 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.flamingoo.challengli",
       "splash": {
-        "backgroundColor": "#fff"
+        "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
       "favicon": "./assets/images/app-icon-web-favicon.png",
       "bundler": "metro",
       "splash": {
-        "backgroundColor": "#fff"
+        "backgroundColor": "#FFFFFF"
       }
     },
     "plugins": [
@@ -69,7 +69,7 @@
           "image": "./assets/images/app-icon-android-adaptive-foreground.png",
           "imageWidth": 300,
           "resizeMode": "contain",
-          "backgroundColor": "#FFF",
+          "backgroundColor": "#FFFFFF",
           "dark": {
             "image": "./assets/images/app-icon-android-adaptive-foreground.png",
             "backgroundColor": "#131f24"
@@ -82,7 +82,7 @@
       "typedRoutes": true
     },
     "splash": {
-      "backgroundColor": "#fff"
+      "backgroundColor": "#FFFFFF"
     },
     "extra": {
       "eas": {
