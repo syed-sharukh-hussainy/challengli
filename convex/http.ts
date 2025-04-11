@@ -44,8 +44,20 @@ http.route({
         case "user.deleted":
           await ctx.runMutation(internal.users.deleteUser, {
             userId: result.data.id!,
-          })
-          break
+          });
+          await ctx.runMutation(internal.userChallenges.deleteUserChallenges, {
+            userId: result.data.id!,
+          });
+          await ctx.runMutation(
+            internal.leaderboard.deleteUserDetailsFromLeaderboard,
+            {
+              userId: result.data.id!,
+            }
+          );
+          await ctx.runMutation(internal.achievements.deleteUserAchievements, {
+            userId: result.data.id!,
+          });
+          break;
       }
       return new Response(null, {
         status: 200,

@@ -72,6 +72,26 @@ export const deleteUser = internalMutation({
       .query("users")
       .withIndex("by_userId", (q) => q.eq("userId", args.userId))
       .first()
+
+      if(user){
+        const users = await ctx.db.query("users").collect();
+      for (let i = 0; i < users.length; i++) {
+        const cUser = users[i];
+
+        if (cUser.followers.includes(user.userName)) {
+          const updatedFollowers = cUser.followers.filter((follower) => follower !== user.userName);
+          await ctx.db.patch(cUser._id, {
+            followers: updatedFollowers,
+          });  
+        } 
+        if (cUser.following.includes(user.userName)) {
+          const updatedFollowing = cUser.following.filter((follower) => follower!== user.userName);
+          await ctx.db.patch(cUser._id, {
+            following: updatedFollowing,
+          }); 
+        }
+      }
+      }
     if (user) {
       return await ctx.db.delete(user?._id)
     }
