@@ -6,7 +6,8 @@ import CategoryItem from "@/components/Categories/CategoryItem"
 import TopBar from "@/components/UI/TopBar"
 import { View } from "react-native"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
-import { router } from "expo-router"
+import { router, useFocusEffect } from "expo-router"
+import { useCallback, useEffect, useState } from "react"
 
 const CategoriesScreen = () => {
   const categories = useQuery(api.categories.getAllCategories, {})
@@ -41,8 +42,9 @@ const CategoriesScreen = () => {
                 Select a category from the list below that matches your goals!
               </Text>
             }
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <CategoryItem
+                index={index}
                 id={item._id}
                 title={item.title}
                 description={item.description}

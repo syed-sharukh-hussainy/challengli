@@ -1,7 +1,7 @@
 import TopBar from "@/components/UI/TopBar"
 import { Screen, Text, TextField } from "@/components"
 import { router } from "expo-router"
-import { Modal, TouchableOpacity, View, ViewStyle } from "react-native"
+import { TouchableOpacity, View, ViewStyle } from "react-native"
 import { useUser } from "@clerk/clerk-expo"
 import { useMutation, useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
@@ -166,10 +166,7 @@ const ProfileSettings = () => {
         />
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 8,
+            marginTop: 24
           }}
         >
           <ModalButton
@@ -198,34 +195,43 @@ const ProfileSettings = () => {
             justifyContent: "center",
             alignItems: "center",
             gap: 8,
+            marginTop: 24,
           }}
         >
-          <ModalButton
-            label="close"
-            onPress={() => setShowDeleteModal(false)}
-            isLoading={isLoading}
-            style={themed((theme) => ({
-              backgroundColor: theme.colors.palette.gray,
-            }))}
-            labelStyle={themed((theme) => ({
-              color: theme.colors.text,
-            }))}
-          />
-          <ModalButton
-            label="delete"
-            onPress={async () => {
-              if (!isLoading) {
-                onDeleteAccount()
-              }
-            }}
-            isLoading={isLoading}
-            style={themed(({ colors }) => ({
-              backgroundColor: colors.palette.angry500,
-            }))}
-            labelStyle={{
-              color: "white",
-            }}
-          />
+          <View style={{
+            flex: 1,
+          }}>
+            <ModalButton
+              label="close"
+              onPress={() => setShowDeleteModal(false)}
+              isLoading={isLoading}
+              style={themed((theme) => ({
+                backgroundColor: theme.colors.palette.gray,
+              }))}
+              labelStyle={themed((theme) => ({
+                color: theme.colors.text,
+              }))}
+            />
+          </View>
+          <View style={{
+            flex: 1
+          }}>
+            <ModalButton
+              label="delete"
+              onPress={async () => {
+                if (!isLoading) {
+                  onDeleteAccount()
+                }
+              }}
+              isLoading={isLoading}
+              style={themed(({ colors }) => ({
+                backgroundColor: colors.palette.angry500,
+              }))}
+              labelStyle={{
+                color: "white",
+              }}
+            />
+          </View>
         </View>
       </ActionModal>
     </Screen>

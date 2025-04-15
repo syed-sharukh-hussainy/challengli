@@ -14,7 +14,9 @@
     },
     "newArchEnabled": true,
     "jsEngine": "hermes",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.flamingoo.challengli",
@@ -29,7 +31,8 @@
       "permissions": [
         "android.permission.SCHEDULE_EXACT_ALARM",
         "android.permission.POST_NOTIFICATIONS",
-        "android.permission.RECEIVE_BOOT_COMPLETED"
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "com.android.vending.BILLING"
       ]
     },
     "ios": {
@@ -58,7 +61,7 @@
         {
           "android": {
             "enableProguardInReleaseBuilds": true,
-            "extraProguardRules": "-keep public class com.horcrux.svg.** {*;}"
+            "extraProguardRules": "-keep public class com.horcrux.svg.** {*;}\n-keep class com.amazon.device.** { *; }\n-keep class com.google.api.client.** { *; }\n-keep class org.joda.time.** { *; }\n-dontwarn com.google.api.client.**\n-dontwarn org.joda.time.**"
           }
         }
       ],
@@ -84,10 +87,14 @@
       "backgroundColor": "#FFFFFF"
     },
     "extra": {
+      "router": {
+        "origin": false
+      },
       "eas": {
-        "projectId": "81a9f797-23a4-4d93-ad75-30384d57b316"
+        "projectId": "650edbf4-dcbd-4026-b3f1-228659472a72"
       }
-    }
+    },
+    "owner": "sharukhsyedhussainy"
   },
   "ignite": {
     "version": "10.2.0"

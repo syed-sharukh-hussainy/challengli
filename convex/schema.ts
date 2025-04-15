@@ -15,6 +15,12 @@ export const User = {
   currentStreak: v.number(),
   longestStreak: v.number(),
   streakDates: v.array(v.string()),
+  isPro: v.boolean(),
+  subscriptions: v.optional(v.object({
+    productId: v.string(),
+    purchaseDate: v.string(),
+    expirationDate: v.string(),
+  }))
 }
 
 export const Categories = {

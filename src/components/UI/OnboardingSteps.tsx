@@ -48,7 +48,7 @@ const OnboardingSteps = () => {
               height: 200,
             }}
           />
-          <Text preset="bold" size="xl" style={themed($title)}>
+          <Text preset="bold" size="lg" style={themed($title)}>
             {title}
           </Text>
           <Text size="sm" style={themed($description)}>
@@ -85,7 +85,7 @@ const $topContainer: ViewStyle = {
 const $title: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   textAlign: "center",
   color: colors.text,
-  marginTop: spacing.xl,
+  marginTop: spacing.lg,
 })
 
 const $description: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({

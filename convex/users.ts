@@ -57,6 +57,7 @@ export const createUser = internalMutation({
       xp: 0,
       currentStreak: 0,
       longestStreak: 0,
+      isPro: false,
       streakDates: [],
     })
     return userId
@@ -73,8 +74,8 @@ export const deleteUser = internalMutation({
       .withIndex("by_userId", (q) => q.eq("userId", args.userId))
       .first()
 
-      if(user){
-        const users = await ctx.db.query("users").collect();
+    if (user) {
+      const users = await ctx.db.query("users").collect();
       for (let i = 0; i < users.length; i++) {
         const cUser = users[i];
 
@@ -82,16 +83,16 @@ export const deleteUser = internalMutation({
           const updatedFollowers = cUser.followers.filter((follower) => follower !== user.userName);
           await ctx.db.patch(cUser._id, {
             followers: updatedFollowers,
-          });  
-        } 
+          });
+        }
         if (cUser.following.includes(user.userName)) {
-          const updatedFollowing = cUser.following.filter((follower) => follower!== user.userName);
+          const updatedFollowing = cUser.following.filter((follower) => follower !== user.userName);
           await ctx.db.patch(cUser._id, {
             following: updatedFollowing,
-          }); 
+          });
         }
       }
-      }
+    }
     if (user) {
       return await ctx.db.delete(user?._id)
     }
@@ -407,3 +408,36 @@ export const getLeaderboardUsers = query({
     return users
   },
 })
+
+export const updateSubscription = internalMutation({
+  args: {
+    userId: v.string(),
+    productId: v.string(),
+    purchaseDate: v.string(),
+    expirationDate: v.string(),
+    forceExpired: v.optional(v.boolean()),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_userId", (q) => q.eq("userId", args.userId))
+      .first();
+
+    if (!user) {
+      throw new ConvexError("User not found");
+    }
+
+    const now = new Date();
+    const expiration = new Date(args.expirationDate);
+    const isPro = args.forceExpired ? false : expiration > now;
+
+    await ctx.db.patch(user._id, {
+      subscriptions: {
+        productId: args.productId,
+        purchaseDate: args.purchaseDate,
+        expirationDate: args.expirationDate,
+      },
+      isPro,
+    });
+  },
+});

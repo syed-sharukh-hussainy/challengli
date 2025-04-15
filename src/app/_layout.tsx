@@ -24,10 +24,10 @@ import LoadingLogo from "@/components/UI/LoadingLogo"
 import { useExitConfirmation } from "@/hooks/useExitConfirmation"
 import NetInfo from "@react-native-community/netinfo"
 import ActionModal from "@/components/UI/ActionModal/ActionModal"
-import { Text } from "@/components"
 import ModalText from "@/components/UI/ActionModal/ModalText"
-import { View } from "react-native"
+import { Platform, View } from "react-native"
 import ModalButton from "@/components/UI/ActionModal/ModalButton"
+import useRevenueCat from "@/hooks/useRevenueCat"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -47,6 +47,10 @@ if (!publishableKey) {
     "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env",
   )
 }
+
+const apiKey = Platform.select({
+  android: process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY!
+})
 
 const InitialLayout = () => {
   const { isLoading, isAuthenticated } = useConvexAuth()
@@ -114,12 +118,7 @@ export default function Root() {
     return () => unsubscribe()
   }, [])
 
-  // Retry button handler
-  const handleRetry = () => {
-    NetInfo.fetch().then((state) => {
-      setIsConnected(state.isConnected ?? true)
-    })
-  }
+
   useFocusEffect(
     useCallback(() => {
       if (themeScheme === "dark") {
@@ -134,8 +133,8 @@ export default function Root() {
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-        <ClerkLoaded>
-          <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+        <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+          <ClerkLoaded>
             <KeyboardProvider>
               <GestureHandlerRootView
                 style={{
@@ -145,8 +144,8 @@ export default function Root() {
                 <InitialLayout />
               </GestureHandlerRootView>
             </KeyboardProvider>
-          </ConvexProviderWithClerk>
-        </ClerkLoaded>
+          </ClerkLoaded>
+        </ConvexProviderWithClerk>
       </ClerkProvider>
 
       <ActionModal visible={showExitPopup}>
