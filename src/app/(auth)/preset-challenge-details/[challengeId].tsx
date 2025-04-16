@@ -8,7 +8,6 @@ import DetailsHeader from "@/components/Challenges/DetailsHeader"
 import ActivityItem from "@/components/Challenges/ActivityItem"
 import FooterButton from "@/components/UI/FooterButton"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
-import { useAppTheme } from "@/utils/useAppTheme"
 import UpgradePro from "@/components/UI/UpgradePro"
 const PresetChallengeDetails = () => {
   const { challengeId } = useLocalSearchParams<{
@@ -30,7 +29,7 @@ const PresetChallengeDetails = () => {
       }}
     >
       <TopBar onBackButtonPressed={() => router.back()} />
-      {!challenge ? (
+      {!challenge || !user || !category ? (
         <LoadingAnimation />
       ) : (
         <>

@@ -35,7 +35,7 @@ const CreatedChallengeDetails = () => {
         flex: 1,
       }}
     >
-      {!challenge ? (
+      {!user || !challenge || !category ? (
         <LoadingAnimation />
       ) : (
         <>

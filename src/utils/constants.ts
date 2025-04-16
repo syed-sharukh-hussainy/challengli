@@ -1,15 +1,15 @@
 export const ONBOARDING_SCREENS = [
   {
-    title: "Create Lasting Habits",
+    title: "Level Up Your Life",
     imageUrl: "boarding1.png",
     description:
       "It takes 21 days to build a habit. Pick your challenge and start transforming your life today!",
   },
   {
-    title: "Customize Your Challenge",
+    title: "Your Habit, Your Pace",
     imageUrl: "boarding2.png",
     description:
-      "Choose a 14-day challenge for a quick start or commit to 21 days for deeper habit formation.",
+      "Shape your habits, your way. Select a shorter 14-day challenge for a quick win or commit to 21 days to solidify lasting change.",
   },
   {
     title: "Track & Stay Consistent",
@@ -563,7 +563,7 @@ const CATEGORIES = [
 const CHALLENGES = [
   {
     title: "Morning Energy Boost",
-    categoryId: "js70wgkkxvv2anhrghm05dnaqd7dtwhf",
+    categoryId: "js7a74tggzbfdzfz6kevqw2a297e40ee",
     description:
       "Start your day with habits that increase energy and productivity. This 14-day challenge will help you establish a morning routine that energizes you for the day ahead.",
     duration: 14,
@@ -731,7 +731,7 @@ const CHALLENGES = [
   },
   {
     title: "Wake Up Like a Champion",
-    categoryId: "js70wgkkxvv2anhrghm05dnaqd7dtwhf",
+    categoryId: "js7a74tggzbfdzfz6kevqw2a297e40ee",
     description:
       "Build a powerful morning routine for lasting energy. This 21-day challenge will help you establish habits that energize you and set a positive tone for the day ahead.",
     duration: 21,
@@ -971,9 +971,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Distraction Detox",
-    categoryId: "j97ac3m3ecsme0jkw2wcfq34pd7e5pst",
+    categoryId: "js78dg6cdneg44d4rgeb61gxbd7e5e12",
     description:
       "Reduce distractions and improve mental clarity. This 14-day challenge will help you cultivate focus and create a more productive environment.",
     duration: 14,
@@ -1141,7 +1142,7 @@ const CHALLENGES = [
   },
   {
     title: "Deep Focus Mastery",
-    categoryId: "j97ac3m3ecsme0jkw2wcfq34pd7e5pst",
+    categoryId: "js78dg6cdneg44d4rgeb61gxbd7e5e12",
     description:
       "Train your brain to sustain attention and concentration. This 21-day challenge will help you develop habits that enhance your focus and productivity.",
     duration: 21,
@@ -1384,9 +1385,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Daily Movement Challenge",
-    categoryId: "js79p7rges1f382r6xsae6tzad7dv5rs",
+    categoryId: "js7c2htkjjv2bdvdhdhqm8tq4n7e42fw",
     description:
       "Incorporate movement into everyday life. This 14-day challenge will help you build a habit of staying active and energized throughout your day.",
     duration: 14,
@@ -1551,7 +1553,7 @@ const CHALLENGES = [
   },
   {
     title: "Strength & Stamina",
-    categoryId: "js79p7rges1f382r6xsae6tzad7dv5rs",
+    categoryId: "js7c2htkjjv2bdvdhdhqm8tq4n7e42fw",
     description:
       "Build endurance, strength, and flexibility. This 21-day challenge will help you develop a balanced fitness routine that enhances your overall physical health.",
     duration: 21,
@@ -1794,9 +1796,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Nature Connection",
-    categoryId: "js70kmp2cffdgmzakhx6vtt5qs7dtww5",
+    categoryId: "js7cat0ay89vbwhqhgw6nvrhws7e4gm9",
     description:
       "Spend mindful time outdoors daily. This 14-day challenge encourages you to connect with nature and enjoy the benefits of being outside.",
     duration: 14,
@@ -1961,7 +1964,7 @@ const CHALLENGES = [
   },
   {
     title: "Outdoor Explorer",
-    categoryId: "js70kmp2cffdgmzakhx6vtt5qs7dtww5",
+    categoryId: "js7cat0ay89vbwhqhgw6nvrhws7e4gm9",
     description:
       "Engage in different outdoor activities each day. This 21-day challenge encourages you to explore the great outdoors and discover new ways to enjoy nature.",
     duration: 21,
@@ -2204,9 +2207,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Social Connection",
-    categoryId: "js7bn1hb6c46dx69h2jn0re3vn7dtnh4",
+    categoryId: "js76y1g0n84jcz47ktx0fvhwq17e59nq",
     description:
       "Strengthen relationships with small daily actions. This 14-day challenge encourages you to engage with others and build meaningful connections.",
     duration: 14,
@@ -2371,7 +2375,7 @@ const CHALLENGES = [
   },
   {
     title: "Meaningful Conversations",
-    categoryId: "js7bn1hb6c46dx69h2jn0re3vn7dtnh4",
+    categoryId: "js76y1g0n84jcz47ktx0fvhwq17e59nq",
     description:
       "Deepen social bonds and improve communication skills. This 21-day challenge encourages you to engage in meaningful conversations with others.",
     duration: 21,
@@ -2537,9 +2541,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Self Expression",
-    categoryId: "js7bwakmz4fqn75xg5kx0dkq2d7dvkph",
+    categoryId: "js7frq5r7c2gne8qjbj96xr3057e5gny",
     description:
       "Discover and express your unique voice. This 14-day challenge encourages you to explore different forms of self-expression and creativity.",
     duration: 14,
@@ -2707,7 +2712,7 @@ const CHALLENGES = [
   },
   {
     title: "Creativity Unleashed",
-    categoryId: "js7bwakmz4fqn75xg5kx0dkq2d7dvkph",
+    categoryId: "js7frq5r7c2gne8qjbj96xr3057e5gny",
     description:
       "Daily creative exercises to unlock your imagination. This 21-day challenge encourages you to explore different forms of creativity and express yourself freely.",
     duration: 21,
@@ -2950,9 +2955,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Confidence Booster",
-    categoryId: "js754fdmjxvqgm5v8ghz5zfpm57dvm25",
+    categoryId: "js7b70dh825r8xa10qrybmjf9h7e4hj7",
     description:
       "Small steps to build self-esteem and courage. This 14-day challenge encourages you to take actionable steps to boost your confidence and embrace challenges.",
     duration: 14,
@@ -3120,7 +3126,7 @@ const CHALLENGES = [
   },
   {
     title: "Fearless Living",
-    categoryId: "js754fdmjxvqgm5v8ghz5zfpm57dvm25",
+    categoryId: "js7b70dh825r8xa10qrybmjf9h7e4hj7",
     description:
       "Face a new fear or challenge daily. This 21-day challenge encourages you to step out of your comfort zone and build resilience.",
     duration: 21,
@@ -3360,9 +3366,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Positivity Challenge",
-    categoryId: "js70tf3meq3ya3smvta77m3n597dv13n",
+    categoryId: "js7bhvqt5f0hxnnqc4hbhastv17e4gxk",
     description:
       "Shift your mindset to focus on joy and gratitude. This 14-day challenge encourages you to cultivate a positive outlook on life.",
     duration: 14,
@@ -3530,7 +3537,7 @@ const CHALLENGES = [
   },
   {
     title: "Happiness Habits",
-    categoryId: "js70tf3meq3ya3smvta77m3n597dv13n",
+    categoryId: "js7bhvqt5f0hxnnqc4hbhastv17e4gxk",
     description:
       "Adopt daily habits for long-term happiness. This 21-day challenge encourages you to incorporate practices that promote joy and well-being into your daily life.",
     duration: 21,
@@ -3696,9 +3703,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Acts of Kindness",
-    categoryId: "js7d8c8a58bjp7405ggd4ckm0x7dvwcg",
+    categoryId: "js767vnc2wygq01mxgbe620pas7e4zf4",
     description:
       "Spread joy and positivity through small, meaningful acts of kindness. Cultivate compassion and make a positive impact on the lives of others in just 14 days.",
     duration: 14,
@@ -3863,7 +3871,7 @@ const CHALLENGES = [
   },
   {
     title: "Giving & Gratitude Challenge",
-    categoryId: "js7d8c8a58bjp7405ggd4ckm0x7dvwcg",
+    categoryId: "js767vnc2wygq01mxgbe620pas7e4zf4",
     description:
       "Cultivate compassion and generosity through daily acts of giving and gratitude. Deepen your appreciation for life's blessings and make a positive impact on the world around you.",
     duration: 21,
@@ -4106,9 +4114,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Bond with Your Pet",
-    categoryId: "js7bhg4gk8wpym4jqf9v1aaw457dv7sn",
+    categoryId: "js788g0tyyemg7z9kgkae4hmjd7e4661",
     description:
       "Strengthen your bond with your furry, scaled, or feathered friend through daily activities designed to foster connection, trust, and love.",
     duration: 14,
@@ -4273,7 +4282,7 @@ const CHALLENGES = [
   },
   {
     title: "Fun & Training with Pets",
-    categoryId: "js7bhg4gk8wpym4jqf9v1aaw457dv7sn",
+    categoryId: "js788g0tyyemg7z9kgkae4hmjd7e4661",
     description:
       "Engage in daily interactive and pet-friendly activities to strengthen your bond, enhance training, and create lasting memories with your beloved animal companion.",
     duration: 21,
@@ -4513,9 +4522,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Healthy Eating Habits",
-    categoryId: "js79f6e0qv5a9krnqrakyqxas97dvx7n",
+    categoryId: "js79th26jw8ejn8ve69kekw2zd7e4gq6",
     description:
       "Embark on a 14-day journey to build healthy eating habits through simple, delicious, and sustainable changes to your diet.",
     duration: 14,
@@ -4683,7 +4693,7 @@ const CHALLENGES = [
   },
   {
     title: "Cooking",
-    categoryId: "js79f6e0qv5a9krnqrakyqxas97dvx7n",
+    categoryId: "js79th26jw8ejn8ve69kekw2zd7e4gq6",
     description:
       "Expand your culinary skills and discover new flavors by cooking a new recipe or meal each day for 21 days.",
     duration: 21,
@@ -4926,9 +4936,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Social Media Break",
-    categoryId: "js7ar1z14hyzn4zyk7ee5g3ezs7dtmje",
+    categoryId: "js7d32dhm1brz4r16w39czpej17e5t71",
     description:
       "Reduce your social media screen time and rediscover the joys of real-world engagement. Reclaim your time, improve your focus, and boost your well-being in just 14 days.",
     duration: 14,
@@ -5096,7 +5107,7 @@ const CHALLENGES = [
   },
   {
     title: "Digital Minimalism",
-    categoryId: "js7ar1z14hyzn4zyk7ee5g3ezs7dtmje",
+    categoryId: "js7d32dhm1brz4r16w39czpej17e5t71",
     description:
       "Reset your relationship with technology by intentionally reducing digital clutter and focusing on what truly adds value to your life. Embrace a more mindful and intentional approach to technology use over 21 days.",
     duration: 21,
@@ -5339,9 +5350,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Smart Spending Habits",
-    categoryId: "js79yqyrtk1zceq5qqnp04pqen7dvxzs",
+    categoryId: "js7a45sr3fj0vxsw6tsmn8s6297e4mkf",
     description:
       "Cultivate smart spending habits with daily actions to save money wisely, build financial awareness, and achieve your financial goals in just 14 days.",
     duration: 14,
@@ -5509,7 +5521,7 @@ const CHALLENGES = [
   },
   {
     title: "Financial Wellness",
-    categoryId: "js79yqyrtk1zceq5qqnp04pqen7dvxzs",
+    categoryId: "js7a45sr3fj0vxsw6tsmn8s6297e4mkf",
     description:
       "Build long-term financial discipline, gain control over your money, and establish a solid foundation for financial security in this 21-day challenge.",
     duration: 21,
@@ -5749,9 +5761,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Skill Learning",
-    categoryId: "js7frv9xxpp6j8bgwhd3hk3x0s7dt3ba",
+    categoryId: "js7cayz73xwytbzgvpwtvsm5f97e41rr",
     description:
       "Dedicate time each day to learn a new skill or hobby, expanding your knowledge, boosting your creativity, and enhancing your personal growth in just 14 days.",
     duration: 14,
@@ -5916,7 +5929,7 @@ const CHALLENGES = [
   },
   {
     title: "Knowledge Expansion",
-    categoryId: "js7frv9xxpp6j8bgwhd3hk3x0s7dt3ba",
+    categoryId: "js7cayz73xwytbzgvpwtvsm5f97e41rr",
     description:
       "Embark on a journey of continuous learning by exploring diverse fields of knowledge. Expand your horizons, stimulate your mind, and cultivate a lifelong love for learning in just 21 days.",
     duration: 21,
@@ -6159,9 +6172,10 @@ const CHALLENGES = [
       },
     ],
   },
+
   {
     title: "Stress Relief Challenge",
-    categoryId: "js70nyvpceam8ve6avcdjxvm757dt94z",
+    categoryId: "js7cgpw7vxnhye60s56aw8jwa57e5cc8",
     description:
       "Reduce stress and cultivate inner peace with simple mindfulness techniques. Practice daily exercises to enhance awareness, manage anxiety, and promote overall well-being in just 14 days.",
     duration: 14,
@@ -6335,7 +6349,7 @@ const CHALLENGES = [
   },
   {
     title: "Mindfulness & Meditation",
-    categoryId: "js70nyvpceam8ve6avcdjxvm757dt94z",
+    categoryId: "js7cgpw7vxnhye60s56aw8jwa57e5cc8",
     description:
       "Build a lasting habit of daily mindful living through guided meditations and awareness exercises. Cultivate inner peace, reduce stress, and enhance your overall well-being in just 21 days.",
     duration: 21,

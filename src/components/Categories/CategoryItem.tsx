@@ -9,6 +9,7 @@ import useRevenueCat from "@/hooks/useRevenueCat"
 import { router } from "expo-router"
 import { useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
+
 type Props = {
   id: Id<"categories">
   title: string
@@ -40,7 +41,7 @@ const CategoryItem = ({ id, title, image, description, index, isFree }: Props) =
           alignItems: "center",
           gap: 8,
         }}>
-          {isLocked && <FontAwesome6 name="lock" size={18} color={theme.colors.palette.gray200} />}
+          {isLocked && <FontAwesome6 name="lock" size={18} color={theme.isDark ? theme.colors.palette.gray200 : "#9ca3af"} />}
           <Text size="sm" weight="bold" numberOfLines={1} style={themed($title)}>
             {title}
           </Text>
