@@ -16,15 +16,17 @@ import ActionModal from "@/components/UI/ActionModal/ActionModal"
 import ModalButton from "@/components/UI/ActionModal/ModalButton"
 import notifee from "@notifee/react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import UpgradePro from "@/components/UI/UpgradePro"
 
 const DayActivity = () => {
   const { challengeId, query } = useLocalSearchParams<{
     challengeId: string
     query: string
   }>()
-  const { themed } = useAppTheme()
+  const { theme, themed } = useAppTheme()
   const [isLoading, setIsLoading] = useState(false)
   const [showCongratsModal, setShowCongratsModal] = useState(false)
+  const user = useQuery(api.users.getUser, {});
   const addXPToUsersLeaderboard = useMutation(api.leaderboard.addXPToUsersLeaderboard)
   const updateAchievement = useMutation(api.achievements.updateAchievement)
   const updateStreak = useMutation(api.users.updateStreak)
@@ -34,12 +36,16 @@ const DayActivity = () => {
   const challenge = useQuery(api.userChallenges.getChallengeByChallengeId, {
     challengeId,
   })
+  const category = useQuery(api.categories.getCategoryById, {
+    categoryId: challenge?.categoryId!
+  })
   const activity = useMemo(() => {
     return challenge?.activities?.find(
       (activity) => format(activity.date!, "yyyy-MM-dd") === todaysDate,
     )
   }, [challenge, todaysDate])
   const color = useMemo(() => challenge?.color, [challenge])
+  const isLocked = !user?.isPro && !category?.isFree;
 
   const handleNotificationUpdate = async () => {
     const storageKey = `challenge_${challenge?._id}_notifications`
@@ -68,28 +74,32 @@ const DayActivity = () => {
 
   const onFinishDayActivity = useCallback(async () => {
     try {
-      setIsLoading(true)
+      if (!isLocked) {
+        setIsLoading(true)
 
-      const updates = [
-        updateActivityStatus({
-          challengeId,
-          date: new Date(query).toISOString(),
-        }),
-        handleNotificationUpdate(),
-        addXPToUsersLeaderboard({ type: "weekly", xp: 10 }),
-        addXPToUsersLeaderboard({ type: "all time", xp: 10 }),
-        addXpToUser({ xp: 10 }),
-        updateStreak({ activityDate: todaysDate }),
-        updateAchievement({ userChallengeId: challengeId }),
-      ]
-      await Promise.all(updates)
-      setShowCongratsModal(true)
+        const updates = [
+          updateActivityStatus({
+            challengeId,
+            date: new Date(query).toISOString(),
+          }),
+          handleNotificationUpdate(),
+          addXPToUsersLeaderboard({ type: "weekly", xp: 10 }),
+          addXPToUsersLeaderboard({ type: "all time", xp: 10 }),
+          addXpToUser({ xp: 10 }),
+          updateStreak({ activityDate: todaysDate }),
+          updateAchievement({ userChallengeId: challengeId }),
+        ]
+        await Promise.all(updates)
+        setShowCongratsModal(true)
+      } else {
+        router.push('/(auth)/premium')
+      }
     } catch (error) {
       console.error(error)
     } finally {
       setIsLoading(false)
     }
-  }, [challengeId, activity, query])
+  }, [isLocked, challengeId, activity, query])
 
   return (
     <Screen
@@ -99,80 +109,84 @@ const DayActivity = () => {
       }}
     >
       <TopBar onBackButtonPressed={() => router.back()} />
-      {!activity ? (
+      {!activity || !user || !category ? (
         <LoadingAnimation />
       ) : (
         <>
-          <View style={themed($container)}>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{
-                paddingVertical: 20,
-              }}
-            >
-              <View style={$headerText}>
-                <Text
-                  size="xs"
-                  weight="semiBold"
-                  style={{
-                    color: color?.primary,
-                    textTransform: "uppercase",
+          {
+            isLocked ?
+              <UpgradePro /> :
+              <><View style={themed($container)}>
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{
+                    paddingVertical: 20,
                   }}
                 >
-                  {challenge?.title}
-                </Text>
-                <Text
-                  weight="semiBold"
-                  size="md"
-                  style={{
-                    marginTop: 16,
-                  }}
-                >
-                  Day {activity?.day}. {activity?.title}
-                </Text>
-                <Text weight="normal" size="sm">
-                  {activity?.task}
-                </Text>
-              </View>
-              <Accordion
-                title="Benefits"
-                subtitle="What you gain from this activity"
-                content={activity?.pros || ""}
-                isList={false}
-                challengeColor={color?.primary}
-                isInitExpanded={activity?.status === "IN_PROGRESS"}
-                imageKey="benefits.png"
-              />
-              {activity?.day !== 1 && (
-                <Accordion
-                  title="Don't Forget"
-                  subtitle="A gentle nudge to keep up with past tasks"
-                  content="Don't forget to complete previous tasks for better progress!"
-                  isList={false}
-                  challengeColor={color?.primary}
-                  isInitExpanded={activity?.status === "IN_PROGRESS"}
-                  imageKey="reminder.png"
-                />
-              )}
+                  <View style={$headerText}>
+                    <Text
+                      size="xs"
+                      weight="semiBold"
+                      style={{
+                        color: color?.primary,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {challenge?.title}
+                    </Text>
+                    <Text
+                      weight="semiBold"
+                      size="md"
+                      style={{
+                        marginTop: 16,
+                      }}
+                    >
+                      Day {activity?.day}. {activity?.title}
+                    </Text>
+                    <Text weight="normal" size="sm">
+                      {activity?.task}
+                    </Text>
+                  </View>
+                  <Accordion
+                    title="Benefits"
+                    subtitle="What you gain from this activity"
+                    content={activity?.pros || ""}
+                    isList={false}
+                    challengeColor={color?.primary}
+                    isInitExpanded={activity?.status === "IN_PROGRESS"}
+                    imageKey="benefits.png"
+                  />
+                  {activity?.day !== 1 && (
+                    <Accordion
+                      title="Don't Forget"
+                      subtitle="A gentle nudge to keep up with past tasks"
+                      content="Don't forget to complete previous tasks for better progress!"
+                      isList={false}
+                      challengeColor={color?.primary}
+                      isInitExpanded={activity?.status === "IN_PROGRESS"}
+                      imageKey="reminder.png"
+                    />
+                  )}
 
-              <Accordion
-                title="Quick Tips"
-                subtitle="Simple tips for better results"
-                content={activity?.tips || []}
-                isList={true}
-                challengeColor={color?.primary}
-                isInitExpanded={false}
-                imageKey="tips.png"
-              />
-            </ScrollView>
-          </View>
-          <DayActivityFooter
-            isLoading={isLoading}
-            backgroundColor={color?.primary!}
-            onPress={onFinishDayActivity}
-            status={activity.status!}
-            day={activity.day}
-          />
+                  <Accordion
+                    title="Quick Tips"
+                    subtitle="Simple tips for better results"
+                    content={activity?.tips || []}
+                    isList={true}
+                    challengeColor={color?.primary}
+                    isInitExpanded={false}
+                    imageKey="tips.png"
+                  />
+                </ScrollView>
+              </View>
+                <DayActivityFooter
+                  isLoading={isLoading}
+                  backgroundColor={color?.primary!}
+                  onPress={onFinishDayActivity}
+                  status={activity.status!}
+                  day={activity.day}
+                /></>
+          }
         </>
       )}
       <ActionModal visible={showCongratsModal}>
@@ -230,6 +244,28 @@ const DayActivity = () => {
           />
         </View>
       </ActionModal>
+      {/* <ActionModal visible={!isLocked}>
+        <ModalText title="You are not a Pro user" subtitle="This content is available to Pro users only" />
+        <View
+          style={{
+            marginTop: 24,
+          }}
+        >
+          <ModalButton
+            label="Upgrade Pro"
+            onPress={() => {
+              router.push('/(auth)/premium')
+            }}
+            isLoading={isLoading}
+            style={themed((theme) => ({
+              backgroundColor: theme.colors.palette.primary,
+            }))}
+            labelStyle={themed((theme) => ({
+              color: theme.colors.text,
+            }))}
+          />
+        </View>
+      </ActionModal> */}
     </Screen>
   )
 }

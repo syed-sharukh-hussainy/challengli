@@ -15,12 +15,13 @@ type Props = {
   description: string
   image: string
   index: number,
+  isFree: boolean,
 }
 
-const CategoryItem = ({ id, title, image, description, index }: Props) => {
-  const { themed } = useAppTheme()
+const CategoryItem = ({ id, title, image, description, index, isFree }: Props) => {
+  const { theme, themed } = useAppTheme()
   const user = useQuery(api.users.getUser, {});
-  const isLocked = user?.isPro === false && index > 0;
+  const isLocked = !isFree && !user?.isPro;
   return (
     <TouchableOpacity
       onPress={async () => {
@@ -39,7 +40,7 @@ const CategoryItem = ({ id, title, image, description, index }: Props) => {
           alignItems: "center",
           gap: 8,
         }}>
-          {isLocked && <FontAwesome6 name="lock" size={18} color="#666" />}
+          {isLocked && <FontAwesome6 name="lock" size={18} color={theme.colors.palette.gray200} />}
           <Text size="sm" weight="bold" numberOfLines={1} style={themed($title)}>
             {title}
           </Text>

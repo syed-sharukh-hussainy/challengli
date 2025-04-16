@@ -9,6 +9,8 @@ import { useAuth } from "@clerk/clerk-expo"
 import Spinner from "@/components/UI/Spinner"
 import { openLinkInBrowser } from "@/utils/openLinkInBrowser"
 import { clearAllNotifications } from "@/utils/notificationHelper"
+import { View } from "react-native"
+import ProComponent from "@/components/UI/ProComponent"
 
 const Settings = () => {
   const { signOut } = useAuth()
@@ -82,6 +84,7 @@ const Settings = () => {
           padding: 20,
         }}
       >
+        <ProComponent />
         <Text size="lg" weight="semiBold" style={{ paddingBottom: 16 }}>
           Account
         </Text>

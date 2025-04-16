@@ -84,7 +84,7 @@ export const createChallenge = mutation({
     description: v.string(),
     duration: v.number(),
     image: v.string(),
-    categoryId: v.string(),
+    categoryId: v.id("categories"),
     color: v.object({
       primary: v.string(),
       secondary: v.string(),

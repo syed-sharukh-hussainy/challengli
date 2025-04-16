@@ -10,10 +10,6 @@ import { useQuery } from "convex/react";
 
 const apiKey = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY || "";
 
-enum Membership {
-    monthly = 'challengli.subscription:challengli-subscription-base',
-    yearly = 'challengli.subscription:challengli-subscription-yearly',
-}
 
 const useRevenueCat = () => {
     const [currentOffering, setCurrentOffering] = useState<PurchasesOffering | null>(null);

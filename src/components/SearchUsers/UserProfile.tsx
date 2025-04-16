@@ -1,4 +1,4 @@
-import { View, Pressable, ViewStyle } from "react-native"
+import { View, Pressable, ViewStyle, TouchableOpacity } from "react-native"
 import React, { useCallback, useState } from "react"
 import { router } from "expo-router"
 import { AutoImage } from "../AutoImage"
@@ -91,7 +91,13 @@ const UserProfile = ({ user, index, length }: Props) => {
           </Text>
         </View>
       </View>
-      <Pressable onPress={() => onFollowFriends(user.userName)} style={themed($followBtn)}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => {
+        if(user.isPro){
+          onFollowFriends(user.userName)
+        } else {
+          router.push('/(auth)/premium')
+        }
+      }} style={themed($followBtn)}>
         {isFollowing[user.userName] ? (
           <Spinner size={14} color="white" />
         ) : me?.following.includes(user.userName) ? (
@@ -99,7 +105,7 @@ const UserProfile = ({ user, index, length }: Props) => {
         ) : (
           <FontAwesome6 name="user-plus" size={14} color="white" />
         )}
-      </Pressable>
+      </TouchableOpacity>
     </Pressable>
   )
 }

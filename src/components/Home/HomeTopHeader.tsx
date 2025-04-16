@@ -41,14 +41,20 @@ const HomeTopHeader = () => {
           <TouchableOpacity
             activeOpacity={0.7}
             style={themed($headerAction)}
-            onPress={() => router.push("/(auth)/calendar-streak")}
+            onPress={() => {
+              if (user?.isPro) {
+                router.push("/(auth)/calendar-streak")
+              } else {
+                router.push('/(auth)/premium')
+              }
+            }}
           >
             <AutoImage source={streak} style={{ width: 24, height: 24 }} />
             <Text weight="bold" size="xs">
               {user?.currentStreak}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} style={themed($headerAction)} onPress={() => {}}>
+          <TouchableOpacity activeOpacity={0.7} style={themed($headerAction)} onPress={() => { }}>
             <AutoImage source={xpPoints} style={{ width: 24, height: 24 }} />
             {!user ? (
               <Spinner size={14} />
@@ -86,7 +92,7 @@ const $title: ThemedStyle<TextStyle> = ({ colors }) => ({
 const $subtitle: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.textDim,
 })
-const $headerActionButtons: ThemedStyle<ViewStyle> = ({}) => ({
+const $headerActionButtons: ThemedStyle<ViewStyle> = ({ }) => ({
   flexDirection: "row",
   gap: 8,
 })

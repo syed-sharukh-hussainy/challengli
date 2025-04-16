@@ -41,7 +41,6 @@ const Friends = () => {
     [user?.id],
   )
 
-  console.log(friends)
   return (
     <Screen
       safeAreaEdges={["top"]}

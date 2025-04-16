@@ -470,78 +470,93 @@ const CATEGORIES = [
     description:
       "Boost your mornings with energizing habits for all-day vitality.",
     image: "category-energize-your-day.png",
+    isFree: true,
   },
   {
     title: "Focus & Concentration",
     description:
       "Sharpen your mind and enhance focus with mental clarity challenges.",
     image: "category-focus-concentration.png",
+    isFree: false,
   },
   {
     title: "Move Your Body",
     description:
       "Stay active and enjoy movement with fitness-based challenges.",
     image: "category-move-your-body.png",
+    isFree: false,
   },
   {
     title: "Step Outside",
     description: "Reconnect with nature and explore the outdoors.",
     image: "category-step-outside.png",
+    isFree: false,
   },
   {
     title: "Connect & Engage",
     description: "Build meaningful relationships through social challenges.",
     image: "category-connect-engage.png",
+    isFree: false,
   },
   {
     title: "Express Yourself",
     description: "Unlock creativity and explore self-expression.",
     image: "category-express-yourself.png",
+    isFree: false,
   },
   {
     title: "Embrace the Challenge",
     description: "Push limits and step outside your comfort zone.",
     image: "category-embrace-the-challenge.png",
+    isFree: false,
   },
   {
     title: "Cultivate Joy",
     description: "Add happiness and positivity to your daily life.",
     image: "category-cultivate-joy.png",
+    isFree: false,
   },
   {
     title: "Spread Kindness",
     description: "Perform acts of kindness and bring joy to others.",
     image: "category-spread-kindness.png",
+    isFree: false,
   },
   {
     title: "Pet Pal Adventures",
     description: "Bond with your pets through fun and engaging activities.",
     image: "category-pet-pal-adventures.png",
+    isFree: false,
   },
   {
     title: "Culinary Creations",
     description: "Discover new recipes and explore creative cooking.",
     image: "category-culinary-creations.png",
+    isFree: false,
   },
   {
     title: "Digital Detox",
     description: "Take a break from screens and enjoy tech-free moments.",
     image: "category-digitals-detox.png",
+    isFree: false,
   },
   {
     title: "Savvy Spending",
     description: "Build smart financial habits and save wisely.",
     image: "category-savvy-spending.png",
+    isFree: false,
   },
   {
     title: "Learn Something New",
     description: "Expand knowledge and develop new skills.",
     image: "category-learn-something-new.png",
+    isFree: false,
   },
   {
     title: "Mindful Moments",
     description: "Practice mindfulness and reduce stress.",
     image: "category-mindful-moments.png",
+    isFree: false,
   },
 ];
 
@@ -958,7 +973,7 @@ const CHALLENGES = [
   },
   {
     title: "Distraction Detox",
-    categoryId: "js7fr3x9x7n1jcnwakf3wt4bgn7dv1bb",
+    categoryId: "j97ac3m3ecsme0jkw2wcfq34pd7e5pst",
     description:
       "Reduce distractions and improve mental clarity. This 14-day challenge will help you cultivate focus and create a more productive environment.",
     duration: 14,
@@ -1126,7 +1141,7 @@ const CHALLENGES = [
   },
   {
     title: "Deep Focus Mastery",
-    categoryId: "js7fr3x9x7n1jcnwakf3wt4bgn7dv1bb",
+    categoryId: "j97ac3m3ecsme0jkw2wcfq34pd7e5pst",
     description:
       "Train your brain to sustain attention and concentration. This 21-day challenge will help you develop habits that enhance your focus and productivity.",
     duration: 21,

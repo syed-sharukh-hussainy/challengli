@@ -6,8 +6,8 @@ import CategoryItem from "@/components/Categories/CategoryItem"
 import TopBar from "@/components/UI/TopBar"
 import { View } from "react-native"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
-import { router, useFocusEffect } from "expo-router"
-import { useCallback, useEffect, useState } from "react"
+import { router } from "expo-router"
+
 
 const CategoriesScreen = () => {
   const categories = useQuery(api.categories.getAllCategories, {})
@@ -46,6 +46,7 @@ const CategoriesScreen = () => {
               <CategoryItem
                 index={index}
                 id={item._id}
+                isFree={item.isFree}
                 title={item.title}
                 description={item.description}
                 image={item.image}
