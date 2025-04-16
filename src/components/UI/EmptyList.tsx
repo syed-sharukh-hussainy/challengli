@@ -12,8 +12,8 @@ const EmptyList = () => {
       <SmartImage
         imgKey="empty.png"
         style={{
-          width: 84,
-          height: 84,
+          width: 74,
+          height: 74,
         }}
       />
       <Text size="md" weight="medium" style={themed($title)}>
@@ -38,6 +38,7 @@ const $title: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.text,
   paddingVertical: spacing.xxs,
   textAlign: "center",
+  marginTop: spacing.xs
 })
 
 const $subtitle: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
