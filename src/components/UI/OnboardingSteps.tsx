@@ -48,7 +48,7 @@ const OnboardingSteps = () => {
               height: 200,
             }}
           />
-          <Text preset="bold" size="lg" style={themed($title)}>
+          <Text weight="bold" size="lg" style={themed($title)}>
             {title}
           </Text>
           <Text size="sm" style={themed($description)}>
