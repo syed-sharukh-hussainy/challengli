@@ -20,7 +20,7 @@ const ProComponent = () => {
                 <Text style={themed(({ colors }) => ({ color: colors.textDim }))} size="xxs" weight="semiBold">Current Plan</Text>
                 <Text weight="bold">{user.subscriptions?.productId === "flamingoo_challengli_subscriptions:challengli-pro-monthly" ? "Monthly Pro" : "Annual Pro"}</Text>
             </View>
-        </TouchableOpacity>;
+        </TouchableOpacity>
     }
     return (
         <TouchableOpacity activeOpacity={0.7} onPress={() => router.push('/(auth)/premium')} style={themed($container)}>

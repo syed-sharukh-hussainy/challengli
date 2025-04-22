@@ -17,13 +17,14 @@ import ModalButton from "@/components/UI/ActionModal/ModalButton"
 import notifee from "@notifee/react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import UpgradePro from "@/components/UI/UpgradePro"
+import { Id } from "convex/_generated/dataModel"
 
 const DayActivity = () => {
   const { challengeId, query } = useLocalSearchParams<{
-    challengeId: string
+    challengeId: Id<"userChallenges">
     query: string
   }>()
-  const { theme, themed } = useAppTheme()
+  const { themed } = useAppTheme()
   const [isLoading, setIsLoading] = useState(false)
   const [showCongratsModal, setShowCongratsModal] = useState(false)
   const user = useQuery(api.users.getUser, {});
@@ -33,7 +34,7 @@ const DayActivity = () => {
   const addXpToUser = useMutation(api.users.addXpToUser)
   const updateActivityStatus = useMutation(api.userChallenges.updateDayActivityStatus)
   const todaysDate = format(query, "yyyy-MM-dd")
-  const challenge = useQuery(api.userChallenges.getChallengeByChallengeId, {
+  const challenge = useQuery(api.userChallenges.getChallengeById, {
     challengeId,
   })
   const category = useQuery(api.categories.getCategoryById, {
@@ -45,8 +46,7 @@ const DayActivity = () => {
     )
   }, [challenge, todaysDate])
   const color = useMemo(() => challenge?.color, [challenge])
-  const isLocked = !user?.isPro && !category?.isFree;
-
+  const isLocked = category ? !user?.isPro && !category?.isFree : false;
   const handleNotificationUpdate = async () => {
     const storageKey = `challenge_${challenge?._id}_notifications`
     const storedNotifications = await AsyncStorage.getItem(storageKey)
@@ -109,7 +109,7 @@ const DayActivity = () => {
       }}
     >
       <TopBar onBackButtonPressed={() => router.back()} />
-      {!activity || !user || !category ? (
+      {!activity || !user ? (
         <LoadingAnimation />
       ) : (
         <>
@@ -147,7 +147,7 @@ const DayActivity = () => {
                       {activity?.task}
                     </Text>
                   </View>
-                  <Accordion
+                  {activity.pros && <Accordion
                     title="Benefits"
                     subtitle="What you gain from this activity"
                     content={activity?.pros || ""}
@@ -155,7 +155,7 @@ const DayActivity = () => {
                     challengeColor={color?.primary}
                     isInitExpanded={activity?.status === "IN_PROGRESS"}
                     imageKey="benefits.png"
-                  />
+                  />}
                   {activity?.day !== 1 && (
                     <Accordion
                       title="Don't Forget"
@@ -168,7 +168,7 @@ const DayActivity = () => {
                     />
                   )}
 
-                  <Accordion
+                  {activity.tips.length !== 0 && <Accordion
                     title="Quick Tips"
                     subtitle="Simple tips for better results"
                     content={activity?.tips || []}
@@ -176,7 +176,7 @@ const DayActivity = () => {
                     challengeColor={color?.primary}
                     isInitExpanded={false}
                     imageKey="tips.png"
-                  />
+                  />}
                 </ScrollView>
               </View>
                 <DayActivityFooter

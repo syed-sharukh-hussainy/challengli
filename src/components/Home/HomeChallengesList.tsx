@@ -68,7 +68,7 @@ const HomeChallengesList = () => {
         renderItem={({ item, index }) => (
           <HomeChallengesListItem
             title={item.activity.title}
-            userChallengeId={item.challengeId}
+            userChallengeId={item._id}
             activity={item.activity}
             color={item.color}
             duration={item.duration}

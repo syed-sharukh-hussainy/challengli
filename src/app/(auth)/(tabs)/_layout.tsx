@@ -9,6 +9,7 @@ const TabsLayout = () => {
         options={{
           title: "Home",
           headerShown: false,
+
         }}
       />
       <Tabs.Screen
@@ -16,6 +17,7 @@ const TabsLayout = () => {
         options={{
           title: "Challenges",
           headerShown: false,
+
         }}
       />
       <Tabs.Screen
@@ -23,6 +25,7 @@ const TabsLayout = () => {
         options={{
           title: "Leaderboard",
           headerShown: false,
+
         }}
       />
       <Tabs.Screen
@@ -30,6 +33,7 @@ const TabsLayout = () => {
         options={{
           title: "Profile",
           headerShown: false,
+
         }}
       />
     </Tabs>

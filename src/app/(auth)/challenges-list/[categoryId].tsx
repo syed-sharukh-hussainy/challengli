@@ -21,10 +21,11 @@ const ChallengesList = () => {
     if (!userChallenges) return new Map<string, string>()
     const map = new Map<string, string>()
     userChallenges.forEach((uc) => {
-      map.set(uc.challengeId, uc.status)
+      map.set(uc.challengeId!, uc.status)
     })
     return map
   }, [userChallenges])
+
 
   const category = useMemo(() => categories?.find((cat) => cat._id === categoryId), [categoryId])
 
@@ -53,7 +54,6 @@ const ChallengesList = () => {
               primaryColor={item.color.primary}
               title={item.title}
               isChallengePresent={userChallengeData.has(item._id)}
-              status={userChallengeData.get(item._id)!}
             />
           )}
         />

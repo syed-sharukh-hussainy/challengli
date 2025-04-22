@@ -9,7 +9,7 @@ const FAB = () => {
   const router = useRouter()
   return (
     <View style={themed($container)}>
-      <Pressable onPress={() => router.push("/(auth)/categories")} style={themed($btn)}>
+      <Pressable onPress={() => router.push("/(auth)/create-challenge")} style={themed($btn)}>
         <FontAwesome6 name="add" size={24} color="white" />
       </Pressable>
     </View>

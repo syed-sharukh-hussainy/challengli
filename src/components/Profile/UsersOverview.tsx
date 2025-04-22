@@ -24,7 +24,7 @@ const UsersOverview = ({ achievements, challenges, rank, xp, currStreak, bestStr
         Overview
       </Text>
       <View style={themed($wrapper)}>
-        <StatItem image="global-rank.png" value={rank} label="Global rank" isLoading={false} />
+        <StatItem image="badge-global.png" value={rank} label="Global rank" isLoading={false} />
         <StatItem image="xp-bolt.png" value={xp} label="Total XP" isLoading={false} />
       </View>
       <View style={themed($wrapper)}>
@@ -44,7 +44,7 @@ const UsersOverview = ({ achievements, challenges, rank, xp, currStreak, bestStr
           isLoading={false}
         />
         <StatItem
-          image="achievements-unlocked.png"
+          image="achievements-profile.png"
           value={achievements}
           label="Achivements"
           isLoading={false}

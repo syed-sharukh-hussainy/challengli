@@ -63,12 +63,12 @@ const ChallengePreferences = () => {
         },
       })
       await createNotification(challenge.title, challenge.duration, _id, hour, period, minutes)
+      rootNavigation.dispatch(StackActions.popToTop())
+      router.replace(`/(auth)/created-challenge-details/${_id}`)
     } catch (error) {
       console.error("Error creating challenge:", error)
     } finally {
       setIsLoading(false)
-      rootNavigation.dispatch(StackActions.popToTop())
-      router.replace(`/(auth)/created-challenge-details/${challengeId}`)
     }
   }
 

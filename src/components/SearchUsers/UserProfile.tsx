@@ -92,7 +92,7 @@ const UserProfile = ({ user, index, length }: Props) => {
         </View>
       </View>
       <TouchableOpacity activeOpacity={0.7} onPress={() => {
-        if(user.isPro){
+        if (me?.isPro) {
           onFollowFriends(user.userName)
         } else {
           router.push('/(auth)/premium')

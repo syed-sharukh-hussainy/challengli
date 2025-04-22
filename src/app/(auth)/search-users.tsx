@@ -1,11 +1,11 @@
 import { FlatList, Pressable, TextStyle, View } from "react-native"
-import { ListView, Screen, Text, TextField } from "@/components"
+import { Screen, Text, TextField } from "@/components"
 import { router } from "expo-router"
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import TopBar from "@/components/UI/TopBar"
-import { useCallback, useEffect, useState } from "react"
-import { useMutation, usePaginatedQuery, useQuery } from "convex/react"
+import { useEffect, useState } from "react"
+import { usePaginatedQuery } from "convex/react"
 import { api } from "convex/_generated/api"
 import { Doc } from "convex/_generated/dataModel"
 import UserProfile from "@/components/SearchUsers/UserProfile"
@@ -84,12 +84,19 @@ const SearchUsers = () => {
           )}
           ListFooterComponent={
             isLoading ? (
-              <View className="mt-2">
+              <View style={{
+                marginTop: 16
+              }}>
                 <Spinner size={24} />
               </View>
             ) : status === "CanLoadMore" ? (
               <Pressable onPress={() => loadMore(10)} className="mt-4 items-center">
-                <Text className="font-urbanist-bold text-lg uppercase text-green-400">
+                <Text size="sm"
+                  weight="semiBold"
+                  style={{
+                    textAlign: "center",
+                    marginTop: 12
+                  }}>
                   Load More
                 </Text>
               </Pressable>

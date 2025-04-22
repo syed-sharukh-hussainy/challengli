@@ -10,17 +10,18 @@ import { api } from "convex/_generated/api"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
 import TopBar from "@/components/UI/TopBar"
 import UpgradePro from "@/components/UI/UpgradePro"
+import { Id } from "convex/_generated/dataModel"
 
 const CreatedChallengeDetails = () => {
-  const { challengeId } = useLocalSearchParams<{ challengeId: string }>()
+  const { challengeId } = useLocalSearchParams<{ challengeId: Id<"userChallenges"> }>()
   const todaysDate = useMemo(() => format(new Date(), "yyyy-MM-dd"), [])
-  const challenge = useQuery(api.userChallenges.getChallengeByChallengeId, {
+  const challenge = useQuery(api.userChallenges.getChallengeById, {
     challengeId,
   })
 
   const user = useQuery(api.users.getUser, {});
   const category = useQuery(api.categories.getCategoryById, { categoryId: challenge?.categoryId });
-  const isLocked = !user?.isPro && !category?.isFree;
+  const isLocked = category ? !user?.isPro && !category?.isFree : false;
   const getItemStyles = useCallback(
     (isValidDate: boolean) => ({
       textColor: isValidDate ? challenge?.color.primary : "#6b7280",
@@ -35,7 +36,7 @@ const CreatedChallengeDetails = () => {
         flex: 1,
       }}
     >
-      {!user || !challenge || !category ? (
+      {!user || !challenge ? (
         <LoadingAnimation />
       ) : (
         <>
@@ -50,7 +51,7 @@ const CreatedChallengeDetails = () => {
               contentContainerStyle={{
                 padding: 20,
               }}
-              keyExtractor={(item) => item.title}
+              keyExtractor={(item) => item.title + "-" + item.date}
               ListHeaderComponent={
                 <DetailsHeader
                   title={challenge.title}
@@ -71,7 +72,7 @@ const CreatedChallengeDetails = () => {
                   textColor={
                     getItemStyles(new Date(item.date || "") <= new Date(todaysDate)).textColor
                   }
-                  challengeId={challengeId}
+                  challengeId={challenge._id}
                 />
               )}
             />

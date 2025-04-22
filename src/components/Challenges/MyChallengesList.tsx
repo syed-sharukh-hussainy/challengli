@@ -1,12 +1,11 @@
-import { View, Text } from "react-native"
-import React, { useMemo } from "react"
 import { useQuery } from "convex/react"
 import LoadingAnimation from "../UI/LoadingAnimation"
 import EmptyList from "../UI/EmptyList"
 import { ListView } from "../ListView"
 import { api } from "convex/_generated/api"
 import MyChallengesListItem from "./MyChallengesListItem"
-import { differenceInDays, format } from "date-fns"
+import { View } from "react-native"
+
 
 const MyChallengesList = () => {
   const challenges = useQuery(api.userChallenges.getUserChallenges, {})
@@ -39,7 +38,7 @@ const MyChallengesList = () => {
             index={index}
             title={item.title}
             description={item.description}
-            id={item.challengeId}
+            id={item._id}
             color={item.color}
             imageUrl={item.image}
             length={challenges.length}

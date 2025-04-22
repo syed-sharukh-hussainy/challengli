@@ -48,9 +48,13 @@ const OnboardingSteps = () => {
               height: 200,
             }}
           />
-          <Text weight="bold" size="lg" style={themed($title)}>
-            {title}
-          </Text>
+          <View style={{
+            width: "90%"
+          }}>
+            <Text weight="bold" size="lg" style={themed($title)}>
+              {title}
+            </Text>
+          </View>
           <Text size="sm" style={themed($description)}>
             {description}
           </Text>

@@ -63,6 +63,26 @@ export const getChallengeByChallengeId = query({
   },
 })
 
+export const getChallengeById = query({
+  args: {
+    challengeId: v.id("userChallenges")
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) {
+      throw new ConvexError("Not authenticated")
+    }
+    const challenge = await ctx.db
+    .query("userChallenges")
+    .withIndex("by_userId", (q) =>
+      q.eq("userId", identity.subject)
+    ).filter((q) => q.eq(q.field("_id"), args.challengeId))
+    .first()
+
+    return challenge
+  },
+})
+
 export const getAllChallengesByUserId = query({
   args: {
     userId: v.string(),
@@ -79,12 +99,12 @@ export const getAllChallengesByUserId = query({
 
 export const createChallenge = mutation({
   args: {
-    challengeId: v.id("presetChallenges"),
+    challengeId: v.optional(v.id("presetChallenges")),
     title: v.string(),
     description: v.string(),
     duration: v.number(),
     image: v.string(),
-    categoryId: v.id("categories"),
+    categoryId:v.optional(v.id("categories")),
     color: v.object({
       primary: v.string(),
       secondary: v.string(),
@@ -150,7 +170,7 @@ export const createChallenge = mutation({
       duration,
       image,
       activities,
-      challengeId,
+      challengeId: args.challengeId!,
       categoryId,
       startDate,
       status: "IN_PROGRESS",

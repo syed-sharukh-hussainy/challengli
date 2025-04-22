@@ -11,8 +11,6 @@ import {
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
 import { customFontsToLoad } from "@/theme"
-import { initI18n } from "@/i18n"
-import { loadDateFnsLocale } from "@/utils/formatDate"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import * as NavigationBar from "expo-navigation-bar"
@@ -27,15 +25,12 @@ import ActionModal from "@/components/UI/ActionModal/ActionModal"
 import ModalText from "@/components/UI/ActionModal/ModalText"
 import { Platform, View } from "react-native"
 import ModalButton from "@/components/UI/ActionModal/ModalButton"
-import useRevenueCat from "@/hooks/useRevenueCat"
 
 SplashScreen.preventAutoHideAsync()
 
 if (__DEV__) {
   require("src/devtools/ReactotronConfig.ts")
 }
-
-export { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary"
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
   unsavedChangesWarning: false,
@@ -61,11 +56,6 @@ const InitialLayout = () => {
   const pathname = usePathname()
   const router = useRouter()
 
-  useEffect(() => {
-    initI18n()
-      .then(() => setIsI18nInitialized(true))
-      .then(() => loadDateFnsLocale())
-  }, [])
 
   const loaded = fontsLoaded && isI18nInitialized
 
@@ -107,7 +97,7 @@ const InitialLayout = () => {
 
 export default function Root() {
   const { themeScheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
-  const { themed } = useAppTheme()
+  const { themed, theme } = useAppTheme()
   const { showExitPopup, setShowExitPopup, handleExitPress } = useExitConfirmation()
   const [isConnected, setIsConnected] = useState(true)
   useEffect(() => {
@@ -165,10 +155,10 @@ export default function Root() {
             }}
           >
             <ModalButton
-              label="close"
+              label="No"
               onPress={() => setShowExitPopup(false)}
               style={themed(({ colors }) => ({
-                backgroundColor: colors.palette.gray,
+                backgroundColor: theme.colors.palette.gray,
               }))}
               labelStyle={themed(({ colors }) => ({
                 color: colors.text,

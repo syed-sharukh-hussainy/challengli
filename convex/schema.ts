@@ -53,7 +53,7 @@ export const PresetChallenges = {
 
 export const UserChallenges = {
   userId: v.string(),
-  challengeId: v.string(),
+  challengeId:v.optional(v.string()),
   title: v.string(),
   description: v.string(),
   image: v.string(),
@@ -63,7 +63,7 @@ export const UserChallenges = {
     secondary: v.string(),
   }),
   duration: v.number(),
-  categoryId: v.id("categories"),
+  categoryId: v.optional(v.id("categories")),
   status: v.string(),
   activities: v.array(
     v.object({

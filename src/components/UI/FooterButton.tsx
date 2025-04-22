@@ -48,6 +48,7 @@ export default FooterButton
 const $footerContainer: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   borderTopWidth: 2,
   backgroundColor: colors.background,
-  padding: spacing.md,
+  paddingHorizontal: spacing.md,
+  paddingVertical: spacing.sm,
   borderColor: colors.border,
 })

@@ -17,6 +17,11 @@ import Purchases, { PurchasesPackage } from 'react-native-purchases';
 
 const features = [
     {
+        title: "Create Your Own Challenges",
+        description: "Customize your own challenges with flexible durations—even beyond 21 days—and tailor them to your unique goals.",
+        imageKey: 'add-new-challenge.png'
+    },
+    {
         title: "Unlock All Categories & Challenges",
         description: "Access a wide range of categories to challenge yourself and build a habit",
         imageKey: 'total-challenges.png'
@@ -34,7 +39,7 @@ const features = [
     {
         title: "Unlock Achievements",
         description: "Complete challenges and milestones to earn badges—only visible to Pro users!",
-        imageKey: 'achievements-unlocked.png'
+        imageKey: 'achievements-profile.png'
     }
 ]
 
@@ -189,7 +194,7 @@ export default function SubscriptionScreen() {
                                                 <View style={{
                                                     flex: 1,
                                                 }}>
-                                                    <Text style={themed($title)} size="xs" weight='medium'>{feature.title}</Text>
+                                                    <Text style={themed($title)} size="xs" weight='semiBold'>{feature.title}</Text>
                                                     <Text style={themed($subtitle)} size="xxs" weight='medium'>{feature.description}</Text>
                                                 </View>
                                             </View>

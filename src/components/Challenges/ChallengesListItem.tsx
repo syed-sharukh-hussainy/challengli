@@ -5,6 +5,8 @@ import { useAppTheme } from "@/utils/useAppTheme"
 import { Text } from "../Text"
 import SmartImage from "../UI/SmartImage"
 import { router } from "expo-router"
+import { useQuery } from "convex/react"
+import { api } from "convex/_generated/api"
 
 type Props = {
   title: string
@@ -14,7 +16,6 @@ type Props = {
   duration: number
   primaryColor: string
   isChallengePresent: boolean
-  status: string
 }
 
 const ChallengesListItem = ({
@@ -24,13 +25,15 @@ const ChallengesListItem = ({
   image,
   title,
   primaryColor,
-  status,
   isChallengePresent,
 }: Props) => {
   const { themed } = useAppTheme()
+  const userChallenge = useQuery(api.userChallenges.getChallengeByChallengeId, {
+    challengeId
+  })
   const onChallengePressed = () => {
-    if (isChallengePresent) {
-      router.push(`/(auth)/created-challenge-details/${challengeId}`)
+    if (isChallengePresent && userChallenge) {
+      router.push(`/(auth)/created-challenge-details/${userChallenge._id}`)
     } else {
       router.push(`/(auth)/preset-challenge-details/${challengeId}`)
     }

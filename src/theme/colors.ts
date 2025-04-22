@@ -5,7 +5,7 @@ const palette = {
 
   primary: "#58cc02",
 
-  muted: "#F7F7F7",
+  muted: "#f3f4f6",
 
   gray: "#e5e7eb",
   gray200: "#d1d5db",

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import ActionModal from "./ActionModal/ActionModal"
 import ModalText from "./ActionModal/ModalText"
 import WheelPicker from "@quidone/react-native-wheel-picker"
@@ -34,6 +34,28 @@ const TimePickerModal = ({
   const [hour, setHour] = useState(initialHour)
   const [minutes, setMinutes] = useState(initialMinutes)
   const [period, setPeriod] = useState(initialPeriod)
+
+  type Props = {
+    item: {
+      value: number
+    }
+  }
+
+  const handleHourChange = useCallback(
+    ({ item: { value } }: Props) => !isLoading && setHour(value),
+    [isLoading]
+  )
+
+  const handleMinuteChange = useCallback(
+    ({ item: { value } }: Props) => !isLoading && setMinutes(value),
+    [isLoading]
+  )
+
+  const handlePeriodChange = useCallback(
+    ({ item: { value } }: Props) => !isLoading && setPeriod(value),
+    [isLoading]
+  )
+
   return (
     <ActionModal visible={showTimePicker}>
       <ModalText title="Reminder Time" />
@@ -52,11 +74,7 @@ const TimePickerModal = ({
           }}
           overlayItemStyle={themed($overlay)}
           itemTextStyle={themed($time)}
-          onValueChanged={({ item: { value } }) => {
-            if (!isLoading) {
-              setHour(value)
-            }
-          }}
+          onValueChanged={handleHourChange}
         />
         <Entypo name="dots-two-vertical" size={22} color={theme.colors.palette.gray200} />
         <View
@@ -74,11 +92,7 @@ const TimePickerModal = ({
             }}
             overlayItemStyle={themed($overlay)}
             itemTextStyle={themed($time)}
-            onValueChanged={({ item: { value } }) => {
-              if (!isLoading) {
-                setMinutes(value)
-              }
-            }}
+            onValueChanged={handleMinuteChange}
           />
           <WheelPicker
             data={PERIOD}
@@ -88,11 +102,7 @@ const TimePickerModal = ({
             }}
             overlayItemStyle={themed($overlay)}
             itemTextStyle={themed($time)}
-            onValueChanged={({ item: { value } }) => {
-              if (!isLoading) {
-                setPeriod(value)
-              }
-            }}
+            onValueChanged={handlePeriodChange}
           />
         </View>
       </View>
@@ -150,7 +160,7 @@ const TimePickerModal = ({
   )
 }
 
-export default TimePickerModal
+export default React.memo(TimePickerModal)
 
 const $time: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
   fontFamily: typography.fonts.spaceGrotesk.semiBold,

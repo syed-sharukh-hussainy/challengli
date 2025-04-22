@@ -28,6 +28,8 @@ const Layout = () => {
         <Stack.Screen name="calendar-streak" />
         <Stack.Screen name="feedback" />
         <Stack.Screen name="notification-settings" />
+        <Stack.Screen name="create-challenge" />
+        <Stack.Screen name="create-own-challenge" />
       </Stack>
     </Authenticated>
   )

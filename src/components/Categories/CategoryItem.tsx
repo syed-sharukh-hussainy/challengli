@@ -1,11 +1,10 @@
 import { View, TouchableOpacity, ViewStyle, TextStyle } from "react-native"
 import { Text } from "../Text"
-import { ThemedStyle, typography } from "@/theme"
+import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import SmartImage from "../UI/SmartImage"
 import { Id } from "convex/_generated/dataModel"
 import { FontAwesome6 } from "@expo/vector-icons"
-import useRevenueCat from "@/hooks/useRevenueCat"
 import { router } from "expo-router"
 import { useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
@@ -41,7 +40,7 @@ const CategoryItem = ({ id, title, image, description, index, isFree }: Props) =
           alignItems: "center",
           gap: 8,
         }}>
-          {isLocked && <FontAwesome6 name="lock" size={18} color={theme.isDark ? theme.colors.palette.gray200 : "#9ca3af"} />}
+          {isLocked && <FontAwesome6 name="lock" size={18} color={theme.colors.text} />}
           <Text size="sm" weight="bold" numberOfLines={1} style={themed($title)}>
             {title}
           </Text>
