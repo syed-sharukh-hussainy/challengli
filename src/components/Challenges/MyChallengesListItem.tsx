@@ -107,7 +107,7 @@ const MyChallengesListItem = ({
                   color: "white",
                 }}
               >
-                Day {dayNumber} / {duration}
+                Day {duration < dayNumber ? duration : dayNumber} / {duration}
               </Text>
             </View>
             <View

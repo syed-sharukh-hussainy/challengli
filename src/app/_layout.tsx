@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
 import {
-  Slot,
   SplashScreen,
   Stack,
   useFocusEffect,
@@ -11,6 +10,7 @@ import {
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
 import { customFontsToLoad } from "@/theme"
+import { loadDateFnsLocale } from "@/utils/formatDate"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import * as NavigationBar from "expo-navigation-bar"
@@ -23,8 +23,9 @@ import { useExitConfirmation } from "@/hooks/useExitConfirmation"
 import NetInfo from "@react-native-community/netinfo"
 import ActionModal from "@/components/UI/ActionModal/ActionModal"
 import ModalText from "@/components/UI/ActionModal/ModalText"
-import { Platform, View } from "react-native"
+import { View } from "react-native"
 import ModalButton from "@/components/UI/ActionModal/ModalButton"
+import { initI18n } from "@/i18n"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -43,10 +44,6 @@ if (!publishableKey) {
   )
 }
 
-const apiKey = Platform.select({
-  android: process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY!
-})
-
 const InitialLayout = () => {
   const { isLoading, isAuthenticated } = useConvexAuth()
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)
@@ -56,6 +53,11 @@ const InitialLayout = () => {
   const pathname = usePathname()
   const router = useRouter()
 
+  useEffect(() => {
+    initI18n()
+      .then(() => setIsI18nInitialized(true))
+      .then(() => loadDateFnsLocale())
+  }, [])
 
   const loaded = fontsLoaded && isI18nInitialized
 
@@ -107,7 +109,6 @@ export default function Root() {
 
     return () => unsubscribe()
   }, [])
-
 
   useFocusEffect(
     useCallback(() => {

@@ -20,7 +20,7 @@ const PresetChallengeDetails = () => {
   const category = useQuery(api.categories.getCategoryById, {
     categoryId: challenge?.categoryId
   })
-  const isLocked = !user?.isPro && !category?.isFree
+  const isLocked = !user?.isPro && !challenge?.isFree
   return (
     <Screen
       safeAreaEdges={["top"]}

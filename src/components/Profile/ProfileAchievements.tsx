@@ -12,7 +12,6 @@ type Props = {
 }
 const ProfileAchievements = ({ userId }: Props) => {
   const { themed, theme } = useAppTheme()
-  const user = useQuery(api.users.getUser, {});
   const achievements = useQuery(api.achievements.getAchievementsByUserId, {
     userId,
   })
@@ -56,11 +55,7 @@ const ProfileAchievements = ({ userId }: Props) => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
-            if (user?.isPro) {
-              router.push(`/(auth)/achievements/${userId}`)
-            } else {
-              router.push('/(auth)/premium')
-            }
+            router.push(`/(auth)/achievements/${userId}`)
           }}
         >
           <Text

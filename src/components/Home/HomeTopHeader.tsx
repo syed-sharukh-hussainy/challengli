@@ -38,23 +38,15 @@ const HomeTopHeader = () => {
           </Text>
         </View>
         <View style={themed($headerActionButtons)}>
-          <TouchableOpacity
-            activeOpacity={0.7}
+          <View
             style={themed($headerAction)}
-            onPress={() => {
-              if (user?.isPro) {
-                router.push("/(auth)/calendar-streak")
-              } else {
-                router.push('/(auth)/premium')
-              }
-            }}
           >
             <AutoImage source={streak} style={{ width: 24, height: 24 }} />
             <Text weight="bold" size="xs">
               {user?.currentStreak}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} style={themed($headerAction)} onPress={() => { }}>
+          </View>
+          <View style={themed($headerAction)}>
             <AutoImage source={xpPoints} style={{ width: 24, height: 24 }} />
             {!user ? (
               <Spinner size={14} />
@@ -63,7 +55,7 @@ const HomeTopHeader = () => {
                 {formattedXPNumber(user?.xp)} XP
               </Text>
             )}
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>

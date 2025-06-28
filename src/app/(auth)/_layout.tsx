@@ -18,14 +18,18 @@ const Layout = () => {
         <Stack.Screen name="challenge-preferences/[challengeId]" />
         <Stack.Screen name="search-users" />
         <Stack.Screen name="settings" />
-        <Stack.Screen name="premium" options={{
-          animation: "slide_from_bottom",
-        }} />
+        <Stack.Screen
+          name="premium"
+          options={{
+            animation: "slide_from_bottom",
+          }}
+        />
         <Stack.Screen name="other-users-profile/[userId]" />
         <Stack.Screen name="achievements/[userId]" />
         <Stack.Screen name="friends/[userId]" />
         <Stack.Screen name="profile-settings" />
         <Stack.Screen name="calendar-streak" />
+        <Stack.Screen name="user-overview" />
         <Stack.Screen name="feedback" />
         <Stack.Screen name="notification-settings" />
         <Stack.Screen name="create-challenge" />

@@ -28,6 +28,10 @@ const UsersLeaderboardList = ({ tabName }: Props) => {
   return (
     <View style={themed($container)}>
       <ListView
+        contentContainerStyle={{
+          padding: 20,
+        }}
+        showsVerticalScrollIndicator={false}
         data={sortedUsers}
         keyExtractor={(item) => item._id}
         estimatedItemSize={80}
@@ -43,5 +47,4 @@ export default UsersLeaderboardList
 
 const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flex: 1,
-  padding: spacing.md,
 })

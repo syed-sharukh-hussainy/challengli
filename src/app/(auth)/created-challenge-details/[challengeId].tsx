@@ -20,8 +20,7 @@ const CreatedChallengeDetails = () => {
   })
 
   const user = useQuery(api.users.getUser, {});
-  const category = useQuery(api.categories.getCategoryById, { categoryId: challenge?.categoryId });
-  const isLocked = category ? !user?.isPro && !category?.isFree : false;
+  const isLocked = challenge ? !user?.isPro && !challenge.isFree : false;
   const getItemStyles = useCallback(
     (isValidDate: boolean) => ({
       textColor: isValidDate ? challenge?.color.primary : "#6b7280",

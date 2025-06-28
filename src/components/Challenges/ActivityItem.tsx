@@ -107,6 +107,7 @@ const ActivityItem = ({
               weight="bold"
               style={themed(({ colors }) => ({
                 color: isValidDate ? textColor : colors.text,
+                textDecorationLine: $textDecoration,
               }))}
               numberOfLines={1}
             >

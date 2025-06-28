@@ -6,7 +6,6 @@ import Spinner from "../UI/Spinner"
 import { Doc } from "convex/_generated/dataModel"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { Text } from "../Text"
-import { router } from "expo-router"
 
 type Props = {
   user: Doc<"users">
@@ -22,14 +21,10 @@ const FollowOrUnFollow = ({ user }: Props) => {
     <TouchableOpacity
       onPress={async () => {
         try {
-          if (me?.isPro) {
-            setIsLoading(true)
-            await updateFriends({
-              userName: user.userName,
-            })
-          } else {
-            router.push('/(auth)/premium')
-          }
+          setIsLoading(true)
+          await updateFriends({
+            userName: user.userName,
+          })
         } catch (error) {
           console.log(error)
         } finally {

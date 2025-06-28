@@ -49,6 +49,7 @@ const ChallengesList = () => {
             <ChallengesListItem
               challengeId={item._id}
               description={item.description}
+              isFree={item.isFree}
               duration={item.duration}
               image={item.image}
               primaryColor={item.color.primary}

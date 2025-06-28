@@ -3,32 +3,33 @@ export const ONBOARDING_SCREENS = [
     title: "Level Up Your Life",
     imageUrl: "boarding1.png",
     description:
-      "It takes 21 days to build a habit. Pick your challenge and start transforming your life today!",
+      "It takes 21 days to build a habit. Pick your challenge and start transforming your life today!"
   },
   {
     title: "Your Habit, Your Pace",
     imageUrl: "boarding2.png",
     description:
-      "Shape your habits, your way. Select a shorter 14-day challenge for a quick win or commit to 21 days to solidify lasting change.",
+      "Shape your habits, your way. Start with a shorter challenge to ease into your journey, and when you're ready, commit to the 21-day challenge for lasting change."
   },
   {
     title: "Track & Stay Consistent",
     imageUrl: "onboarding33.png",
     description:
-      "Check in daily, stay on track, and watch your habits grow stronger with each passing day.",
+      "Check in daily, stay on track, and watch your habits grow stronger with each passing day."
   },
   {
     title: "Earn Rewards & Stay Motivated",
     imageUrl: "boarding4.png",
     description:
-      "Gain XP, unlock achievements, and climb the leaderboard as you progress through your challenge.",
+      "Gain XP, unlock achievements, and climb the leaderboard as you progress through your challenge."
   },
   {
     title: "Join a Supportive Community",
     imageUrl: "boarding5.png",
     description:
-      "Connect with others, share progress, and stay inspired as you take on your 14 or 21-day journey.",
-  },
+      "Connect with others, share progress, and stay inspired as you take on your 21-day journey."
+  }
+
 ]
 export const HOURS = [
   {
@@ -1384,3 +1385,5 @@ export const COLORS = [
     secondary: "#fff3e0",
   },
 ]
+
+

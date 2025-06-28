@@ -61,6 +61,7 @@ const CreateOwnChallenge = () => {
         duration,
         image: selectedImage,
         reminderTime,
+        isFree: false,
         startDate: todaysDate,
         title: selectedTitle,
       })

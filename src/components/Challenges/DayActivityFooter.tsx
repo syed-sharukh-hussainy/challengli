@@ -1,6 +1,6 @@
 import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { Pressable, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import { TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Text } from "../Text"
 import Spinner from "../UI/Spinner"
 

@@ -46,7 +46,6 @@ const CategoriesScreen = () => {
               <CategoryItem
                 index={index}
                 id={item._id}
-                isFree={item.isFree}
                 title={item.title}
                 description={item.description}
                 image={item.image}

@@ -73,11 +73,11 @@ export const getChallengeById = query({
       throw new ConvexError("Not authenticated")
     }
     const challenge = await ctx.db
-    .query("userChallenges")
-    .withIndex("by_userId", (q) =>
-      q.eq("userId", identity.subject)
-    ).filter((q) => q.eq(q.field("_id"), args.challengeId))
-    .first()
+      .query("userChallenges")
+      .withIndex("by_userId", (q) =>
+        q.eq("userId", identity.subject)
+      ).filter((q) => q.eq(q.field("_id"), args.challengeId))
+      .first()
 
     return challenge
   },
@@ -104,7 +104,8 @@ export const createChallenge = mutation({
     description: v.string(),
     duration: v.number(),
     image: v.string(),
-    categoryId:v.optional(v.id("categories")),
+    categoryId: v.optional(v.id("categories")),
+    isFree: v.boolean(),
     color: v.object({
       primary: v.string(),
       secondary: v.string(),
@@ -127,7 +128,6 @@ export const createChallenge = mutation({
   },
   handler: async (ctx, args) => {
     const {
-      challengeId,
       startDate,
       challengeActivities,
       description,
@@ -136,6 +136,7 @@ export const createChallenge = mutation({
       duration,
       categoryId,
       color,
+      isFree,
       reminderTime,
     } = args
     const user = await ctx.auth.getUserIdentity()
@@ -176,6 +177,7 @@ export const createChallenge = mutation({
       status: "IN_PROGRESS",
       color: color,
       reminderTime,
+      isFree,
     })
   },
 })
@@ -217,7 +219,7 @@ export const updateReminderTime = mutation({
 export const updateDayActivityStatus = mutation({
   args: {
     date: v.string(),
-    challengeId: v.string(),
+    challengeId: v.id("userChallenges"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
@@ -226,8 +228,8 @@ export const updateDayActivityStatus = mutation({
     }
     const challenge = await ctx.db
       .query("userChallenges")
-      .withIndex("by_cid_uid_status", (q) =>
-        q.eq("userId", identity.subject).eq("challengeId", args.challengeId),
+      .withIndex("by_id", (q) =>
+        q.eq("_id", args.challengeId),
       )
       .first()
 

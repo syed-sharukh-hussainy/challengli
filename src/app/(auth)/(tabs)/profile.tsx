@@ -1,9 +1,7 @@
-import { Pressable, ScrollView, TouchableOpacity, View } from "react-native"
+import { ScrollView, View } from "react-native"
 import React, { useMemo } from "react"
-import { Screen, Text } from "@/components"
+import { Screen } from "@/components"
 import TopBar from "@/components/UI/TopBar"
-import TopBarWithActions from "@/components/UI/TopBarWithActions"
-import { FontAwesome6 } from "@expo/vector-icons"
 import { router } from "expo-router"
 import ActionButton from "@/components/UI/ActionModal/ActionButton"
 import ProfileImageName from "@/components/Profile/ProfileImageName"
@@ -11,7 +9,6 @@ import { useUser } from "@clerk/clerk-expo"
 import { useQuery } from "convex/react"
 import { api } from "convex/_generated/api"
 import LoadingAnimation from "@/components/UI/LoadingAnimation"
-import TabHeader from "@/components/UI/TabHeader"
 import FollowingFollowers from "@/components/Profile/FollowingFollowers"
 import AddFriends from "@/components/Profile/AddFriends"
 import { useAppTheme } from "@/utils/useAppTheme"
@@ -36,6 +33,16 @@ const Profile = () => {
   const challenges = useQuery(api.userChallenges.getAllChallengesByUserId, {
     userId: CUser?.id!,
   })
+
+  const achievements = useQuery(api.achievements.getAchievementsByUserId, {
+    userId: CUser?.id!,
+  });
+
+  const totalAchievements = achievements?.filter(
+    (ach) => ach.status === "COMPLETED"
+  );
+
+  const isMe = useMemo(() => CUser?.id === user?.userId, [CUser?.id, user?.userId])
 
   return (
     <Screen
@@ -81,7 +88,10 @@ const Profile = () => {
             currStreak={user.currentStreak}
             bestStreak={user.longestStreak}
             challenges={challenges?.length!}
-            achievements={0}
+            achievements={totalAchievements?.length!}
+            userId={user.userId}
+            isMe={isMe}
+            isPro={user.isPro}
           />
           <ProfileAchievements userId={user.userId} />
         </ScrollView>

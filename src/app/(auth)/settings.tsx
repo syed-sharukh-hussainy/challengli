@@ -1,8 +1,16 @@
 import React, { useState } from "react"
 import { Screen, Text } from "@/components"
-import { Alert, Linking, ScrollView, Share, TouchableOpacity, ViewStyle } from "react-native"
+import {
+  Alert,
+  Linking,
+  Pressable,
+  ScrollView,
+  Share,
+  TouchableOpacity,
+  ViewStyle,
+} from "react-native"
 import TopBar from "@/components/UI/TopBar"
-import { router } from "expo-router"
+import { Link, router } from "expo-router"
 import { FontAwesome6 } from "@expo/vector-icons"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { useAuth } from "@clerk/clerk-expo"
@@ -48,7 +56,7 @@ const Settings = () => {
   }
 
   const handleShare = async () => {
-    const message = `Hi! I'm using Challengli to build better habits and stay motivated. Join me on this amazing journey! Download the app here: https://play.google.com/store/apps/details?id=com.flamingo.challengli`
+    const message = `Hi! I'm using Challengli to build better habits and stay motivated. Join me on this amazing journey! Download the app here: https://play.google.com/store/apps/details?id=com.flamingoo.challengli`
 
     try {
       const result = await Share.share({
@@ -184,10 +192,36 @@ const Settings = () => {
                 color: "white",
               }}
             >
-              Sign Out
+              Log Out
             </Text>
           )}
         </TouchableOpacity>
+
+        <View
+          style={{
+            alignItems: "center",
+            marginTop: 24,
+          }}
+        >
+          <Text
+            weight="semiBold"
+            size="md"
+            style={themed(({ colors }) => ({
+              color: colors.textDim,
+            }))}
+          >
+            Challengli
+          </Text>
+          <Text
+            weight="bold"
+            size="xxs"
+            style={themed(({ colors }) => ({
+              color: colors.textDim,
+            }))}
+          >
+            v1.0.2
+          </Text>
+        </View>
       </ScrollView>
     </Screen>
   )

@@ -84,6 +84,7 @@ const Friends = () => {
           contentContainerStyle={{
             padding: 16,
           }}
+          showsVerticalScrollIndicator={false}
           estimatedItemSize={80}
           keyExtractor={(item) => item?._id!}
           renderItem={({ item, index }) => {

@@ -32,7 +32,12 @@ const ProfileImageName = ({ imageUrl, createdAt, fullName, username }: Props) =>
           />
         )}
       </View>
-      <View className="flex-1 flex-row items-center justify-between">
+      <View style={{
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}>
         <View
           style={{
             gap: 2,
@@ -41,10 +46,10 @@ const ProfileImageName = ({ imageUrl, createdAt, fullName, username }: Props) =>
           <Text size="sm" weight="bold" style={themed($name)} numberOfLines={1}>
             {fullName}
           </Text>
-          <Text size="xxs" style={themed($subname)}>
+          <Text size="xxs" weight="semiBold" style={themed($subname)}>
             @{username}
           </Text>
-          <Text size="xxs" style={themed($subname)}>
+          <Text size="xxs" weight="semiBold" style={themed($subname)}>
             Joined {format(createdAt, "MMMM yyyy")}
           </Text>
         </View>

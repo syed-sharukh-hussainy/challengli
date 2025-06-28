@@ -91,13 +91,13 @@ const UserProfile = ({ user, index, length }: Props) => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => {
-        if (me?.isPro) {
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => {
           onFollowFriends(user.userName)
-        } else {
-          router.push('/(auth)/premium')
-        }
-      }} style={themed($followBtn)}>
+        }}
+        style={themed($followBtn)}
+      >
         {isFollowing[user.userName] ? (
           <Spinner size={14} color="white" />
         ) : me?.following.includes(user.userName) ? (

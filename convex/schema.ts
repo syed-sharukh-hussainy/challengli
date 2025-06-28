@@ -27,7 +27,6 @@ export const Categories = {
   title: v.string(),
   description: v.string(),
   image: v.string(),
-  isFree: v.boolean(),
 }
 
 export const PresetChallenges = {
@@ -38,6 +37,7 @@ export const PresetChallenges = {
     primary: v.string(),
     secondary: v.string(),
   }),
+  isFree: v.boolean(),
   duration: v.number(),
   categoryId: v.id("categories"),
   activities: v.array(
@@ -53,7 +53,7 @@ export const PresetChallenges = {
 
 export const UserChallenges = {
   userId: v.string(),
-  challengeId:v.optional(v.string()),
+  challengeId: v.optional(v.string()),
   title: v.string(),
   description: v.string(),
   image: v.string(),
@@ -62,6 +62,7 @@ export const UserChallenges = {
     primary: v.string(),
     secondary: v.string(),
   }),
+  isFree: v.boolean(),
   duration: v.number(),
   categoryId: v.optional(v.id("categories")),
   status: v.string(),

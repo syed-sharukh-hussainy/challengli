@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import notifee, { AndroidImportance } from "@notifee/react-native"
+import notifee, { AndroidImportance, AndroidVisibility } from "@notifee/react-native"
 
 export const useNotifications = (channelId: string = "challenge-reminders") => {
   useEffect(() => {
@@ -13,6 +13,9 @@ export const useNotifications = (channelId: string = "challenge-reminders") => {
         name: "Challenge Reminders",
         importance: AndroidImportance.HIGH,
         sound: "default",
+        vibration: true,
+        visibility: AndroidVisibility.PUBLIC,
+        bypassDnd: true,
       })
     }
 

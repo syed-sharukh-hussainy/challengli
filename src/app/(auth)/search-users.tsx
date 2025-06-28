@@ -63,6 +63,7 @@ const SearchUsers = () => {
         <FlatList
           data={filteredUsers}
           keyExtractor={(item) => item._id}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingTop: 32,
           }}
@@ -84,19 +85,23 @@ const SearchUsers = () => {
           )}
           ListFooterComponent={
             isLoading ? (
-              <View style={{
-                marginTop: 16
-              }}>
+              <View
+                style={{
+                  marginTop: 16,
+                }}
+              >
                 <Spinner size={24} />
               </View>
             ) : status === "CanLoadMore" ? (
-              <Pressable onPress={() => loadMore(10)} className="mt-4 items-center">
-                <Text size="sm"
+              <Pressable onPress={() => loadMore(10)}>
+                <Text
+                  size="sm"
                   weight="semiBold"
                   style={{
                     textAlign: "center",
-                    marginTop: 12
-                  }}>
+                    marginTop: 12,
+                  }}
+                >
                   Load More
                 </Text>
               </Pressable>

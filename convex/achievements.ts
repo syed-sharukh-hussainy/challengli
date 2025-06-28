@@ -62,7 +62,7 @@ export const claimAchievement = mutation({
 
 export const updateAchievement = mutation({
   args: {
-    userChallengeId: v.string(),
+    userChallengeId: v.id("userChallenges"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
@@ -73,9 +73,7 @@ export const updateAchievement = mutation({
 
     const challenge = await ctx.db
       .query("userChallenges")
-      .withIndex("by_cid_uid_status", (q) =>
-        q.eq("userId", identity?.subject!).eq("challengeId", args.userChallengeId),
-      )
+      .withIndex("by_id", (q) => q.eq("_id", args.userChallengeId))
       .first()
 
     if (user === null) {

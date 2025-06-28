@@ -12,11 +12,12 @@ import FollowingFollowers from "@/components/Profile/FollowingFollowers"
 import UsersOverview from "@/components/Profile/UsersOverview"
 import ProfileAchievements from "@/components/Profile/ProfileAchievements"
 import FollowOrUnFollow from "@/components/Profile/FollowOrUnFollow"
+import { useUser } from "@clerk/clerk-expo"
 
 const OtherUsersProfile = () => {
   const { userId } = useLocalSearchParams<{ userId: string }>()
+
   const { themed } = useAppTheme()
-  const [isLoading, setIsLoading] = useState(false)
 
   const user = useQuery(api.users.getUserById, {
     userId,
@@ -86,6 +87,9 @@ const OtherUsersProfile = () => {
               bestStreak={user.longestStreak}
               challenges={challenges?.length!}
               achievements={totalAchievements?.length!}
+              userId={user.userId}
+              isPro={false}
+              isMe={false}
             />
             <ProfileAchievements userId={user.userId} />
           </ScrollView>

@@ -56,6 +56,7 @@ const ChallengePreferences = () => {
         challengeId: challenge._id,
         challengeActivities: challenge.activities,
         color: challenge.color,
+        isFree: challenge.isFree,
         reminderTime: {
           hour,
           minutes,

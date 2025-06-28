@@ -4,10 +4,7 @@ import { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import SmartImage from "../UI/SmartImage"
 import { Id } from "convex/_generated/dataModel"
-import { FontAwesome6 } from "@expo/vector-icons"
 import { router } from "expo-router"
-import { useQuery } from "convex/react"
-import { api } from "convex/_generated/api"
 
 type Props = {
   id: Id<"categories">
@@ -15,36 +12,24 @@ type Props = {
   description: string
   image: string
   index: number,
-  isFree: boolean,
 }
 
-const CategoryItem = ({ id, title, image, description, index, isFree }: Props) => {
-  const { theme, themed } = useAppTheme()
-  const user = useQuery(api.users.getUser, {});
-  const isLocked = !isFree && !user?.isPro;
+const CategoryItem = ({ id, title, image, description, index }: Props) => {
+  const { themed } = useAppTheme()
   return (
     <TouchableOpacity
       onPress={async () => {
-        if (!isLocked) {
-          router.push(`/(auth)/challenges-list/${id}`)
-        } else {
-          router.push('/(auth)/premium')
-        }
+        router.push(`/(auth)/challenges-list/${id}`)
       }}
       activeOpacity={0.8}
       style={themed($btnContainer)}
     >
       <View style={{ width: "70%", alignItems: "flex-start", gap: 4 }}>
-        <View style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 8,
-        }}>
-          {isLocked && <FontAwesome6 name="lock" size={18} color={theme.colors.text} />}
-          <Text size="sm" weight="bold" numberOfLines={1} style={themed($title)}>
-            {title}
-          </Text>
-        </View>
+
+        <Text size="sm" weight="bold" numberOfLines={1} style={themed($title)}>
+          {title}
+        </Text>
+
         <Text size="xs" weight="normal" numberOfLines={3} style={themed($description)}>
           {description}
         </Text>
